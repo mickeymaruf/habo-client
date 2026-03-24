@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import { challengeService } from "@/services/challenge.service";
 import { Challenge } from "@/types/challenge.type";
-import { Calendar, Users, Lock, ArrowLeft } from "lucide-react";
+import { Calendar, Lock, ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { JoinChallengeButton } from "./_components/join-challenge-button";
-import { authClient } from "@/lib/auth-client";
-import { authService } from "@/services/auth.service";
+import ActivityGraph from "./_components/activity-graph";
+import { participationService } from "@/services/participation.service";
+import ActivityCalendar from "./_components/activity-calendar";
 
 export default async function ChallengePage({
   params,
@@ -15,16 +14,15 @@ export default async function ChallengePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { data: challenge } =
-    await challengeService.getSingleChallenge<Challenge>(id);
-  const { session } = await authService.getSession();
+  const { data: participation } =
+    await participationService.getSingleParticipation<any>(id);
 
-  if (!challenge) return notFound();
+  if (!participation) return notFound();
 
   return (
     <div className="mx-auto w-full max-w-3xl">
       {/* Back Button */}
-      <Link href="/challenges">
+      <Link href="/participations">
         <button className="mb-6 flex cursor-pointer items-center gap-2 font-bold text-black duration-200 hover:-translate-x-2">
           <ArrowLeft className="h-5 w-5" /> Back
         </button>
@@ -34,37 +32,31 @@ export default async function ChallengePage({
         {/* Header */}
         <div className="mb-6 space-y-3">
           <h1 className="text-4xl font-bold tracking-tight text-black">
-            {challenge.title}
+            {participation.challenge.title}
           </h1>
           <p className="max-w-[95%] leading-relaxed font-medium text-black/70">
-            {challenge.description}
+            {participation.challenge.description}
           </p>
         </div>
         {/* Info Pills */}
         <div className="mb-6 flex flex-wrap gap-3">
           <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-            <Calendar className="h-4 w-4" /> {challenge.durationDays} Days
+            <Calendar className="h-4 w-4" />{" "}
+            {participation.challenge.durationDays} Days
           </div>
           <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-            {challenge.category}
+            {participation.challenge.category}
           </div>
-          {challenge.isPremium && (
+          {participation.challenge.isPremium && (
             <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
               <Lock className="h-4 w-4" /> Premium
             </div>
           )}
         </div>
         {/* Join Button */}
-        <div className="mb-8">
-          <JoinChallengeButton
-            challengeId={challenge.id}
-            initialHasJoined={challenge.participations.some(
-              (p) => p.userId === session.user.id,
-            )}
-          />
-        </div>
+        <p className="my-10 text-amber-500">Show joined at</p>
         {/* Participants */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <h3 className="mb-3 font-bold text-black">People doing this</h3>
           <div className="flex -space-x-3">
             {challenge.participations.map((p) => (
@@ -95,7 +87,7 @@ export default async function ChallengePage({
               </div>
             )}
           </div>
-        </div>
+        </div> */}
         {/* Progress */}
         <div className="mb-6">
           <h3 className="mb-2 font-bold text-black">Community Progress</h3>
@@ -115,8 +107,21 @@ export default async function ChallengePage({
             <p>⚡ Seeing others progress keeps me going.</p>
           </div>
         </div>
-        {/*  */}
-        Show my progress
+
+        {/* My progress */}
+        <div className="my-10 h-px w-full bg-black/10" />
+
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-black">My Progress</h3>
+          <p className="text-black/70">
+            Track your daily progress and stay motivated!
+          </p>
+        </div>
+        <ActivityGraph
+          joinedAt={participation.joinedAt}
+          progressLogs={participation.progressLogs}
+          durationDays={participation.challenge.durationDays}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
-export interface ChallengeData {
+import { ChallengeStatus } from "./enum.types";
+
+export interface Challenge {
   id: string;
   title: string;
   description: string;
@@ -7,7 +9,7 @@ export interface ChallengeData {
   isPremium?: boolean;
   featured?: boolean;
   price?: number | null;
-  status: "PENDING" | "ACTIVE" | "COMPLETED" | string;
+  status: ChallengeStatus;
   createdAt: string;
   updatedAt: string;
   creatorId: string;

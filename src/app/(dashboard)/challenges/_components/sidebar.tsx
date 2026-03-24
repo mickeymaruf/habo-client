@@ -16,11 +16,11 @@ import { usePathname } from "next/navigation";
 
 const navItems = [
   { icon: LayoutGrid, label: "Dashboard", href: "/challenges" },
-  { icon: Calendar, label: "Schedule", href: "/my-challenges" },
-  { icon: MessageSquare, label: "Messages", href: "/" },
-  { icon: Clock, label: "History", href: "/" },
-  { icon: Zap, label: "Stats", href: "/" },
-  { icon: Trophy, label: "Goals", href: "/" },
+  { icon: Calendar, label: "Schedule", href: "/participations" },
+  { icon: MessageSquare, label: "Messages", href: "#" },
+  { icon: Clock, label: "History", href: "#" },
+  { icon: Zap, label: "Stats", href: "#" },
+  { icon: Trophy, label: "Goals", href: "#" },
 ];
 export default function Sidebar() {
   const pathname = usePathname();
@@ -37,7 +37,7 @@ export default function Sidebar() {
       <nav className="flex flex-1 flex-col gap-4">
         {navItems.map((item) => (
           <div key={item.label} className="group relative">
-            {pathname === item.href && (
+            {pathname.startsWith(item.href) && (
               <div className="absolute top-1/2 -left-4 h-6 w-1 -translate-y-1/2 rounded-r-full bg-indigo-600" />
             )}
             <Button
@@ -46,7 +46,7 @@ export default function Sidebar() {
               size="icon"
               className={cn(
                 "h-12 w-12 rounded-xl transition-all",
-                pathname === item.href
+                pathname.startsWith(item.href)
                   ? "bg-indigo-50 text-indigo-600"
                   : "text-gray-400 hover:bg-indigo-50 hover:text-indigo-600",
               )}

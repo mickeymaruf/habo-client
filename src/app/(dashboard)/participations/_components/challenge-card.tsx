@@ -3,14 +3,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Challenge } from "@/types/challenge.type";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ChallengeWithoutParticipation } from "@/types/participation.types";
 
-export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
+export default function ChallengeCard({
+  challenge,
+}: {
+  challenge: ChallengeWithoutParticipation;
+}) {
   return (
     <Card className="w-full max-w-md overflow-hidden rounded-[40px] border-none bg-[#C3B5FD] shadow-lg">
       <CardContent className="flex h-full flex-col">
         {/* Top Row */}
         <div className="mb-10 flex items-start justify-between">
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <h3 className="mb-3 font-bold text-black">People doing this</h3>
             <div className="flex h-10 -space-x-3">
               {challenge.participations.map((p) => (
@@ -41,9 +46,9 @@ export default function ChallengeCard({ challenge }: { challenge: Challenge }) {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
 
-          <Link href={`/challenges/${challenge.id}`}>
+          <Link href={`/participations/${challenge.id}`}>
             <div className="cursor-pointer rounded-full bg-white p-4 shadow-sm transition-transform hover:scale-105">
               <ArrowUpRight className="h-6 w-6 text-black" />
             </div>

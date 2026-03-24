@@ -1,17 +1,18 @@
 import { participationService } from "@/services/participation.service";
 import DashboardHeader from "./_components/dashboard-header";
-import TaskList from "./_components/task-list";
-import ChallengeCard from "../challenges/_components/challenge-card";
+import CheckList from "./_components/check-list";
+import ChallengeCard from "./_components/challenge-card";
+import { Participation } from "@/types/participation.types";
 
 export default async function MyChallengesPage() {
   const { data: participations } =
-    await participationService.getMyParticipations();
+    await participationService.getMyParticipations<Participation[]>();
 
   return (
     <div>
       <div className="grid grid-cols-2 gap-10">
         <DashboardHeader />
-        <TaskList participations={participations.data} />
+        <CheckList participations={participations} />
       </div>
 
       {/* make a title or header section */}
@@ -22,8 +23,8 @@ export default async function MyChallengesPage() {
         </p>
       </div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-        {participations.data.map((c) => (
-          <ChallengeCard key={c.id} challengeData={c.challenge} />
+        {participations.map((c) => (
+          <ChallengeCard key={c.id} challenge={c.challenge} />
         ))}
       </div>
     </div>

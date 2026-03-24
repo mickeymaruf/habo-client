@@ -1,15 +1,15 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 
 export default function DashboardHeader() {
-  const [now, setNow] = React.useState(new Date());
+  const [now, setNow] = useState(new Date());
 
   // Update time every minute
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);

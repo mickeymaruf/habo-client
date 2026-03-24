@@ -1,63 +1,17 @@
 "use client";
 
-import * as React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { isSameDay } from "date-fns";
-import { progressService } from "@/services/progress.service";
 import { createProgress } from "@/actions/progress";
+import { Participation } from "@/types/participation.types";
+import { useState } from "react";
 
-export interface TaskItem {
-  id: string; // participation ID
-  title: string; // challenge title
-  emoji?: string; // optional emoji for the task
-  completed: boolean; // if today’s task is completed
-  completedDays: number; // total completed days
-  totalDays: number; // challenge duration
-  note?: string | null; // optional note for today
-  progressLogs: {
-    id: string;
-    date: string; // ISO date
-    note?: string | null;
-    completed: boolean;
-    createdAt: string;
-  }[];
-}
-
-export interface Participation {
-  id: string;
-  userId: string;
-  challengeId: string;
-  joinedAt: string;
-  progress: number; // percent complete
-  completed: boolean;
-  challenge: {
-    id: string;
-    title: string;
-    description: string;
-    durationDays: number;
-    category: string;
-    isPremium: boolean;
-    price?: number | null;
-    status: string;
-  };
-  progressLogs: TaskItem["progressLogs"];
-}
-
-export interface MyParticipationsResponse {
-  success: boolean;
-  message: string;
-  data: Participation[];
-}
-
-export default function HabitList({
+export default function CheckList({
   participations,
 }: {
   participations: Participation[];
 }) {
-  const today = new Date();
-
-  const [state, setState] = React.useState(() =>
+  const [state, setState] = useState(() =>
     participations.map((p) => {
       const joined = new Date(p.joinedAt);
       const today = new Date();
@@ -77,6 +31,7 @@ export default function HabitList({
         ),
         currentDay: Math.min(diffDays, p.challenge.durationDays),
         totalDays: p.challenge.durationDays,
+        loading: false,
       };
     }),
   );
@@ -113,12 +68,12 @@ export default function HabitList({
         <button className="text-sm">View Details</button>
       </div>
       <div className="space-y-6 rounded-3xl bg-white p-4">
-        {state.map((habit) => (
-          <div key={habit.id} className="flex items-center justify-between">
+        {state.map((challenge) => (
+          <div key={challenge.id} className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               {/* Emoji Container */}
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-2xl">
-                {habit.emoji || "🏆"}
+                {challenge.emoji || "🏆"}
               </div>
 
               {/* Task Info */}
@@ -126,25 +81,25 @@ export default function HabitList({
                 <h3
                   className={cn(
                     "text-lg transition-all",
-                    habit.completed ? "line-through" : "",
+                    challenge.completed ? "line-through" : "",
                   )}
                 >
-                  {habit.title}
+                  {challenge.title}
                 </h3>
 
                 {/* Progress indicator */}
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <span>
-                    {habit.currentDay}/{habit.totalDays} days
+                    {challenge.currentDay}/{challenge.totalDays} days
                   </span>
                 </div>
               </div>
             </div>
 
             <Checkbox
-              checked={habit.completed}
-              disabled={habit.completed || habit.loading}
-              onCheckedChange={() => handleCheck(habit.id)}
+              checked={challenge.completed}
+              disabled={challenge.completed || challenge.loading}
+              onCheckedChange={() => handleCheck(challenge.id)}
               className={cn(
                 "h-7 w-7 cursor-pointer rounded-lg border-2",
                 "data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
