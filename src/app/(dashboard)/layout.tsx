@@ -1,5 +1,5 @@
-import Navbar from "./_components/navbar";
-import Sidebar from "./_components/sidebar";
+import Navbar from "./challenges/_components/navbar";
+import Sidebar from "./challenges/_components/sidebar";
 
 export default function DashboardLayout({
   children,

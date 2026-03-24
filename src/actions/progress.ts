@@ -4,9 +4,8 @@ import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { env } from "@/env";
 
-export const addProgress = async (payload: {
+export const createProgress = async (payload: {
   participationId: string;
-  day: number;
   note?: string;
 }) => {
   const cookieStore = await cookies();
@@ -26,6 +25,7 @@ export const addProgress = async (payload: {
     throw new Error(data.message || "Failed to add progress");
   }
 
+  // Revalidate cache
   revalidateTag("progress", "max");
   revalidateTag("participations", "max");
 
