@@ -42,7 +42,7 @@ export default function SignupForm() {
         }
 
         toast.success("Account created successfully!", { id });
-        router.push("/dashboard");
+        router.push("/challenges");
       } catch (error: any) {
         toast.error(error.message || "Something went wrong", { id });
       } finally {

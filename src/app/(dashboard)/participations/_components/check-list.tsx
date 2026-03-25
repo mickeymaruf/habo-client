@@ -65,7 +65,6 @@ export default function CheckList({
     <div>
       <div className="mb-5 flex items-center justify-between">
         <h3 className="text-xl font-semibold">Today's checklist</h3>
-        <button className="text-sm">View Details</button>
       </div>
       <div className="space-y-6 rounded-3xl bg-white p-4">
         {state.map((challenge) => (

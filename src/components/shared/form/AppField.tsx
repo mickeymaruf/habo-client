@@ -24,6 +24,7 @@ type AppFieldProps = {
   prepend?: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  onChangeOverride?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function AppField({
@@ -35,6 +36,7 @@ export default function AppField({
   prepend,
   className,
   disabled = false,
+  onChangeOverride,
 }: AppFieldProps) {
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const firstError =
@@ -68,7 +70,10 @@ export default function AppField({
           type={type}
           value={field.state.value}
           onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
+          // If override exists, use it. Else, use default string handler.
+          onChange={
+            onChangeOverride || ((e) => field.handleChange(e.target.value))
+          }
           aria-invalid={isInvalid}
           placeholder={placeholder}
           disabled={disabled}

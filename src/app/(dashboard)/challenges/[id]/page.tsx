@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import { challengeService } from "@/services/challenge.service";
 import { Challenge } from "@/types/challenge.type";
-import { Calendar, Users, Lock, ArrowLeft } from "lucide-react";
+import { Calendar, Lock, ArrowLeft } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { JoinChallengeButton } from "./_components/join-challenge-button";
-import { authClient } from "@/lib/auth-client";
 import { authService } from "@/services/auth.service";
+import ChallengeAction from "../../../../components/challenge/challenge-action";
 
 export default async function ChallengePage({
   params,
@@ -115,9 +114,12 @@ export default async function ChallengePage({
             <p>⚡ Seeing others progress keeps me going.</p>
           </div>
         </div>
-        {/*  */}
-        Show my progress
       </div>
+
+      {/* Owner Actions */}
+      {session.user.id === challenge.creatorId && (
+        <ChallengeAction challengeId={challenge.id} />
+      )}
     </div>
   );
 }

@@ -7,11 +7,14 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between border-b border-gray-100 bg-white px-8 py-4">
       <div className="flex w-1/3 items-center gap-4">
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+        <div className="relative w-full max-w-sm text-black">
+          <Search
+            size={22}
+            className="absolute top-1/2 left-0 -translate-y-1/2"
+          />
           <Input
             placeholder="Search Activities"
-            className="border-none bg-gray-50/50 pl-10 focus-visible:ring-1"
+            className="border-0 bg-white pl-10 outline-none placeholder:text-black focus:border-0 focus-visible:ring-1"
           />
         </div>
       </div>

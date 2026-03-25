@@ -7,6 +7,9 @@ import Link from "next/link";
 import ActivityGraph from "./_components/activity-graph";
 import { participationService } from "@/services/participation.service";
 import ActivityCalendar from "./_components/activity-calendar";
+import CheckList from "../_components/check-list";
+import ChallengeAction from "../../../../components/challenge/challenge-action";
+import { authService } from "@/services/auth.service";
 
 export default async function ChallengePage({
   params,
@@ -16,6 +19,7 @@ export default async function ChallengePage({
   const { id } = await params;
   const { data: participation } =
     await participationService.getSingleParticipation<any>(id);
+  const { session } = await authService.getSession();
 
   if (!participation) return notFound();
 
@@ -27,6 +31,10 @@ export default async function ChallengePage({
           <ArrowLeft className="h-5 w-5" /> Back
         </button>
       </Link>
+
+      <div className="my-8 space-y-3 rounded-4xl px-8">
+        <CheckList participations={[participation]} />
+      </div>
 
       <div className="rounded-4xl bg-white px-6 py-8">
         {/* Header */}
@@ -53,8 +61,11 @@ export default async function ChallengePage({
             </div>
           )}
         </div>
-        {/* Join Button */}
-        <p className="my-10 text-amber-500">Show joined at</p>
+
+        <p className="my-10 text-amber-700">
+          Joined at {new Date(participation.joinedAt).toLocaleDateString()}
+        </p>
+
         {/* Participants */}
         {/* <div className="mb-6">
           <h3 className="mb-3 font-bold text-black">People doing this</h3>
@@ -98,15 +109,6 @@ export default async function ChallengePage({
             60% completed today
           </p>
         </div>
-        {/* Reviews */}
-        <div className="mb-6">
-          <h3 className="mb-2 font-bold text-black">Reviews</h3>
-          <div className="space-y-2 font-medium text-black/70">
-            <p>🔥 This challenge actually helped me stay consistent.</p>
-            <p>💪 Tough but rewarding.</p>
-            <p>⚡ Seeing others progress keeps me going.</p>
-          </div>
-        </div>
 
         {/* My progress */}
         <div className="my-10 h-px w-full bg-black/10" />
@@ -123,6 +125,11 @@ export default async function ChallengePage({
           durationDays={participation.challenge.durationDays}
         />
       </div>
+
+      {/* Owner Actions */}
+      {session.user.id === participation.challenge.creatorId && (
+        <ChallengeAction challengeId={participation.challenge.id} />
+      )}
     </div>
   );
 }

@@ -35,7 +35,7 @@ export default function LoginForm() {
         }
 
         toast.success("Logged in successfully", { id });
-        router.push("/dashboard");
+        router.push("/challenges");
       } catch (error: any) {
         toast.error(error.message || "An unexpected error occurred", { id });
       } finally {
