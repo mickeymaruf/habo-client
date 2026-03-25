@@ -1,31 +1,53 @@
 import { notFound } from "next/navigation";
-import { challengeService } from "@/services/challenge.service";
-import { Challenge } from "@/types/challenge.type";
-import { Calendar, Lock, ArrowLeft } from "lucide-react";
+import { Calendar, Lock, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import ActivityGraph from "./_components/activity-graph";
 import { participationService } from "@/services/participation.service";
-import ActivityCalendar from "./_components/activity-calendar";
 import CheckList from "../_components/check-list";
 import ChallengeAction from "../../../../components/challenge/challenge-action";
 import { authService } from "@/services/auth.service";
 import { Button } from "@/components/ui/button";
+import { SuccessBanner } from "@/components/payment/success-banner";
 
 export default async function ChallengePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { id } = await params;
+  const sParams = await searchParams;
+  const isSuccess = sParams.success === "true";
+
   const { data: participation } =
     await participationService.getSingleParticipation<any>(id);
   const session = await authService.getSession();
+
+  // Handle the "Race Condition" (Paid but DB not updated yet)
+  if (!participation && isSuccess) {
+    return (
+      <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center py-20 text-center">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#A3E635] border-t-transparent" />
+        <h2 className="mt-6 text-2xl font-bold">Verifying your payment...</h2>
+        <p className="text-black/60">
+          We're just finalizing your access. This page will refresh
+          automatically.
+        </p>
+        <meta httpEquiv="refresh" content="3" />{" "}
+        {/* Auto-refresh every 3 seconds */}
+      </div>
+    );
+  }
 
   if (!participation) return notFound();
 
   return (
     <div className="mx-auto w-full max-w-3xl">
+      {/* PLACE THE SUCCESS MESSAGE HERE */}
+      {isSuccess && <SuccessBanner />}
+
       <div className="mb-4 flex items-center justify-between">
         {/* Back Button */}
         <Button
