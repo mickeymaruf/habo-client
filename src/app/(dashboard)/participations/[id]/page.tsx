@@ -10,6 +10,7 @@ import ActivityCalendar from "./_components/activity-calendar";
 import CheckList from "../_components/check-list";
 import ChallengeAction from "../../../../components/challenge/challenge-action";
 import { authService } from "@/services/auth.service";
+import { Button } from "@/components/ui/button";
 
 export default async function ChallengePage({
   params,
@@ -19,18 +20,30 @@ export default async function ChallengePage({
   const { id } = await params;
   const { data: participation } =
     await participationService.getSingleParticipation<any>(id);
-  const { session } = await authService.getSession();
+  const session = await authService.getSession();
 
   if (!participation) return notFound();
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      {/* Back Button */}
-      <Link href="/participations">
-        <button className="mb-6 flex cursor-pointer items-center gap-2 font-bold text-black duration-200 hover:-translate-x-2">
-          <ArrowLeft className="h-5 w-5" /> Back
-        </button>
-      </Link>
+      <div className="mb-4 flex items-center justify-between">
+        {/* Back Button */}
+        <Button
+          size="icon"
+          asChild
+          className="flex cursor-pointer items-center gap-2 bg-transparent font-bold text-black duration-200 hover:-translate-x-2 hover:bg-blue-100"
+        >
+          <Link href="/challenges">
+            <ArrowLeft className="h-5 w-5" /> Back
+          </Link>
+        </Button>
+
+        {/* Actions Dropdown */}
+        <ChallengeAction
+          user={session.user}
+          challenge={participation.challenge}
+        />
+      </div>
 
       <div className="my-8 space-y-3 rounded-4xl px-8">
         <CheckList participations={[participation]} />
@@ -125,11 +138,6 @@ export default async function ChallengePage({
           durationDays={participation.challenge.durationDays}
         />
       </div>
-
-      {/* Owner Actions */}
-      {session.user.id === participation.challenge.creatorId && (
-        <ChallengeAction challengeId={participation.challenge.id} />
-      )}
     </div>
   );
 }

@@ -1,8 +1,11 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import CreateChallengeForm from "./_components/create-challenge-form";
+import { authService } from "@/services/auth.service";
 
-export default function CreateChallengePage() {
+export default async function CreateChallengePage() {
+  const session = await authService.getSession();
+
   return (
     <div className="mx-auto w-full max-w-3xl">
       {/* Back Button */}
@@ -20,7 +23,7 @@ export default function CreateChallengePage() {
           </p>
         </div>
 
-        <CreateChallengeForm />
+        <CreateChallengeForm role={session.user.role} />
       </div>
     </div>
   );

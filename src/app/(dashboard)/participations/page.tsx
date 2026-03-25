@@ -22,11 +22,19 @@ export default async function MyChallengesPage() {
           Here are the challenges you're participating in.
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-        {participations.map((c) => (
-          <ChallengeCard key={c.id} challenge={c.challenge} />
-        ))}
-      </div>
+      {participations.length > 0 ? (
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {participations.map((c) => (
+            <ChallengeCard key={c.id} challenge={c.challenge} />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-3xl border-2 border-dashed border-gray-100 py-20 text-center">
+          <p className="text-lg text-gray-400">
+            You haven't joined any challenges yet.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

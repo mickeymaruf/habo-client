@@ -58,15 +58,6 @@ export default function Sidebar() {
           </div>
         ))}
       </nav>
-
-      {/* Logout */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="mt-auto text-gray-400 hover:text-red-500"
-      >
-        <LogOut className="h-5 w-5" />
-      </Button>
     </aside>
   );
 }

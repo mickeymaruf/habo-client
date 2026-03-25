@@ -1,9 +1,32 @@
-import { Search, Bell, Plus } from "lucide-react";
+"use client";
+
+import {
+  Search,
+  Bell,
+  LogOut,
+  Settings,
+  ShieldCheck,
+  User as UserIcon,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { User } from "@/types/auth.types";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ user }: { user: User }) {
+  const router = useRouter();
+
   return (
     <nav className="flex items-center justify-between border-b border-gray-100 bg-white px-8 py-4">
       <div className="flex w-1/3 items-center gap-4">
@@ -14,7 +37,7 @@ export default function Navbar() {
           />
           <Input
             placeholder="Search Activities"
-            className="border-0 bg-white pl-10 outline-none placeholder:text-black focus:border-0 focus-visible:ring-1"
+            className="border-0 bg-white pl-10 shadow-none ring-0 outline-none placeholder:text-black focus:border-0 focus:ring-0 focus-visible:ring-0"
           />
         </div>
       </div>
@@ -25,10 +48,70 @@ export default function Navbar() {
           <span className="absolute top-2 right-2 h-2 w-2 rounded-full border-2 border-white bg-red-500" />
         </Button>
         <div className="flex items-center gap-3">
-          <Avatar className="h-9 w-9 border-2 border-orange-100">
-            <AvatarImage src="/profile-placeholder.png" />
-            <AvatarFallback>HB</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-10 w-10 rounded-full outline-none"
+              >
+                <Avatar key={user.id} className="h-10 w-10 shadow-sm">
+                  {user?.image ? (
+                    <AvatarImage src={user.image} />
+                  ) : (
+                    <AvatarFallback
+                      className="flex items-center justify-center font-bold text-white"
+                      style={{
+                        backgroundColor: `hsl(${
+                          ((user?.name?.charCodeAt(0) || 0) * 37) % 360
+                        }, 70%, 50%)`,
+                      }}
+                    >
+                      {user?.name ? user.name[0].toUpperCase() : "U"}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm leading-none font-semibold text-black">
+                    {user?.name}
+                  </p>
+                  <p className="text-xs leading-none text-black/80">
+                    {user?.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="cursor-pointer">
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <ShieldCheck className="mr-2 h-4 w-4" />
+                  <span>Change Password</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  authClient.signOut();
+                  router.push("/login");
+                }}
+                className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-600"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </nav>

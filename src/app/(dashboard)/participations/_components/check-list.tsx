@@ -67,45 +67,60 @@ export default function CheckList({
         <h3 className="text-xl font-semibold">Today's checklist</h3>
       </div>
       <div className="space-y-6 rounded-3xl bg-white p-4">
-        {state.map((challenge) => (
-          <div key={challenge.id} className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {/* Emoji Container */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-2xl">
-                {challenge.emoji || "🏆"}
-              </div>
+        {state.length > 0 ? (
+          state.map((challenge) => (
+            <div
+              key={challenge.id}
+              className="flex items-center justify-between"
+            >
+              <div className="flex items-center gap-4">
+                {/* Emoji Container */}
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-2xl">
+                  {challenge.emoji || "🏆"}
+                </div>
 
-              {/* Task Info */}
-              <div className="flex flex-1 flex-col gap-1">
-                <h3
-                  className={cn(
-                    "text-lg transition-all",
-                    challenge.completed ? "line-through" : "",
-                  )}
-                >
-                  {challenge.title}
-                </h3>
+                {/* Task Info */}
+                <div className="flex flex-1 flex-col gap-1">
+                  <h3
+                    className={cn(
+                      "text-lg transition-all",
+                      challenge.completed ? "line-through" : "",
+                    )}
+                  >
+                    {challenge.title}
+                  </h3>
 
-                {/* Progress indicator */}
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <span>
-                    {challenge.currentDay}/{challenge.totalDays} days
-                  </span>
+                  {/* Progress indicator */}
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <span>
+                      {challenge.currentDay}/{challenge.totalDays} days
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Checkbox
-              checked={challenge.completed}
-              disabled={challenge.completed || challenge.loading}
-              onCheckedChange={() => handleCheck(challenge.id)}
-              className={cn(
-                "h-7 w-7 cursor-pointer rounded-lg border-2",
-                "data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
-              )}
-            />
+              <Checkbox
+                checked={challenge.completed}
+                disabled={challenge.completed || challenge.loading}
+                onCheckedChange={() => handleCheck(challenge.id)}
+                className={cn(
+                  "h-7 w-7 cursor-pointer rounded-lg border-2",
+                  "data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
+                )}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="mb-3 text-4xl">🎯</div>
+            <p className="font-medium text-gray-900">
+              No active challenges today
+            </p>
+            <p className="text-sm text-gray-500">
+              Join a new challenge to see it in your checklist!
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

@@ -1,39 +1,13 @@
-import React from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Apple,
-  ArrowRight,
-  Check,
-  CheckCircle2,
-  ChevronRight,
-} from "lucide-react";
+import { CheckCircle2, ChevronRight } from "lucide-react";
 import Clouds from "./Clouds";
 import { FaCheck } from "react-icons/fa";
 import FAQSection from "@/components/home/faq-section";
 import Link from "next/link";
-import { Figtree } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const figtree = Figtree({
-  variable: "--font-figtree",
-  subsets: ["latin"],
-});
 
 export default function Home() {
   return (
-    <div
-      className={cn(
-        "font-roboto min-h-screen bg-white font-sans text-slate-900",
-        figtree.className,
-      )}
-    >
+    <div className="#font-roboto min-h-screen bg-white font-sans text-slate-900">
       <div className="bg-[url('/Gemini_Generated_Image_m865k8m865k8m865.png')] bg-cover bg-center bg-no-repeat">
         {/* --- Navigation --- */}
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">

@@ -20,7 +20,7 @@ import {
   createChallengeZodSchema,
 } from "@/zod/challenge.validation";
 
-export default function CreateChallengeForm() {
+export default function CreateChallengeForm({ role }: { role: string }) {
   const router = useRouter();
 
   const form = useForm({
@@ -114,46 +114,51 @@ export default function CreateChallengeForm() {
         </form.Field>
       </div>
 
-      <form.Field name="isPremium">
-        {(field) => (
-          <div className="flex items-center gap-3 p-2">
-            <input
-              type="checkbox"
-              id="isPremium"
-              checked={field.state.value}
-              onChange={(e) => field.handleChange(e.target.checked)}
-              className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <label
-              htmlFor="isPremium"
-              className="flex items-center gap-2 text-sm font-semibold text-gray-700"
-            >
-              <Sparkles className="h-4 w-4 text-blue-500" /> Premium Challenge
-            </label>
-          </div>
-        )}
-      </form.Field>
-
-      <form.Subscribe selector={(state) => [state.values.isPremium]}>
-        {([isPremium]) =>
-          isPremium ? (
-            <form.Field name="price">
-              {(field) => (
-                <AppField
-                  field={field}
-                  label="Price"
-                  type="number"
-                  placeholder="0.00"
-                  prepend={<DollarSign className="h-5 w-5 text-gray-400" />}
-                  onChangeOverride={(e) =>
-                    field.handleChange(Number(e.target.value))
-                  }
+      {role === "ADMIN" && (
+        <>
+          <form.Field name="isPremium">
+            {(field) => (
+              <div className="flex items-center gap-3 p-2">
+                <input
+                  type="checkbox"
+                  id="isPremium"
+                  checked={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.checked)}
+                  className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-              )}
-            </form.Field>
-          ) : null
-        }
-      </form.Subscribe>
+                <label
+                  htmlFor="isPremium"
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
+                >
+                  <Sparkles className="h-4 w-4 text-blue-500" /> Premium
+                  Challenge
+                </label>
+              </div>
+            )}
+          </form.Field>
+
+          <form.Subscribe selector={(state) => [state.values.isPremium]}>
+            {([isPremium]) =>
+              isPremium ? (
+                <form.Field name="price">
+                  {(field) => (
+                    <AppField
+                      field={field}
+                      label="Price"
+                      type="number"
+                      placeholder="0.00"
+                      prepend={<DollarSign className="h-5 w-5 text-gray-400" />}
+                      onChangeOverride={(e) =>
+                        field.handleChange(Number(e.target.value))
+                      }
+                    />
+                  )}
+                </form.Field>
+              ) : null
+            }
+          </form.Subscribe>
+        </>
+      )}
 
       <form.Subscribe
         selector={(state) => [state.canSubmit, state.isSubmitting] as const}

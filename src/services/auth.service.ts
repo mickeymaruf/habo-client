@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import { env } from "@/env";
+import { AuthSessionResponse } from "@/types/auth.types";
 
 export const authService = {
-  getSession: async () => {
+  getSession: async (): Promise<AuthSessionResponse> => {
     const cookieStore = await cookies();
 
     const res = await fetch(`${env.AUTH_URL}/get-session`, {
@@ -20,6 +21,6 @@ export const authService = {
       );
     }
 
-    return { session: data };
+    return data;
   },
 };

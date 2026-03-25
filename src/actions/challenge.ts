@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { env } from "@/env";
+import { UpdateChallengePayload } from "@/zod/challenge.validation";
 
 export const createChallenge = async (payload: any) => {
   const cookieStore = await cookies();
@@ -27,7 +28,10 @@ export const createChallenge = async (payload: any) => {
   return data;
 };
 
-export const updateChallenge = async (id: string, payload: any) => {
+export const updateChallenge = async (
+  id: string,
+  payload: UpdateChallengePayload,
+) => {
   const cookieStore = await cookies();
 
   const res = await fetch(`${env.API_URL}/challenges/${id}`, {
