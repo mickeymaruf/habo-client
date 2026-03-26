@@ -1,0 +1,14 @@
+{/* Brand Section */}
+<div className="mb-14 w-full px-4">
+<div className="group relative cursor-default">
+    {/* The Main "Sticker" */}
+    <div className="relative z-10 -rotate-3 border-4 border-black bg-[#A3E635] px-1 py-2 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:rotate-0">
+    <h1 className="text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
+        HABO
+    </h1>
+    </div>
+
+    {/* The Shadow Layer (Decorative) */}
+    <div className="absolute inset-0 translate-x-1 translate-y-1 -rotate-3 rounded-sm bg-black/5" />
+</div>
+</div>

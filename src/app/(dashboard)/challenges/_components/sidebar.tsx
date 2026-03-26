@@ -22,41 +22,53 @@ const navItems = [
   { icon: Zap, label: "Stats", href: "#" },
   { icon: Trophy, label: "Goals", href: "#" },
 ];
+
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-screen w-24 shrink-0 flex-col items-center border-r border-gray-100 bg-white py-8">
-      {/* Brand Section */}
-      <div className="mb-14 text-center">
-        <h1 className="text-xl leading-tight font-bold text-slate-900">Habo</h1>
-        <p className="text-[10px] font-medium text-slate-400">Orely.co</p>
+    <aside className="flex h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10">
+      {/* Brand Section - High Contrast */}
+      <div className="mb-12 text-center">
+        <h1 className="text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
+          HABO
+        </h1>
+        <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
       </div>
 
       {/* Nav Links */}
-      <nav className="flex flex-1 flex-col gap-4">
-        {navItems.map((item) => (
-          <div key={item.label} className="group relative">
-            {pathname.startsWith(item.href) && (
-              <div className="absolute top-1/2 -left-4 h-6 w-1 -translate-y-1/2 rounded-r-full bg-indigo-600" />
-            )}
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-12 w-12 rounded-xl transition-all",
-                pathname.startsWith(item.href)
-                  ? "bg-indigo-50 text-indigo-600"
-                  : "text-gray-400 hover:bg-indigo-50 hover:text-indigo-600",
-              )}
-            >
-              <Link href={item.href}>
-                <item.icon className="h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        ))}
+      <nav className="flex flex-1 flex-col gap-6">
+        {navItems.map((item) => {
+          const isActive = pathname.startsWith(item.href);
+          return (
+            <div key={item.label} className="group relative">
+              <Button
+                asChild
+                variant="ghost"
+                className={cn(
+                  "h-14 w-14 rounded-2xl border-4 transition-all duration-200 active:scale-90",
+                  isActive
+                    ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                    : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
+                )}
+              >
+                <Link href={item.href}>
+                  <item.icon
+                    className={cn(
+                      "h-6 w-6",
+                      isActive ? "stroke-[3px]" : "stroke-[2px]",
+                    )}
+                  />
+                </Link>
+              </Button>
+
+              {/* Tooltip on hover (Optional) */}
+              <span className="absolute top-1/2 left-20 z-50 -translate-y-1/2 scale-0 rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase transition-all group-hover:scale-100">
+                {item.label}
+              </span>
+            </div>
+          );
+        })}
       </nav>
     </aside>
   );

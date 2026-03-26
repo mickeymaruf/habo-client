@@ -12,7 +12,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { User } from "@/types/auth.types";
 import { Challenge } from "@/types/challenge.type";
-import { Trash2, Star, Ban, MoreVertical, LogOut } from "lucide-react";
+import {
+  Trash2,
+  Star,
+  Ban,
+  MoreVertical,
+  LogOut,
+  ShieldAlert,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -51,75 +58,63 @@ export default function ChallengeAction({
     }
   };
 
-  const handleLeave = async () => {
-    if (
-      confirm("Are you sure you want to leave? Your progress will be hidden.")
-    ) {
-      toast.success("You left the challenge");
-      router.push("/challenges");
-    }
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
+        {/* TRIGGER: Styled as a matching sticker */}
         <Button
           variant="ghost"
           size="icon"
-          className="h-10 w-10 rounded-full hover:bg-slate-100"
+          className="group relative z-20 h-12 w-12 rotate-2 rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:rotate-0 hover:bg-white hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:scale-95"
         >
-          <MoreVertical className="h-5 w-5 text-slate-600" />
+          <MoreVertical className="h-6 w-6 stroke-[3px] text-black" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
         align="end"
-        className="w-56 rounded-2xl p-2 shadow-xl"
+        className="w-64 rounded-[24px] border-4 border-black bg-white p-3 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
       >
         {/* ADMIN SECTION */}
         {isAdmin && (
           <>
-            <DropdownMenuLabel className="px-2 py-1.5 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
-              Admin Actions
+            <DropdownMenuLabel className="flex items-center gap-2 px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
+              <ShieldAlert className="h-3 w-3" /> Admin Ops
             </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={handleToggleFeatured}
-              className="flex cursor-pointer items-center gap-2 rounded-lg py-2.5"
+              className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black italic transition-colors focus:bg-[#A3E635] focus:text-black"
             >
               <Star
-                className={`h-4 w-4 ${challenge.featured ? "fill-amber-500 text-amber-500" : ""}`}
+                className={`h-4 w-4 stroke-[3px] ${challenge.featured ? "fill-black" : ""}`}
               />
-              {challenge.featured ? "Remove Featured" : "Make Featured"}
+              {challenge.featured ? "UNFEATURE" : "FEATURE THIS"}
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-lg py-2.5 text-orange-600">
-              <Ban className="h-4 w-4" />
-              Ban Challenge
+            <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-orange-600 italic focus:bg-orange-100">
+              <Ban className="h-4 w-4 stroke-[3px]" />
+              BAN CHALLENGE
             </DropdownMenuItem>
-            <DropdownMenuSeparator className="my-1" />
+            <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
           </>
         )}
 
-        {/* GENERAL SECTION */}
-        <DropdownMenuLabel className="px-2 py-1.5 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
-          General
+        <DropdownMenuLabel className="px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
+          Options
         </DropdownMenuLabel>
 
-        <DropdownMenuItem
-          onClick={handleLeave}
-          className="flex cursor-pointer items-center gap-2 rounded-lg py-2.5 font-medium text-slate-700"
-        >
-          <LogOut className="h-4 w-4" />
-          Leave Challenge
+        <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100">
+          <LogOut className="h-4 w-4 stroke-[3px]" />
+          LEAVE SESSION
         </DropdownMenuItem>
 
         {isCreator && (
-          <div className="mt-1 px-1 pb-1">
+          <div className="mt-2">
             <DropdownMenuItem
               onClick={handleDelete}
-              className="flex cursor-pointer items-center gap-2 rounded-lg bg-red-600 px-3 py-2.5 font-bold text-white focus:bg-red-700 focus:text-white"
+              className="flex cursor-pointer items-center gap-2 rounded-xl bg-black px-3 py-3 font-black text-[#A3E635] italic focus:bg-red-600 focus:text-white"
             >
-              <Trash2 className="h-4 w-4" />
-              Delete Challenge
+              <Trash2 className="h-4 w-4 stroke-[3px]" />
+              TERMINATE
             </DropdownMenuItem>
           </div>
         )}

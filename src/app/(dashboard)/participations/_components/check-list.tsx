@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { createProgress } from "@/actions/progress";
 import { Participation } from "@/types/participation.types";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function CheckList({
   participations,
@@ -62,62 +63,81 @@ export default function CheckList({
   };
 
   return (
-    <div>
-      <div className="mb-5 flex items-center justify-between">
-        <h3 className="text-xl font-semibold">Today's checklist</h3>
+    <div className="w-full max-w-3xl">
+      <div className="mb-2 flex items-baseline justify-between px-1">
+        <h3 className="text-sm font-black tracking-[0.3em] text-black uppercase">
+          Daily Tasks
+        </h3>
+        <p className="text-[10px] font-bold text-black/30 uppercase">
+          {state.filter((s) => s.completed).length} of {state.length} complete
+        </p>
       </div>
-      <div className="space-y-6 rounded-3xl bg-white p-4">
+
+      <div className="border-t-2 border-black">
         {state.length > 0 ? (
           state.map((challenge) => (
             <div
               key={challenge.id}
-              className="flex items-center justify-between"
+              className={cn(
+                "group flex items-center justify-between border-b border-black/10 py-6 transition-colors",
+                challenge.completed ? "bg-zinc-50/50" : "hover:bg-[#A3E635]/5",
+              )}
             >
-              <div className="flex items-center gap-4">
-                {/* Emoji Container */}
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-2xl">
-                  {challenge.emoji || "🏆"}
+              <div className="flex items-center gap-8 px-2">
+                {/* Minimalist Day Index */}
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold text-black/20 uppercase">
+                    Day
+                  </span>
+                  <span className="text-2xl leading-none font-black text-black tabular-nums">
+                    {challenge.currentDay.toString().padStart(2, "0")}
+                  </span>
                 </div>
 
-                {/* Task Info */}
-                <div className="flex flex-1 flex-col gap-1">
+                {/* Vertical Divider */}
+                <div className="h-10 w-[2px] bg-black" />
+
+                {/* Title and Badge */}
+                <div className="flex flex-col gap-1">
                   <h3
                     className={cn(
-                      "text-lg transition-all",
-                      challenge.completed ? "line-through" : "",
+                      "text-xl font-black tracking-tight uppercase italic transition-all",
+                      challenge.completed
+                        ? "text-black/20 line-through"
+                        : "text-black",
                     )}
                   >
                     {challenge.title}
                   </h3>
-
-                  {/* Progress indicator */}
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <span>
-                      {challenge.currentDay}/{challenge.totalDays} days
-                    </span>
-                  </div>
+                  <p className="mt-1 w-fit rounded-sm bg-black px-2 py-0.5 text-[10px] font-black tracking-widest text-[#A3E635] uppercase">
+                    {challenge.totalDays} Day Mission
+                  </p>
                 </div>
               </div>
 
-              <Checkbox
-                checked={challenge.completed}
-                disabled={challenge.completed || challenge.loading}
-                onCheckedChange={() => handleCheck(challenge.id)}
-                className={cn(
-                  "h-7 w-7 cursor-pointer rounded-lg border-2",
-                  "data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
+              {/* Square Tactical Checkbox */}
+              <div className="pr-4">
+                {challenge.loading ? (
+                  <Loader2 className="h-6 w-6 animate-spin text-black" />
+                ) : (
+                  <Checkbox
+                    checked={challenge.completed}
+                    disabled={challenge.completed || challenge.loading}
+                    onCheckedChange={() => handleCheck(challenge.id)}
+                    className={cn(
+                      "h-14 w-14 rounded-none border-2 border-black transition-all",
+                      "data-[state=checked]:border-black data-[state=checked]:bg-[#A3E635] data-[state=checked]:text-black",
+                      "hover:border-black hover:bg-[#A3E635]",
+                    )}
+                  />
                 )}
-              />
+              </div>
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center justify-center py-10 text-center">
-            <div className="mb-3 text-4xl">🎯</div>
-            <p className="font-medium text-gray-900">
-              No active challenges today
-            </p>
-            <p className="text-sm text-gray-500">
-              Join a new challenge to see it in your checklist!
+          <div className="py-20 text-center">
+            <p className="text-xs font-bold tracking-[0.2em] text-black/20 uppercase">
+              Checklist Empty
             </p>
           </div>
         )}

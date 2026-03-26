@@ -1,14 +1,21 @@
 import { notFound } from "next/navigation";
-import { Calendar, Lock, ArrowLeft, CheckCircle2 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Calendar,
+  Lock,
+  ArrowLeft,
+  Zap,
+  Users2,
+  Sparkles,
+  ShieldCheck,
+} from "lucide-react";
 import Link from "next/link";
 import ActivityGraph from "./_components/activity-graph";
 import { participationService } from "@/services/participation.service";
 import CheckList from "../_components/check-list";
-import ChallengeAction from "../../../../components/challenge/challenge-action";
+import ChallengeAction from "@/components/challenge/challenge-action";
 import { authService } from "@/services/auth.service";
-import { Button } from "@/components/ui/button";
 import { SuccessBanner } from "@/components/payment/success-banner";
+import { cn } from "@/lib/utils";
 
 export default async function ChallengePage({
   params,
@@ -28,15 +35,15 @@ export default async function ChallengePage({
   // Handle the "Race Condition" (Paid but DB not updated yet)
   if (!participation && isSuccess) {
     return (
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-center py-20 text-center">
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center py-20 text-center">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-[#A3E635] border-t-transparent" />
-        <h2 className="mt-6 text-2xl font-bold">Verifying your payment...</h2>
-        <p className="text-black/60">
-          We're just finalizing your access. This page will refresh
-          automatically.
+        <h2 className="mt-6 text-3xl font-black tracking-tighter uppercase italic">
+          Verifying Mission Access...
+        </h2>
+        <p className="mt-2 text-xs font-bold tracking-widest text-black/60 uppercase">
+          Finalizing encrypted payment data. Stand by.
         </p>
-        <meta httpEquiv="refresh" content="3" />{" "}
-        {/* Auto-refresh every 3 seconds */}
+        <meta httpEquiv="refresh" content="3" />
       </div>
     );
   }
@@ -44,121 +51,124 @@ export default async function ChallengePage({
   if (!participation) return notFound();
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
-      {/* PLACE THE SUCCESS MESSAGE HERE */}
+    <div className="mx-auto w-full max-w-4xl space-y-6 pb-20">
       {isSuccess && <SuccessBanner />}
 
-      <div className="mb-4 flex items-center justify-between">
-        {/* Back Button */}
-        <Button
-          size="icon"
-          asChild
-          className="flex cursor-pointer items-center gap-2 bg-transparent font-bold text-black duration-200 hover:-translate-x-2 hover:bg-blue-100"
-        >
-          <Link href="/challenges">
-            <ArrowLeft className="h-5 w-5" /> Back
-          </Link>
-        </Button>
-
-        {/* Actions Dropdown */}
-        <ChallengeAction
-          user={session.user}
-          challenge={participation.challenge}
-        />
-      </div>
-
-      <div className="my-8 space-y-3 rounded-4xl px-8">
-        <CheckList participations={[participation]} />
-      </div>
-
-      <div className="rounded-4xl bg-white px-6 py-8">
-        {/* Header */}
-        <div className="mb-6 space-y-3">
-          <h1 className="text-4xl font-bold tracking-tight text-black">
-            {participation.challenge.title}
-          </h1>
-          <p className="max-w-[95%] leading-relaxed font-medium text-black/70">
-            {participation.challenge.description}
-          </p>
-        </div>
-        {/* Info Pills */}
-        <div className="mb-6 flex flex-wrap gap-3">
-          <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-            <Calendar className="h-4 w-4" />{" "}
-            {participation.challenge.durationDays} Days
-          </div>
-          <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-            {participation.challenge.category}
-          </div>
-          {participation.challenge.isPremium && (
-            <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-              <Lock className="h-4 w-4" /> Premium
-            </div>
+      {/* Main Participation Container */}
+      <div className="relative overflow-hidden rounded-[50px] border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+        {/* --- TOP BANNER ACCENT --- */}
+        <div
+          className={cn(
+            "relative flex h-28 w-full items-center justify-between overflow-hidden border-b-4 border-black px-8",
+            participation.challenge.featured ? "bg-yellow-400" : "bg-[#A3E635]",
           )}
+        >
+          {/* Back Button Sticker */}
+          <Link
+            href="/participations"
+            className="group relative z-20 -rotate-2 transition-transform hover:rotate-0 active:scale-95"
+          >
+            <div className="flex items-center gap-2 rounded-xl border-4 border-black bg-white px-5 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <ArrowLeft className="h-5 w-5 stroke-[4px] text-black" />
+              <span className="text-sm font-black tracking-tighter text-black uppercase italic">
+                Dashboard
+              </span>
+            </div>
+          </Link>
+
+          {/* Actions Dropdown */}
+          <ChallengeAction
+            user={session.user}
+            challenge={participation.challenge}
+          />
+
+          {/* Background Texture Pattern */}
+          <div className="absolute inset-0 z-0 [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px] opacity-10" />
         </div>
 
-        <p className="my-10 text-amber-700">
-          Joined at {new Date(participation.joinedAt).toLocaleDateString()}
-        </p>
-
-        {/* Participants */}
-        {/* <div className="mb-6">
-          <h3 className="mb-3 font-bold text-black">People doing this</h3>
-          <div className="flex -space-x-3">
-            {challenge.participations.map((p) => (
-              <Avatar key={p.userId} className="h-10 w-10 shadow-sm">
-                {p.user?.image ? (
-                  <AvatarImage src={p.user.image} />
-                ) : (
-                  <AvatarFallback
-                    className="flex items-center justify-center font-bold text-white"
-                    style={{
-                      backgroundColor: `hsl(${
-                        ((p.user?.name?.charCodeAt(0) || 0) * 37) % 360
-                      }, 70%, 50%)`,
-                    }}
-                  >
-                    {p.user?.name ? p.user.name[0].toUpperCase() : "U"}
-                  </AvatarFallback>
-                )}
-              </Avatar>
-            ))}
-
-            {challenge._count?.participations >
-              challenge.participations.length && (
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white bg-black text-xs font-bold text-white">
-                +
-                {challenge._count.participations -
-                  challenge.participations.length}
+        <div className="relative px-8 pt-10 pb-12">
+          {/* Header Section */}
+          <div className="mb-10 space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="rounded-full bg-black px-4 py-1 text-[10px] font-black tracking-widest text-white uppercase">
+                {participation.challenge.category}
+              </span>
+              <div className="flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1 text-[10px] font-black uppercase">
+                <ShieldCheck className="h-3 w-3 stroke-[3px] text-[#A3E635]" />{" "}
+                Active Mission
               </div>
-            )}
-          </div>
-        </div> */}
-        {/* Progress */}
-        <div className="mb-6">
-          <h3 className="mb-2 font-bold text-black">Community Progress</h3>
-          <div className="h-3 w-full overflow-hidden rounded-full bg-black/10">
-            <div className="h-full w-[60%] rounded-full bg-black" />
-          </div>
-          <p className="mt-1 text-sm font-medium text-black/60">
-            60% completed today
-          </p>
-        </div>
+            </div>
 
-        {/* My progress */}
-        <div className="my-10 h-px w-full bg-black/10" />
+            <h1 className="text-5xl leading-none font-black tracking-tighter text-black uppercase italic md:text-6xl">
+              {participation.challenge.title}
+            </h1>
 
-        <div className="mb-6">
-          <h3 className="text-2xl font-bold text-black">My Progress</h3>
-          <p className="text-black/70">
-            Track your daily progress and stay motivated!
-          </p>
+            <p className="max-w-2xl text-xl leading-relaxed font-medium text-black/70">
+              {participation.challenge.description}
+            </p>
+          </div>
+
+          {/* Task Log (Checklist) Section */}
+          <div className="mb-12">
+            <CheckList participations={[participation]} />
+          </div>
+
+          <div className="space-y-12">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">
+                <Calendar className="h-6 w-6 stroke-[3px] text-black" />
+                <span className="text-2xl font-black tracking-tighter uppercase">
+                  {participation.challenge.durationDays} DAYS
+                </span>
+                <span className="text-xs font-bold text-black/50 uppercase">
+                  Total Duration
+                </span>
+              </div>
+              <div className="flex flex-col gap-1 rounded-3xl border-4 border-black bg-[#A3E635] p-6">
+                <Zap className="h-6 w-6 stroke-[3px] text-black" />
+                <span className="text-2xl font-black tracking-tighter uppercase">
+                  60%
+                </span>
+                <span className="text-xs font-bold text-black/50 uppercase">
+                  Community Avg
+                </span>
+              </div>
+              <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">
+                <Users2 className="h-6 w-6 stroke-[3px] text-black" />
+                <span className="text-2xl font-black tracking-tighter text-amber-700 uppercase italic">
+                  {new Date(participation.joinedAt).toLocaleDateString(
+                    undefined,
+                    { month: "short", day: "numeric" },
+                  )}
+                </span>
+                <span className="text-xs font-bold text-black/50 uppercase">
+                  Deployment Date
+                </span>
+              </div>
+            </div>
+
+            {/* Activity Graph Section */}
+            <div className="space-y-6">
+              <div className="flex flex-col">
+                <h3 className="text-3xl font-black tracking-tighter uppercase italic">
+                  Mission Progress
+                </h3>
+                <p className="mt-1 text-xs font-bold tracking-widest text-black/40 uppercase">
+                  Historical activity and consistency tracking.
+                </p>
+              </div>
+
+              <div className="rounded-[35px] border-4 border-black bg-white p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <ActivityGraph
+                  joinedAt={participation.joinedAt}
+                  progressLogs={participation.progressLogs}
+                  durationDays={participation.challenge.durationDays}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <ActivityGraph
-          joinedAt={participation.joinedAt}
-          progressLogs={participation.progressLogs}
-          durationDays={participation.challenge.durationDays}
-        />
       </div>
     </div>
   );

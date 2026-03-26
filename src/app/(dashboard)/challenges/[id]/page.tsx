@@ -1,14 +1,21 @@
 import { notFound } from "next/navigation";
 import { challengeService } from "@/services/challenge.service";
 import { Challenge } from "@/types/challenge.type";
-import { Calendar, Lock, ArrowLeft, Sparkles, XCircle } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Calendar,
+  Lock,
+  ArrowLeft,
+  Sparkles,
+  Zap,
+  Users2,
+  Star,
+} from "lucide-react";
 import Link from "next/link";
 import { JoinChallengeButton } from "./_components/join-challenge-button";
 import { authService } from "@/services/auth.service";
-import ChallengeAction from "../../../../components/challenge/challenge-action";
-import { Button } from "@/components/ui/button";
+import ChallengeAction from "@/components/challenge/challenge-action";
 import { CanceledBanner } from "@/components/payment/cancel-banner";
+import { cn } from "@/lib/utils";
 
 export default async function ChallengePage({
   params,
@@ -27,168 +34,158 @@ export default async function ChallengePage({
 
   if (!challenge) return notFound();
 
-  // Logic to check if we should show the paywall
   const hasJoined = challenge.participations.some(
     (p) => p.userId === session.user.id,
   );
   const showPaywall = challenge.isPremium && !hasJoined;
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
+    <div className="mx-auto w-full max-w-4xl space-y-6 pb-20">
       {isCanceled && <CanceledBanner />}
 
-      <div className="mb-4 flex items-center justify-between">
-        {/* Back Button */}
-        <Button
-          size="icon"
-          asChild
-          className="flex cursor-pointer items-center gap-2 bg-transparent font-bold text-black duration-200 hover:-translate-x-2 hover:bg-blue-100"
+      {/* Main Content Card */}
+      <div className="relative overflow-hidden rounded-[50px] border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+        {/* --- TOP BANNER ACCENT --- */}
+        <div
+          className={cn(
+            "relative flex h-28 w-full items-center justify-between overflow-hidden border-b-4 border-black px-8",
+            challenge.featured ? "bg-yellow-400" : "bg-[#C3B5FD]",
+          )}
         >
-          <Link href="/challenges">
-            <ArrowLeft className="h-5 w-5" /> Back
-          </Link>
-        </Button>
-
-        {/* Actions Dropdown */}
-        <ChallengeAction user={session.user} challenge={challenge} />
-      </div>
-
-      <div className="relative overflow-hidden rounded-4xl bg-white px-6 py-8">
-        {challenge.featured && (
-          <div className="absolute top-0 right-0 z-20">
-            <div className="translate-x-10 translate-y-4 rotate-45 bg-yellow-400 px-10 py-1 text-[10px] font-black tracking-widest text-black uppercase shadow-sm">
-              Featured
+          {/* LEFT SIDE: Back Button Sticker */}
+          <Link
+            href="/challenges"
+            className="group relative z-20 -rotate-2 transition-transform hover:rotate-0 active:scale-95"
+          >
+            <div className="flex items-center gap-2 rounded-xl border-4 border-black bg-white px-5 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <ArrowLeft className="h-5 w-5 stroke-[4px] text-black" />
+              <span className="text-sm font-black tracking-tighter text-black uppercase italic">
+                Back to Feed
+              </span>
             </div>
-          </div>
-        )}
+          </Link>
 
-        {/* Header - Stay Visible */}
-        <div className="mb-6 space-y-3">
-          <h1 className="text-4xl font-bold tracking-tight text-black">
-            {challenge.title}
-          </h1>
+          {/* RIGHT SIDE: Action Dropdown Sticker */}
+          <ChallengeAction user={session.user} challenge={challenge} />
 
-          <p className="max-w-[95%] leading-relaxed font-medium text-black/70">
-            {challenge.description}
-          </p>
+          {/* Background Texture Pattern */}
+          <div className="absolute inset-0 z-0 [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px] opacity-10" />
         </div>
 
-        {/* EVERYTHING BELOW THIS IS BLURRED IF PREMIUM */}
-        <div className="relative">
-          <div
-            className={
-              showPaywall
-                ? "pointer-events-none opacity-50 blur-sm transition-all select-none"
-                : ""
-            }
-          >
-            {/* Info Pills */}
-            <div className="mb-6 flex flex-wrap gap-3">
-              {challenge.featured && (
-                <div className="flex items-center gap-2 rounded-full bg-amber-400 px-5 py-2.5 text-xs font-black tracking-wider text-amber-950 uppercase shadow-[0_2px_10px_rgba(251,191,36,0.2)]">
-                  <Sparkles className="h-4 w-4 fill-amber-950" />
-                  Featured
-                </div>
-              )}
-              {challenge.isPremium && (
-                <div className="flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-[11px] font-black tracking-wider text-white uppercase shadow-sm">
-                  <Lock className="h-3.5 w-3.5 fill-white/20" />
-                  Premium
-                </div>
-              )}
-              <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
-                <Calendar className="h-4 w-4" /> {challenge.durationDays} Days
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-black/90 px-5 py-2.5 text-sm font-medium text-white">
+        <div className="relative px-8 pt-10 pb-12">
+          {/* Header Section */}
+          <div className="mb-10 space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="rounded-full bg-black px-4 py-1 text-[10px] font-black tracking-widest text-white uppercase">
                 {challenge.category}
-              </div>
+              </span>
+              {challenge.featured && (
+                <div className="flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1 text-[10px] font-black uppercase">
+                  <Sparkles className="h-3 w-3 fill-yellow-400" /> Featured
+                </div>
+              )}
             </div>
 
-            {/* Join Button (Original location, blurred) */}
-            <div className="mb-8">
-              <JoinChallengeButton
-                challengeId={challenge.id}
-                isPremium={challenge.isPremium}
-                initialHasJoined={hasJoined}
-              />
-            </div>
+            <h1 className="text-5xl leading-none font-black tracking-tighter text-black uppercase italic md:text-6xl">
+              {challenge.title}
+            </h1>
 
-            {/* Participants */}
-            <div className="my-10">
-              <h3 className="mb-3 font-bold text-black">People doing this</h3>
-              <div className="flex items-center gap-2">
-                {challenge.participations.map((p) => (
-                  <Avatar
-                    key={p.userId}
-                    className="h-12 w-12 border border-slate-100"
-                  >
-                    {p.user?.image ? (
-                      <AvatarImage src={p.user.image} />
-                    ) : (
-                      <AvatarFallback
-                        className="flex items-center justify-center text-sm font-bold text-white"
-                        style={{
-                          backgroundColor: `hsl(${((p.user?.name?.charCodeAt(0) || 0) * 37) % 360}, 70%, 50%)`,
-                        }}
-                      >
-                        {p.user?.name ? p.user.name[0].toUpperCase() : "U"}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                ))}
-                {challenge._count?.participations >
-                  challenge.participations.length && (
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-[10px] font-bold text-slate-500">
-                    +
-                    {challenge._count.participations -
-                      challenge.participations.length}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Progress */}
-            <div className="mb-6">
-              <h3 className="mb-2 font-bold text-black">Community Progress</h3>
-              <div className="h-3 w-full overflow-hidden rounded-full bg-black/10">
-                <div className="h-full w-[60%] rounded-full bg-black" />
-              </div>
-              <p className="mt-1 text-sm font-medium text-black/60">
-                60% completed today
-              </p>
-            </div>
-
-            {/* Reviews */}
-            <div className="mb-6">
-              <h3 className="mb-2 font-bold text-black">Reviews</h3>
-              <div className="space-y-2 font-medium text-black/70">
-                <p>🔥 This challenge actually helped me stay consistent.</p>
-                <p>💪 Tough but rewarding.</p>
-                <p>⚡ Seeing others progress keeps me going.</p>
-              </div>
-            </div>
+            <p className="max-w-2xl text-xl leading-relaxed font-medium text-black/70">
+              {challenge.description}
+            </p>
           </div>
 
-          {/* THE PAYWALL OVERLAY */}
-          {showPaywall && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/10 pt-10">
-              <div className="w-full max-w-sm rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-50 text-black">
-                  <Lock className="h-6 w-6" />
+          {/* Paywall Blurring Logic */}
+          <div className="relative">
+            <div
+              className={cn(
+                "space-y-12 transition-all duration-500",
+                showPaywall
+                  ? "pointer-events-none opacity-40 blur-md select-none"
+                  : "",
+              )}
+            >
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">
+                  <Calendar className="h-6 w-6 stroke-[3px] text-black" />
+                  <span className="text-2xl font-black">
+                    {challenge.durationDays} DAYS
+                  </span>
+                  <span className="text-xs font-bold text-black/50 uppercase">
+                    Timeline
+                  </span>
                 </div>
-                <h3 className="mb-2 text-xl font-bold">Premium Content</h3>
-                <p className="mb-8 text-sm font-medium text-black/50">
-                  Join this premium challenge to unlock the roadmap, daily
-                  tracking, and community stats.
-                </p>
+                <div className="flex flex-col gap-1 rounded-3xl border-4 border-black bg-[#A3E635] p-6">
+                  <Users2 className="h-6 w-6 stroke-[3px] text-black" />
+                  <span className="text-2xl font-black">
+                    {challenge._count?.participations || 0}
+                  </span>
+                  <span className="text-xs font-bold text-black/50 uppercase">
+                    Participants
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">
+                  <Zap className="h-6 w-6 stroke-[3px] text-black" />
+                  <span className="text-2xl font-black">60%</span>
+                  <span className="text-xs font-bold text-black/50 uppercase">
+                    Avg. Progress
+                  </span>
+                </div>
+              </div>
+
+              {/* Reviews & Social Proof */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-black tracking-tighter uppercase italic">
+                  What they're saying
+                </h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {["🔥 Consistency hack!", "💪 Hard but worth it"].map(
+                    (review, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 rounded-2xl border-2 border-black bg-zinc-50 p-4 font-bold italic"
+                      >
+                        <Star className="h-4 w-4 fill-black" /> "{review}"
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+
+              {/* Join Button Section */}
+              <div className="mx-auto max-w-md">
                 <JoinChallengeButton
                   challengeId={challenge.id}
-                  isPremium={true}
-                  initialHasJoined={false}
+                  isPremium={challenge.isPremium}
+                  initialHasJoined={hasJoined}
                 />
               </div>
             </div>
-          )}
+
+            {/* THE BRUTALIST PAYWALL OVERLAY */}
+            {showPaywall && (
+              <div className="absolute inset-0 z-30 flex items-center justify-center pt-10">
+                <div className="w-full max-w-md rounded-[40px] border-4 border-black bg-white p-10 text-center shadow-[15px_15px_0px_0px_rgba(163,230,53,1)]">
+                  <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-zinc-900 text-[#A3E635]">
+                    <Lock className="h-10 w-10 stroke-[3px]" />
+                  </div>
+                  <h3 className="mb-3 text-3xl font-black tracking-tighter uppercase italic">
+                    Premium Access
+                  </h3>
+                  <p className="mb-8 leading-tight font-bold text-black/60">
+                    This challenge includes private roadmaps, daily tracking
+                    tools, and exclusive community stats.
+                  </p>
+                  <JoinChallengeButton
+                    challengeId={challenge.id}
+                    isPremium={true}
+                    initialHasJoined={false}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   Settings,
   ShieldCheck,
   User as UserIcon,
+  Zap,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -28,91 +29,138 @@ export default function Navbar({ user }: { user: User }) {
   const router = useRouter();
 
   return (
-    <nav className="flex items-center justify-between border-b border-gray-100 bg-white px-8 py-4">
-      <div className="flex w-1/3 items-center gap-4">
-        <div className="relative w-full max-w-sm text-black">
+    <nav className="flex h-24 items-center justify-between border-b-4 border-black bg-white px-10">
+      {/* Search - Command Style */}
+      <div className="flex w-1/3 items-center">
+        <div className="group relative w-full max-w-sm">
           <Search
-            size={22}
-            className="absolute top-1/2 left-0 -translate-y-1/2"
+            size={20}
+            className="absolute top-1/2 left-4 -translate-y-1/2 stroke-[3px] text-black"
           />
           <Input
-            placeholder="Search Activities"
-            className="border-0 bg-white pl-10 shadow-none ring-0 outline-none placeholder:text-black focus:border-0 focus:ring-0 focus-visible:ring-0"
+            placeholder="SEARCH MISSIONS..."
+            className="h-12 border-4 border-black bg-white pl-12 font-black tracking-tight italic ring-0 placeholder:text-zinc-400 focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </div>
       </div>
 
+      {/* Right Side Actions */}
       <div className="flex items-center gap-6">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5 text-gray-500" />
-          <span className="absolute top-2 right-2 h-2 w-2 rounded-full border-2 border-white bg-red-500" />
-        </Button>
-        <div className="flex items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="relative h-10 w-10 rounded-full outline-none"
-              >
-                <Avatar key={user.id} className="h-10 w-10 shadow-sm">
-                  {user?.image ? (
-                    <AvatarImage src={user.image} />
-                  ) : (
-                    <AvatarFallback
-                      className="flex items-center justify-center font-bold text-white"
-                      style={{
-                        backgroundColor: `hsl(${
-                          ((user?.name?.charCodeAt(0) || 0) * 37) % 360
-                        }, 70%, 50%)`,
-                      }}
-                    >
-                      {user?.name ? user.name[0].toUpperCase() : "U"}
-                    </AvatarFallback>
-                  )}
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="group relative h-12 w-12 rounded-xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-[#A3E635] active:translate-y-1 active:shadow-none"
+            >
+              <Bell className="h-6 w-6 stroke-[2.5px] text-black transition-transform group-hover:rotate-12" />
+              {/* The Alert Dot */}
+              <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full border-2 border-black bg-red-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]" />
+            </Button>
+          </DropdownMenuTrigger>
 
-            <DropdownMenuContent className="w-56" align="end" forceMount>
-              <DropdownMenuLabel className="font-normal">
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm leading-none font-semibold text-black">
-                    {user?.name}
-                  </p>
-                  <p className="text-xs leading-none text-black/80">
-                    {user?.email}
-                  </p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="cursor-pointer">
-                  <UserIcon className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <ShieldCheck className="mr-2 h-4 w-4" />
-                  <span>Change Password</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => {
-                  authClient.signOut();
-                  router.push("/login");
-                }}
-                className="cursor-pointer text-red-600 focus:bg-red-50 focus:text-red-600"
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+          <DropdownMenuContent
+            align="end"
+            className="w-64 rounded-[30px] border-4 border-black bg-white p-8 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
+          >
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              {/* Simple Icon */}
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-4 border-black bg-[#A3E635]">
+                <Zap className="h-6 w-6 stroke-[3px] text-black" />
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="text-xl font-black tracking-tighter text-black uppercase italic">
+                  Coming Soon
+                </h3>
+                <p className="text-[10px] leading-tight font-bold tracking-widest text-black/40 uppercase">
+                  We are currently building this feature.
+                </p>
+              </div>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <div className="h-10 w-[2px] bg-black/10" />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="flex h-14 items-center gap-3 rounded-2xl border-4 border-black p-2 shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] transition-all hover:bg-zinc-50"
+            >
+              <Avatar className="h-8 w-8 border-2 border-black">
+                {user?.image ? (
+                  <AvatarImage src={user.image} />
+                ) : (
+                  <AvatarFallback className="bg-black text-xs font-black text-white">
+                    {user?.name?.[0].toUpperCase()}
+                  </AvatarFallback>
+                )}
+              </Avatar>
+              <div className="hidden text-left md:block">
+                <p className="text-xs leading-none font-black text-black uppercase">
+                  {user?.name}
+                </p>
+                <p className="text-[10px] font-bold text-black/40">
+                  LVL 12 AGENT
+                </p>
+              </div>
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            className="w-64 rounded-[30px] border-4 border-black bg-white p-3 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            align="end"
+            forceMount
+          >
+            {/* User Profile Header */}
+            <DropdownMenuLabel className="px-4 py-3">
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm leading-none font-black tracking-tighter text-black uppercase italic">
+                  {user?.name}
+                </p>
+                <p className="truncate text-[10px] font-bold text-black/40">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
+
+            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
+
+            {/* Main Actions Group */}
+            <DropdownMenuGroup className="space-y-1">
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
+                <UserIcon className="h-5 w-5 stroke-[3px]" />
+                <span>Profile Intel</span>
               </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
+                <ShieldCheck className="h-5 w-5 stroke-[3px]" />
+                <span>Security</span>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
+                <Settings className="h-5 w-5 stroke-[3px]" />
+                <span>Systems</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
+
+            {/* Logout Section */}
+            <DropdownMenuItem
+              onClick={() => {
+                authClient.signOut();
+                router.push("/login");
+              }}
+              className="flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black tracking-tighter text-[#A3E635] uppercase italic transition-all hover:scale-[0.98] focus:bg-red-600 focus:text-white"
+            >
+              <LogOut className="h-5 w-5 stroke-[3px]" />
+              <span>Terminate Session</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );

@@ -1,3 +1,4 @@
+import { Challenge } from "./challenge.type";
 import { ChallengeStatus } from "./enum.types";
 import { Progress } from "./progress.types";
 
@@ -23,6 +24,19 @@ export interface Participation {
   joinedAt: string;
   progress: number;
   completed: boolean;
-  challenge: ChallengeWithoutParticipation;
+  challenge: Challenge;
   progressLogs: Progress[];
+  creator: {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    image?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    role: string;
+    status: string;
+    isDeleted: boolean;
+    deletedAt: string | null;
+  };
 }

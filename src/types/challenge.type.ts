@@ -16,15 +16,7 @@ export interface Challenge {
   creator: {
     id: string;
     name: string;
-    email: string;
-    emailVerified: boolean;
     image?: string | null;
-    createdAt: string;
-    updatedAt: string;
-    role: string;
-    status: string;
-    isDeleted: boolean;
-    deletedAt: string | null;
   };
   participations: {
     id: string;
@@ -36,10 +28,10 @@ export interface Challenge {
     user: {
       id: string;
       name: string;
-      image: null;
+      image?: null;
     };
   }[];
-  _count: {
+  _count?: {
     votes: number;
     comments: number;
     participations: number;

@@ -10,11 +10,14 @@ export default async function DashboardLayout({
   const { user } = await authService.getSession();
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC]">
+    <div className="flex h-screen bg-white">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Navbar user={user} />
-        <main className="flex-1 overflow-y-auto p-8">{children}</main>
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-y-auto bg-[#F4F4F5] p-6 md:p-10">
+          <div className="mx-auto max-w-7xl">{children}</div>
+        </main>
       </div>
     </div>
   );
