@@ -2,12 +2,12 @@
 
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebookF } from "react-icons/fa";
-import LoginForm from "@/components/auth/login-form";
+import SignupForm from "@/components/auth/signup-form";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="relative flex min-h-screen w-full bg-white font-mono selection:bg-[#A3E635] selection:text-black">
       {/* --- BACK BUTTON / ABORT PROTOCOL --- */}
@@ -24,7 +24,7 @@ export default function LoginPage() {
       {/* Background Large Text Decor */}
       <div className="pointer-events-none absolute top-0 left-[5%] z-0 select-none">
         <p className="text-[15rem] font-black tracking-tighter text-black/5 uppercase italic">
-          HABITS
+          EVOLVE
         </p>
       </div>
 
@@ -38,30 +38,30 @@ export default function LoginPage() {
                 Habo <span className="text-[#A3E635]">_</span>
               </h1>
               <p className="text-[10px] font-bold tracking-[0.3em] text-black/40 uppercase">
-                System.Access.Authorized
+                New.User.Registration
               </p>
             </div>
 
             {/* Welcome Text */}
             <div className="mb-10 space-y-1">
               <p className="text-xs font-black tracking-widest text-black/40 uppercase">
-                Identity Verification Required
+                Begin Initial Deployment
               </p>
               <h2 className="text-4xl font-black tracking-tighter text-black uppercase italic">
-                Welcome Back
+                Create Account
               </h2>
             </div>
 
-            <LoginForm />
+            <SignupForm />
 
-            {/* Social Logins */}
+            {/* Social Signups */}
             {/* <div className="mt-12">
               <div className="relative mb-8 flex items-center justify-center">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t-2 border-black/10"></span>
                 </div>
                 <span className="relative bg-white px-4 text-[10px] font-black tracking-widest text-black/40 uppercase">
-                  External Auth Providers
+                  Verify via Third-Party
                 </span>
               </div>
 
@@ -79,49 +79,55 @@ export default function LoginPage() {
             </div> */}
 
             <p className="mt-10 text-center text-xs font-bold tracking-widest uppercase">
-              New Recruit?{" "}
+              Already Have One?{" "}
               <Link
-                href="/sign-up"
+                href="/login"
                 className="text-black underline decoration-[#A3E635] decoration-4 underline-offset-4 hover:bg-[#A3E635]"
               >
-                Create Account
+                Login
               </Link>
             </p>
           </div>
         </div>
       </div>
 
-      {/* Right Side: Updated Sleek Text Area */}
+      {/* Right Side: Sleek Typography/Quote Area */}
       <div className="relative hidden w-2/6 border-l-[6px] border-black bg-[#A3E635] lg:block">
-        {/* Subtle Dot Pattern Background */}
-        <div className="absolute inset-0 z-0 [background-image:radial-gradient(#000_2px,transparent_2px)] [background-size:24px_24px] opacity-20"></div>
+        <div className="absolute inset-0 z-0 [background-image:linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] [background-size:40px_40px] opacity-10"></div>
 
         <div className="relative z-10 flex h-full flex-col items-center justify-center p-12">
-          {/* Main Content Box */}
-          <div className="flex h-full max-h-[600px] w-full flex-col justify-between border-[6px] border-black bg-black p-8 shadow-[20px_20px_0px_0px_rgba(0,0,0,1)]">
-            {/* Top Sleek Accents */}
-            <div className="space-y-2">
-              <div className="h-2 w-16 bg-[#A3E635]"></div>
-              <div className="h-1 w-8 bg-[#A3E635]/50"></div>
-            </div>
-
-            {/* Center Sleek Text */}
-            <div className="space-y-6">
-              <p className="text-6xl leading-[0.8] font-black tracking-tighter text-white uppercase italic">
-                Start <br />
-                <span className="text-[#A3E635]">Doing.</span>
-              </p>
-              <div className="h-[2px] w-full bg-white/10"></div>
-              <p className="text-[10px] leading-relaxed tracking-widest text-white/60 uppercase">
-                Protocol: Discipline // Level: 01 <br />
-                Status: Awaiting Input...
+          {/* Main Visual Block */}
+          <div className="flex h-full max-h-[600px] w-full flex-col justify-between border-[6px] border-black bg-black p-10 shadow-[20px_20px_0px_0px_rgba(0,0,0,1)]">
+            <div className="flex items-start justify-between">
+              <div className="space-y-1">
+                <div className="h-4 w-4 bg-[#A3E635]"></div>
+                <div className="h-4 w-4 bg-[#A3E635]/50"></div>
+              </div>
+              <p className="text-[10px] font-black tracking-tighter text-[#A3E635] uppercase">
+                Status: Initialization
               </p>
             </div>
 
-            {/* Tactical Overlay (Preserved text from original) */}
-            <div className="border-4 border-[#A3E635] bg-transparent p-4">
-              <p className="text-xl font-black tracking-tighter text-[#A3E635] uppercase italic">
-                Phase 01: Consistency
+            <div className="space-y-4">
+              <h3 className="text-6xl leading-none font-black tracking-tighter text-white uppercase italic">
+                Build <br />
+                The <br />
+                <span className="text-[#A3E635]">Machine.</span>
+              </h3>
+              <p className="text-xs tracking-widest text-white/40 uppercase">
+                // No excuses. <br />
+                // No shortcuts.
+              </p>
+            </div>
+
+            {/* New Quote Banner */}
+            <div className="border-4 border-[#A3E635] bg-transparent p-5">
+              <p className="mb-2 text-[10px] font-bold tracking-widest text-white/50 uppercase">
+                Mission Directive:
+              </p>
+              <p className="text-2xl leading-tight font-black tracking-tighter text-white uppercase italic">
+                "Intensity is <br />
+                the <span className="text-[#A3E635]">Requirement.</span>"
               </p>
             </div>
           </div>

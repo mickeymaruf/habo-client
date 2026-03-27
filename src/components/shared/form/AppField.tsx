@@ -46,20 +46,20 @@ export default function AppField({
   //   const hasError = firstError !== null;
 
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn("space-y-1.5", className)}>
       <Label
         htmlFor={field.name}
         className={cn(
-          "text-sm font-semibold text-gray-700",
+          "text-[10px] font-black tracking-[0.2em] text-black/50 uppercase transition-colors",
           isInvalid && "text-destructive",
         )}
       >
         {label}
       </Label>
 
-      <div className="relative">
+      <div className="group relative">
         {prepend && (
-          <div className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400">
+          <div className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-black transition-transform group-focus-within:scale-110">
             {prepend}
           </div>
         )}
@@ -79,15 +79,18 @@ export default function AppField({
           disabled={disabled}
           aria-describedby={isInvalid ? `${field.name}-error` : undefined}
           className={cn(
-            "rounded-full border-gray-300 bg-white py-6 focus-visible:ring-blue-500",
+            // --- NEW BRUTALIST STYLING ---
+            "rounded-none border-2 border-black bg-white py-6 text-sm font-bold tracking-tight uppercase transition-all placeholder:font-medium placeholder:text-black/20",
+            "focus-visible:border-[#A3E635] focus-visible:ring-0 focus-visible:ring-offset-0",
+            "disabled:bg-zinc-100 disabled:opacity-50",
             prepend && "pl-12",
             append && "pr-12",
-            isInvalid && "border-destructive focus-visible:ring-destructive/20",
+            isInvalid && "border-destructive focus-visible:border-destructive",
           )}
         />
 
         {append && (
-          <div className="absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 text-gray-400">
+          <div className="absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 text-black/40 hover:text-black">
             {append}
           </div>
         )}
@@ -97,7 +100,7 @@ export default function AppField({
         <p
           id={`${field.name}-error`}
           role="alert"
-          className="text-destructive text-sm"
+          className="text-destructive text-[10px] font-black tracking-tighter uppercase italic"
         >
           {firstError}
         </p>

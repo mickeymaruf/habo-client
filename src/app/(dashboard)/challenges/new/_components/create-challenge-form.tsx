@@ -8,12 +8,12 @@ import {
   Tag,
   DollarSign,
   Sparkles,
+  Zap,
 } from "lucide-react";
 import AppField from "@/components/shared/form/AppField";
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useState } from "react";
 import { createChallenge } from "@/actions/challenge";
 import {
   CreateChallengePayload,
@@ -37,18 +37,17 @@ export default function CreateChallengeForm({ role }: { role: string }) {
       onChange: createChallengeZodSchema,
     },
     onSubmit: async ({ value }) => {
-      const id = toast.loading("Creating challenge...");
+      const id = toast.loading("Deploying challenge protocol...");
       try {
-        // Ensure price is handled according to your Zod refine logic
         const payload = { ...value };
         if (!payload.isPremium) delete payload.price;
 
         await createChallenge(payload);
 
-        toast.success("Challenge created!", { id });
+        toast.success("Protocol Active!", { id });
         router.push("/challenges");
       } catch (error: any) {
-        toast.error(error.message || "An error occurred", { id });
+        toast.error(error.message || "Deployment failed", { id });
       }
     },
   });
@@ -63,102 +62,115 @@ export default function CreateChallengeForm({ role }: { role: string }) {
         e.stopPropagation();
         form.handleSubmit();
       }}
-      className="space-y-6"
+      className="space-y-8"
     >
-      <form.Field name="title">
-        {(field) => (
-          <AppField
-            field={field}
-            label="Title"
-            placeholder="e.g. 30 Days of Running"
-            prepend={<Type className="h-5 w-5 text-gray-400" />}
-          />
-        )}
-      </form.Field>
-
-      <form.Field name="description">
-        {(field) => (
-          <AppField
-            field={field}
-            label="Description"
-            placeholder="Describe the habit..."
-            prepend={<AlignLeft className="h-5 w-5 text-gray-400" />}
-          />
-        )}
-      </form.Field>
-
-      <div className="grid grid-cols-2 gap-4">
-        <form.Field name="durationDays">
+      <div className="space-y-6">
+        <form.Field name="title">
           {(field) => (
             <AppField
               field={field}
-              label="Days"
-              type="number"
-              prepend={<Calendar className="h-5 w-5 text-gray-400" />}
-              onChangeOverride={(e) =>
-                field.handleChange(Number(e.target.value))
-              }
+              label="Mission Title"
+              placeholder="e.g. ALPHA_RUN_30"
+              prepend={<Type className="h-5 w-5 text-black" />}
             />
           )}
         </form.Field>
 
-        <form.Field name="category">
+        <form.Field name="description">
           {(field) => (
             <AppField
               field={field}
-              label="Category"
-              placeholder="Health"
-              prepend={<Tag className="h-5 w-5 text-gray-400" />}
+              label="Objective Details"
+              placeholder="Define the parameters of success..."
+              prepend={<AlignLeft className="h-5 w-5 text-black" />}
             />
           )}
         </form.Field>
-      </div>
 
-      {role === "ADMIN" && (
-        <>
-          <form.Field name="isPremium">
+        <div className="grid grid-cols-2 gap-6">
+          <form.Field name="durationDays">
             {(field) => (
-              <div className="flex items-center gap-3 p-2">
-                <input
-                  type="checkbox"
-                  id="isPremium"
-                  checked={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.checked)}
-                  className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="isPremium"
-                  className="flex items-center gap-2 text-sm font-semibold text-gray-700"
-                >
-                  <Sparkles className="h-4 w-4 text-blue-500" /> Premium
-                  Challenge
-                </label>
-              </div>
+              <AppField
+                field={field}
+                label="Timeframe (Days)"
+                type="number"
+                prepend={<Calendar className="h-5 w-5 text-black" />}
+                onChangeOverride={(e) =>
+                  field.handleChange(Number(e.target.value))
+                }
+              />
             )}
           </form.Field>
 
-          <form.Subscribe selector={(state) => [state.values.isPremium]}>
-            {([isPremium]) =>
-              isPremium ? (
-                <form.Field name="price">
-                  {(field) => (
-                    <AppField
-                      field={field}
-                      label="Price"
-                      type="number"
-                      placeholder="0.00"
-                      prepend={<DollarSign className="h-5 w-5 text-gray-400" />}
-                      onChangeOverride={(e) =>
-                        field.handleChange(Number(e.target.value))
-                      }
+          <form.Field name="category">
+            {(field) => (
+              <AppField
+                field={field}
+                label="Sector"
+                placeholder="Health / Logic"
+                prepend={<Tag className="h-5 w-5 text-black" />}
+              />
+            )}
+          </form.Field>
+        </div>
+
+        {role === "ADMIN" && (
+          <div className="border-4 border-black bg-black/5 p-4">
+            <p className="mb-4 text-[10px] font-black tracking-widest text-black/40 uppercase">
+              Administrative Overrides
+            </p>
+            <form.Field name="isPremium">
+              {(field) => (
+                <div className="flex items-center gap-3">
+                  <div className="relative flex items-center">
+                    <input
+                      type="checkbox"
+                      id="isPremium"
+                      checked={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.checked)}
+                      className="h-6 w-6 cursor-pointer appearance-none border-4 border-black bg-white transition-colors checked:bg-[#A3E635]"
                     />
-                  )}
-                </form.Field>
-              ) : null
-            }
-          </form.Subscribe>
-        </>
-      )}
+                    {field.state.value && (
+                      <Zap className="pointer-events-none absolute left-1 h-4 w-4 text-black" />
+                    )}
+                  </div>
+                  <label
+                    htmlFor="isPremium"
+                    className="flex cursor-pointer items-center gap-2 text-xs font-black tracking-tight text-black uppercase"
+                  >
+                    Premium Tier Authorization
+                  </label>
+                </div>
+              )}
+            </form.Field>
+
+            <form.Subscribe selector={(state) => [state.values.isPremium]}>
+              {([isPremium]) =>
+                isPremium ? (
+                  <div className="mt-6">
+                    <form.Field name="price">
+                      {(field) => (
+                        <AppField
+                          field={field}
+                          label="Access Credit (USD)"
+                          type="number"
+                          placeholder="0.00"
+                          prepend={
+                            <DollarSign className="h-5 w-5 text-black" />
+                          }
+                          onChangeOverride={(e) =>
+                            field.handleChange(Number(e.target.value))
+                          }
+                        />
+                      )}
+                    </form.Field>
+                  </div>
+                ) : null
+              }
+            </form.Subscribe>
+          </div>
+        )}
+      </div>
 
       <form.Subscribe
         selector={(state) => [state.canSubmit, state.isSubmitting] as const}
@@ -166,11 +178,11 @@ export default function CreateChallengeForm({ role }: { role: string }) {
         {([canSubmit, isSubmitting]) => (
           <AppSubmitButton
             isPending={isSubmitting}
-            pendingLabel="Creating..."
+            pendingLabel="Initializing..."
             disabled={!canSubmit}
-            className="text-md w-full rounded-full bg-[#576fda] py-7 tracking-wide uppercase shadow-lg shadow-blue-200 hover:bg-[#4A63D8]"
+            className="group relative flex w-full cursor-pointer items-center justify-center border-[4px] border-black bg-[#A3E635] py-8 text-lg font-black tracking-tighter uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
           >
-            Create Challenge
+            Confirm Mission Parameters
           </AppSubmitButton>
         )}
       </form.Subscribe>
