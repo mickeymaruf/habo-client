@@ -11,7 +11,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-white">
-      <Sidebar />
+      <Sidebar role={user.role} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Navbar user={user} />
         {/* Main Content Area */}

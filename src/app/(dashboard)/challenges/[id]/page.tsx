@@ -16,6 +16,7 @@ import { authService } from "@/services/auth.service";
 import ChallengeAction from "@/components/challenge/challenge-action";
 import { CanceledBanner } from "@/components/payment/cancel-banner";
 import { cn } from "@/lib/utils";
+import EngagementHub from "./_components/engagement";
 
 export default async function ChallengePage({
   params,
@@ -161,6 +162,9 @@ export default async function ChallengePage({
                   initialHasJoined={hasJoined}
                 />
               </div>
+
+              {/* --- ENGAGEMENT HUB (VOTING & COMMENTS) --- */}
+              <EngagementHub challengeId={challenge.id} />
             </div>
 
             {/* THE BRUTALIST PAYWALL OVERLAY */}

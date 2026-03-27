@@ -8,23 +8,30 @@ import {
   Trophy,
   LogOut,
   Clock,
+  ShieldCheck, // Added for Admin Stats
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserRole as UserRoleType } from "@/types/enum.types";
+import { UserRole } from "@/constants/user";
 
-const navItems = [
-  { icon: LayoutGrid, label: "Dashboard", href: "/challenges" },
-  { icon: Calendar, label: "Schedule", href: "/participations" },
-  { icon: MessageSquare, label: "Messages", href: "#" },
-  { icon: Clock, label: "History", href: "#" },
-  { icon: Zap, label: "Stats", href: "#" },
-  { icon: Trophy, label: "Goals", href: "#" },
-];
-
-export default function Sidebar() {
+export default function Sidebar({ role }: { role: UserRoleType }) {
   const pathname = usePathname();
+
+  const navItems = [
+    { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
+    { icon: Calendar, label: "Participations", href: "/participations" },
+  ];
+
+  if (role === UserRole.ADMIN) {
+    navItems.push({
+      icon: ShieldCheck,
+      label: "Platform Stats",
+      href: "/stats",
+    });
+  }
 
   return (
     <aside className="flex h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10">
