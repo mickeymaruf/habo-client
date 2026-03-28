@@ -36,4 +36,5 @@ export interface Challenge {
     comments: number;
     participations: number;
   };
+  votedByMe: boolean;
 }

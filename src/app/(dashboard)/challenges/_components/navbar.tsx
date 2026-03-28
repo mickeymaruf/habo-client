@@ -24,6 +24,7 @@ import {
 import { User } from "@/types/auth.types";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { UserRole } from "@/constants/user";
 
 export default function Navbar({ user }: { user: User }) {
   const router = useRouter();
@@ -103,7 +104,7 @@ export default function Navbar({ user }: { user: User }) {
                   {user?.name}
                 </p>
                 <p className="text-[10px] font-bold text-black/40">
-                  LVL 12 AGENT
+                  {user.role === UserRole.ADMIN ? "ADMIN_USER" : "USER"}
                 </p>
               </div>
             </Button>

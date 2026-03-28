@@ -164,7 +164,13 @@ export default async function ChallengePage({
               </div>
 
               {/* --- ENGAGEMENT HUB (VOTING & COMMENTS) --- */}
-              <EngagementHub challengeId={challenge.id} />
+              <EngagementHub
+                challengeId={challenge.id}
+                userId={session.user.id}
+                votesCount={challenge._count?.votes}
+                commentsCount={challenge._count?.comments}
+                votedByMe={challenge.votedByMe}
+              />
             </div>
 
             {/* THE BRUTALIST PAYWALL OVERLAY */}

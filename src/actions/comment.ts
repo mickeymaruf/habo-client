@@ -31,13 +31,13 @@ export const createComment = async ({
     throw new Error(data.message || "Failed to create comment");
   }
 
-  revalidateTag("comments", "max");
+  revalidateTag(`comments-${challengeId}`, "max");
 
   return data;
 };
 
 // ✅ Like Comment
-export const likeComment = async (commentId: string) => {
+export const likeComment = async (commentId: string, challengeId: string) => {
   const cookieStore = await cookies();
 
   const res = await fetch(`${env.API_URL}/comments/${commentId}/like`, {
@@ -53,13 +53,13 @@ export const likeComment = async (commentId: string) => {
     throw new Error(data.message || "Failed to like comment");
   }
 
-  revalidateTag("comments", "max");
+  revalidateTag(`comments-${challengeId}`, "max");
 
   return data;
 };
 
 // ✅ Unlike Comment
-export const unlikeComment = async (commentId: string) => {
+export const unlikeComment = async (commentId: string, challengeId: string) => {
   const cookieStore = await cookies();
 
   const res = await fetch(`${env.API_URL}/comments/${commentId}/like`, {
@@ -75,13 +75,13 @@ export const unlikeComment = async (commentId: string) => {
     throw new Error(data.message || "Failed to unlike comment");
   }
 
-  revalidateTag("comments", "max");
+  revalidateTag(`comments-${challengeId}`, "max");
 
   return data;
 };
 
 // ✅ Delete Comment
-export const deleteComment = async (commentId: string) => {
+export const deleteComment = async (commentId: string, challengeId: string) => {
   const cookieStore = await cookies();
 
   const res = await fetch(`${env.API_URL}/comments/${commentId}`, {
@@ -97,7 +97,7 @@ export const deleteComment = async (commentId: string) => {
     throw new Error(data.message || "Failed to delete comment");
   }
 
-  revalidateTag("comments", "max");
+  revalidateTag(`comments-${challengeId}`, "max");
 
   return data;
 };

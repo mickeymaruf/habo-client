@@ -2,19 +2,23 @@
 
 import { useState } from "react";
 import { Comment } from "@/types/comment.types";
-import { ThumbsUp, CornerDownRight } from "lucide-react";
+import { ThumbsUp, CornerDownRight, Trash2 } from "lucide-react"; // Added Trash2
 import { formatDistanceToNow } from "date-fns";
 import { CommentInput } from "./comment-input";
-import { likeComment, unlikeComment } from "@/actions/comment";
+import { likeComment, unlikeComment, deleteComment } from "@/actions/comment"; // Added deleteComment
 
 export default function CommentItem({
   comment,
   challengeId,
   isReply = false,
+  currentUserId, // Add these to check permissions
+  isAdmin = false,
 }: {
   comment: Comment;
   challengeId: string;
   isReply?: boolean;
+  currentUserId?: string;
+  isAdmin?: boolean;
 }) {
   const [isReplying, setIsReplying] = useState(false);
   const [isLiked, setIsLiked] = useState(comment.likedByMe);
@@ -22,23 +26,33 @@ export default function CommentItem({
     comment._count?.likes || 0,
   );
 
+  // Determine if the user has permission to delete
+  const canDelete = isAdmin || currentUserId === comment.userId;
+
   const handleLike = async () => {
     const originalLiked = isLiked;
     const originalCount = likeCount;
-
     try {
       setIsLiked(!originalLiked);
       setLikeCount((prev) => (originalLiked ? prev - 1 : prev + 1));
-
       if (originalLiked) {
-        await unlikeComment(comment.id);
+        await unlikeComment(comment.id, challengeId);
       } else {
-        await likeComment(comment.id);
+        await likeComment(comment.id, challengeId);
       }
     } catch (error) {
       setIsLiked(originalLiked);
       setLikeCount(originalCount);
       console.error("Sync failed:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("ARE YOU SURE YOU WANT TO DELETE THIS COMMENT?")) return;
+    try {
+      await deleteComment(comment.id, challengeId);
+    } catch (error) {
+      console.error("Deletion failed:", error);
     }
   };
 
@@ -63,6 +77,17 @@ export default function CommentItem({
                 addSuffix: true,
               })}
             </span>
+
+            {/* Delete Trigger - Now aligned to the right in the action bar */}
+            {canDelete && (
+              <button
+                onClick={handleDelete}
+                className="ml-auto flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-red-600/40 uppercase hover:text-red-700"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                DELETE
+              </button>
+            )}
           </div>
 
           <p
@@ -117,6 +142,8 @@ export default function CommentItem({
                 comment={reply}
                 challengeId={challengeId}
                 isReply={true}
+                currentUserId={currentUserId}
+                isAdmin={isAdmin}
               />
             ))}
           </div>

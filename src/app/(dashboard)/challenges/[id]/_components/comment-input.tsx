@@ -30,7 +30,7 @@ export function CommentInput({
         // Call onSuccess to close the reply toggle in the parent
         if (onSuccess) onSuccess();
       } catch (error) {
-        console.error("Failed to deploy intel:", error);
+        console.error("Failed to write a comment", error);
       }
     });
   };
@@ -44,7 +44,7 @@ export function CommentInput({
         // Change placeholder dynamically if it's a reply
         placeholder={
           placeholder ||
-          (parentId ? "DEPLOY REPLY..." : "DEPLOY YOUR THOUGHTS...")
+          (parentId ? "WRITE REPLY..." : "WRITE YOUR THOUGHTS...")
         }
         className={`w-full rounded-none border-4 border-black bg-zinc-50 font-bold tracking-tight uppercase placeholder:text-black/20 focus:bg-white focus:ring-0 focus:outline-none disabled:opacity-50 ${
           parentId ? "p-4 text-sm" : "p-6 text-base"
@@ -54,7 +54,7 @@ export function CommentInput({
       <button
         onClick={handlePost}
         disabled={isPending || !content.trim()}
-        className={`absolute right-4 bottom-4 flex items-center gap-2 border-2 border-black bg-black px-6 py-2 text-[10px] font-black text-[#A3E635] uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] transition-all hover:bg-[#A3E635] hover:text-black active:translate-y-1 active:shadow-none disabled:bg-zinc-800 disabled:shadow-none ${
+        className={`absolute right-4 bottom-4 flex items-center gap-2 border-2 border-black bg-black px-6 py-2 text-[10px] font-black text-[#A3E635] uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] transition-all hover:bg-[#A3E635] active:translate-y-1 active:shadow-none disabled:bg-zinc-800 disabled:shadow-none ${
           parentId ? "px-4 py-1.5" : "px-6 py-2"
         }`}
       >
@@ -64,7 +64,7 @@ export function CommentInput({
           </>
         ) : (
           <>
-            {parentId ? "Reply_Intel" : "Send_Intel"}{" "}
+            {parentId ? "Send_Reply" : "Send_Comment"}{" "}
             <Send className="h-3 w-3" />
           </>
         )}
