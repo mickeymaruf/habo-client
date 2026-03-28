@@ -8,7 +8,8 @@ import {
   Trophy,
   LogOut,
   Clock,
-  ShieldCheck, // Added for Admin Stats
+  ShieldCheck,
+  Crown, // Added for Admin Stats
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -23,6 +24,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   const navItems = [
     { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
     { icon: Calendar, label: "Participations", href: "/participations" },
+    { icon: Crown, label: "Leaderboard", href: "/leaderboard" },
   ];
 
   if (role === UserRole.ADMIN) {
