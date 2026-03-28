@@ -91,7 +91,7 @@ export default async function LeaderboardPage() {
           <div className="flex items-center gap-4 border-b-8 border-black pb-4">
             <TrendingUp className="h-8 w-8 stroke-[3px]" />
             <h3 className="text-4xl font-black tracking-tighter uppercase italic">
-              Missions_Taking_Over
+              Challenges_Taking_Over
             </h3>
           </div>
 
@@ -282,10 +282,6 @@ export default async function LeaderboardPage() {
                 </div>
               </div>
             ))}
-
-            <button className="w-full border-4 border-black bg-black py-3 text-xs font-black text-[#A3E635] uppercase transition-all hover:bg-[#A3E635] hover:text-black active:translate-y-1">
-              View All Operatives
-            </button>
           </div>
         </div>
       </div>
