@@ -1,10 +1,11 @@
 import { challengeService } from "@/services/challenge.service";
 import { Challenge } from "@/types/challenge.type";
-import { Plus, Sparkles, ArrowRight, Zap, Trophy } from "lucide-react";
+import { Plus, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import ChallengeCard from "../../../components/challenge/challenge-card";
+import ChallengeCard from "@/components/challenge/challenge-card";
+import FeaturedChallengeCard from "@/components/challenge/featured-challenge-card";
 
 export default async function ChallengesPage() {
   const { data: challenges } =
@@ -16,8 +17,8 @@ export default async function ChallengesPage() {
   return (
     <div className="space-y-16 pb-20">
       {/* --- HERO SECTION --- */}
-      <section className="relative overflow-hidden rounded-[50px] bg-black p-8 text-white md:p-12">
-        <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+      <section className="relative overflow-hidden rounded-[50px] bg-black p-8 text-white md:p-16">
+        <div className="relative z-10 flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full bg-[#A3E635] px-4 py-1 text-xs font-black text-black uppercase">
               <Zap className="h-3 w-3 fill-black" /> New Season
@@ -34,11 +35,11 @@ export default async function ChallengesPage() {
 
           <Button
             asChild
-            className="h-20 rounded-[30px] bg-[#A3E635] px-10 text-xl font-black text-black shadow-[0_0_30px_rgba(163,230,53,0.3)] transition-all hover:scale-105 hover:bg-[#bef558] active:scale-95"
+            className="hover:bg-primary h-20 w-full border-4 border-black bg-[#A3E635] px-10 text-2xl font-black text-black transition-all hover:-translate-y-1 hover:text-[#A3E635] hover:shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] active:translate-y-1 lg:w-auto"
           >
-            <Link href="/challenges/new" className="flex items-center gap-3">
+            <Link href="/challenges/new" className="flex items-center gap-4">
               <Plus className="h-6 w-6 stroke-[4px]" />
-              CREATE YOUR OWN
+              CREATE_NEW
             </Link>
           </Button>
         </div>
@@ -46,7 +47,7 @@ export default async function ChallengesPage() {
         <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#A3E635]/10 blur-[100px]" />
       </section>
 
-      {/* --- FEATURED SECTION (Horizontal) --- */}
+      {/* --- SECTION 01: THE SPOTLIGHT (Horizontal) --- */}
       {featuredChallenges.length > 0 && (
         <section className="space-y-8">
           <div className="flex items-center justify-between px-4">
@@ -56,54 +57,10 @@ export default async function ChallengesPage() {
             </h2>
           </div>
 
-          <ScrollArea className="w-full whitespace-nowrap">
-            <div className="flex w-max space-x-8 px-4 pt-2 pb-8">
+          <ScrollArea className="w-full pb-6 whitespace-nowrap">
+            <div className="flex w-max space-x-8 px-2 pt-2 pb-10">
               {featuredChallenges.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/challenges/${c.id}`}
-                  className="group relative h-[420px] w-[320px] shrink-0 overflow-hidden rounded-[45px] bg-zinc-900 p-8 transition-all hover:-translate-y-2 md:w-[380px]"
-                >
-                  {/* Background Accents */}
-                  <div className="absolute top-0 right-0 h-32 w-32 translate-x-10 -translate-y-10 rounded-full bg-[#C3B5FD]/20 blur-3xl transition-colors group-hover:bg-[#A3E635]/20" />
-
-                  <div className="flex h-full flex-col justify-between">
-                    <div className="space-y-4">
-                      <span className="inline-block rounded-full border border-zinc-700 px-4 py-1.5 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
-                        {c.category}
-                      </span>
-                      <h3 className="text-3xl leading-none font-black whitespace-normal text-white group-hover:text-[#A3E635]">
-                        {c.title}
-                      </h3>
-                      <p className="line-clamp-3 font-medium whitespace-normal text-zinc-500">
-                        {c.description}
-                      </p>
-                    </div>
-
-                    <div className="space-y-6">
-                      <div className="flex -space-x-3">
-                        {c.participations.slice(0, 4).map((p, i) => (
-                          <div
-                            key={i}
-                            className="h-10 w-10 rounded-full border-4 border-zinc-900 bg-zinc-800"
-                          />
-                        ))}
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full border-4 border-zinc-900 bg-[#A3E635] text-[10px] font-black text-black">
-                          {c._count?.participations}+
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm font-black text-white">
-                          {c.durationDays} DAYS
-                        </div>
-                        <div className="rounded-full bg-white p-3 text-black transition-transform group-hover:rotate-45">
-                          <ArrowRight className="h-5 w-5" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                <FeaturedChallengeCard key={c.id} c={c} />
               ))}
             </div>
             <ScrollBar orientation="horizontal" className="h-2 bg-zinc-100" />
@@ -111,11 +68,12 @@ export default async function ChallengesPage() {
         </section>
       )}
 
-      {/* --- ALL CHALLENGES (Grid with specialized design) --- */}
+      {/* --- SECTION 02: ALL CHALLENGES (The Grid) --- */}
       <section className="space-y-8 px-4">
         <h2 className="text-3xl font-black tracking-tighter text-black uppercase italic">
           Explore All
         </h2>
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {regularChallenges.map((c) => (
             <ChallengeCard key={c.id} challenge={c} redirectUrl="/challenges" />

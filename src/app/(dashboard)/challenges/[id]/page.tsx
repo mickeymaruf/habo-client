@@ -135,25 +135,6 @@ export default async function ChallengePage({
                 </div>
               </div>
 
-              {/* Reviews & Social Proof */}
-              <div className="space-y-6">
-                <h3 className="text-2xl font-black tracking-tighter uppercase italic">
-                  What they're saying
-                </h3>
-                <div className="grid gap-4 md:grid-cols-2">
-                  {["🔥 Consistency hack!", "💪 Hard but worth it"].map(
-                    (review, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-3 rounded-2xl border-2 border-black bg-zinc-50 p-4 font-bold italic"
-                      >
-                        <Star className="h-4 w-4 fill-black" /> "{review}"
-                      </div>
-                    ),
-                  )}
-                </div>
-              </div>
-
               {/* Join Button Section */}
               <div className="mx-auto max-w-md">
                 <JoinChallengeButton

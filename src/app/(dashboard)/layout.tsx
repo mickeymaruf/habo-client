@@ -1,6 +1,6 @@
 import { authService } from "@/services/auth.service";
-import Navbar from "./challenges/_components/navbar";
-import Sidebar from "./challenges/_components/sidebar";
+import Navbar from "@/components/dashboard/navbar";
+import Sidebar from "@/components/dashboard/sidebar";
 
 export default async function DashboardLayout({
   children,

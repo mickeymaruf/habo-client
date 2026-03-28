@@ -22,8 +22,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   const pathname = usePathname();
 
   const navItems = [
-    { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
-    { icon: Calendar, label: "Participations", href: "/participations" },
+    { icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
     { icon: Crown, label: "Leaderboard", href: "/leaderboard" },
   ];
 

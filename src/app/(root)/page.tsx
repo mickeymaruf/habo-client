@@ -1,47 +1,20 @@
 "use client";
 
-import Link from "next/link";
+import React from "react";
 import {
   ArrowRight,
   Flame,
   Zap,
   Target,
-  Users,
   Award,
   ShieldCheck,
-  Trophy,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React from "react";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white font-mono text-black selection:bg-[#A3E635]">
-      {/* --- PROTOCOL_01: NAVIGATION --- */}
-      <nav className="sticky top-0 z-50 border-b-8 border-black bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="group flex items-center gap-2">
-            <h1 className="text-4xl leading-none font-black tracking-tighter text-black uppercase italic">
-              HABO<span className="text-[#A3E635]">.</span>
-            </h1>
-            <div className="h-1.5 w-10 -skew-x-12 border-x-2 border-black bg-[#A3E635] opacity-0 transition-opacity group-hover:opacity-100" />
-          </Link>
-
-          <div className="flex items-center gap-6 text-sm font-black tracking-widest uppercase">
-            <NavLink href="/challenges">Challenges_</NavLink>
-            <NavLink href="#features">Features_</NavLink>
-            <NavLink href="/leaderboard">Leaderboard_</NavLink>
-          </div>
-
-          <Link href="/challenges">
-            <button className="border-4 border-black bg-black px-6 py-2.5 text-xs font-black text-[#A3E635] uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] transition-all hover:translate-y-0.5 hover:shadow-none active:scale-95">
-              Access_Challenges
-            </button>
-          </Link>
-        </div>
-      </nav>
-
-      {/* --- PROTOCOL_02: HERO SECTOR --- */}
+    <>
+      {/* --- HERO SECTION --- */}
       <header className="relative overflow-hidden bg-white py-24 md:py-32">
         <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
           <div className="mb-8 inline-block skew-x-[-12deg] border-4 border-black bg-black px-6 py-2 text-white">
@@ -79,7 +52,7 @@ export default function LandingPage() {
 
         {/* Background Patterns */}
         <div className="absolute inset-0 z-0 [background-image:radial-gradient(#000_2px,transparent_2px)] [background-size:24px_24px] opacity-10" />
-        <div className="absolute bottom-[-10%] left-[-5%] h-60 w-60 rounded-full border-[16px] border-black opacity-10" />
+        <div className="absolute bottom-[-10%] left-[-5%] h-60 w-60 rounded-full border-[16px] border-black opacity-10 blur-md" />
       </header>
 
       <div className="group flex overflow-hidden border-y-8 border-black bg-black py-8 whitespace-nowrap">
@@ -226,48 +199,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
-
-      {/* --- FOOTER --- */}
-      <footer className="border-t-8 border-black bg-white py-12">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 text-center md:flex-row md:text-left">
-          <div>
-            <p className="text-sm font-bold tracking-widest text-black uppercase">
-              © 2026 HABO // Build Better Habits Together
-            </p>
-            <p className="mt-2 max-w-md text-xs font-medium tracking-wide text-black/60">
-              Join challenges, stay accountable, track your streaks, and grow
-              with a community committed to better daily habits.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-6 text-[10px] font-black tracking-[0.3em] uppercase md:justify-end">
-            <span className="text-black">Challenges</span>
-            <span className="text-black">Leaderboard</span>
-            <span className="text-black">Premium</span>
-            <span className="text-black">Support</span>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-{
-  /* --- SYSTEM HELPER COMPONENTS --- */
-}
-
-function NavLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link href={href} className="group relative overflow-hidden">
-      {children}
-      <div className="absolute bottom-0 left-0 h-1 w-full -translate-x-full bg-[#A3E635] transition-transform duration-300 group-hover:translate-x-0" />
-    </Link>
+    </>
   );
 }
 
