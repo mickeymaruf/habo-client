@@ -5,11 +5,13 @@ export const challengeService = {
   getAllChallenges: async <TData>(query?: {
     search?: string;
     category?: string;
+    featured?: string;
   }): Promise<ApiResponse<TData>> => {
     const url = new URL(`${env.API_URL}/challenges`);
 
     if (query?.search) url.searchParams.append("search", query.search);
     if (query?.category) url.searchParams.append("category", query.category);
+    if (query?.featured) url.searchParams.append("featured", query.featured);
 
     const res = await fetch(url.toString(), {
       next: { tags: ["challenges"] },

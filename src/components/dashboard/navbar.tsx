@@ -8,7 +8,9 @@ import {
   ShieldCheck,
   User as UserIcon,
   Zap,
+  CornerDownLeft,
 } from "lucide-react";
+import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,11 +25,34 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/types/auth.types";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { UserRole } from "@/constants/user";
 
-export default function Navbar({ user }: { user: User }) {
+export default function DashboardNavbar({ user }: { user: User }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get("search") || "",
+  );
+
+  const performSearch = (term: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (term) {
+      params.set("search", term);
+    } else {
+      params.delete("search");
+    }
+    router.push(`/challenges?${params.toString()}`);
+    inputRef.current?.blur();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      performSearch(searchValue);
+    }
+  };
 
   return (
     <nav className="flex h-24 items-center justify-between border-b-4 border-black bg-white px-10">
@@ -36,12 +61,31 @@ export default function Navbar({ user }: { user: User }) {
         <div className="group relative w-full max-w-sm">
           <Search
             size={20}
-            className="absolute top-1/2 left-4 -translate-y-1/2 stroke-[3px] text-black"
+            className="absolute top-1/2 left-4 z-10 -translate-y-1/2 stroke-[3px] text-black transition-colors group-focus-within:text-black"
           />
           <Input
+            ref={inputRef}
+            type="search"
             placeholder="SEARCH MISSIONS..."
-            className="h-12 border-4 border-black bg-white pl-12 font-black tracking-tight italic ring-0 placeholder:text-zinc-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            // Removed default ring and offset, enforced black border on focus
+            className="h-12 border-4 border-black bg-white pr-24 pl-12 font-black tracking-tight italic transition-colors placeholder:text-zinc-400 focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:relative [&::-webkit-search-cancel-button]:right-2"
           />
+
+          {/* THE "ENTER" BUTTON - Now clickable */}
+          {searchValue.length > 0 && (
+            <button
+              onClick={() => performSearch(searchValue)}
+              className="animate-in fade-in zoom-in absolute top-1/2 right-10 z-10 flex -translate-y-1/2 items-center gap-1.5 border-2 border-black bg-[#A3E635] px-2 py-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] duration-200 active:translate-y-[-40%] active:shadow-none"
+            >
+              <span className="text-[9px] font-black tracking-tighter text-black uppercase italic">
+                Enter
+              </span>
+              <CornerDownLeft className="h-3 w-3 stroke-[4px]" />
+            </button>
+          )}
         </div>
       </div>
 
