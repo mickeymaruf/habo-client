@@ -27,6 +27,7 @@ import { User } from "@/types/auth.types";
 import { authClient } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { UserRole } from "@/constants/user";
+import Link from "next/link";
 
 export default function DashboardNavbar({ user }: { user: User }) {
   const router = useRouter();
@@ -177,17 +178,17 @@ export default function DashboardNavbar({ user }: { user: User }) {
             <DropdownMenuGroup className="space-y-1">
               <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
                 <UserIcon className="h-5 w-5 stroke-[3px]" />
-                <span>Profile Intel</span>
+                <span>Profile</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
-                <ShieldCheck className="h-5 w-5 stroke-[3px]" />
-                <span>Security</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
-                <Settings className="h-5 w-5 stroke-[3px]" />
-                <span>Systems</span>
+              <DropdownMenuItem
+                asChild
+                className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black"
+              >
+                <Link href="/security">
+                  <ShieldCheck className="h-5 w-5 stroke-[3px]" />
+                  <span>Security</span>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -202,7 +203,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
               className="flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black tracking-tighter text-[#A3E635] uppercase italic transition-all hover:scale-[0.98] focus:bg-red-600 focus:text-white"
             >
               <LogOut className="h-5 w-5 stroke-[3px]" />
-              <span>Terminate Session</span>
+              <span>Logout</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
