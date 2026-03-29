@@ -17,6 +17,7 @@ import ChallengeAction from "@/components/challenge/challenge-action";
 import { CanceledBanner } from "@/components/payment/cancel-banner";
 import { cn } from "@/lib/utils";
 import EngagementHub from "./_components/engagement";
+import { UserRole } from "@/constants/user";
 
 export default async function ChallengePage({
   params,
@@ -67,7 +68,13 @@ export default async function ChallengePage({
           </Link>
 
           {/* RIGHT SIDE: Action Dropdown Sticker */}
-          <ChallengeAction user={session.user} challenge={challenge} />
+          {(hasJoined || session.user.role === UserRole.ADMIN) && (
+            <ChallengeAction
+              user={session.user}
+              challenge={challenge}
+              hasJoined={hasJoined}
+            />
+          )}
 
           {/* Background Texture Pattern */}
           <div className="absolute inset-0 z-0 [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px] opacity-10" />
@@ -126,11 +133,13 @@ export default async function ChallengePage({
                     Participants
                   </span>
                 </div>
-                <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">
-                  <Zap className="h-6 w-6 stroke-[3px] text-black" />
-                  <span className="text-2xl font-black">60%</span>
-                  <span className="text-xs font-bold text-black/50 uppercase">
-                    Avg. Progress
+                <div className="flex flex-col gap-1 rounded-3xl border-4 border-black bg-cyan-300 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <Sparkles className="h-6 w-6 fill-white stroke-[3px] text-black" />
+                  <span className="text-2xl font-black">
+                    {challenge.completedToday || 0}
+                  </span>
+                  <span className="text-xs leading-none font-bold text-black/70 uppercase">
+                    Completed Today
                   </span>
                 </div>
               </div>

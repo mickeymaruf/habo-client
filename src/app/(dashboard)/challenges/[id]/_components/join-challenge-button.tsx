@@ -60,27 +60,18 @@ export function JoinChallengeButton({
   // --- SUCCESS STATE (Already Joined) ---
   if (joined) {
     return (
-      <div className="animate-in fade-in zoom-in flex flex-col items-center gap-6 rounded-[40px] border-4 border-black bg-white p-8 text-center shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] duration-300">
-        <div className="flex h-16 w-16 rotate-3 items-center justify-center rounded-2xl border-4 border-black bg-[#A3E635] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <CheckCircle2 className="h-10 w-10 stroke-[3px] text-black" />
-        </div>
-
-        <div className="space-y-2">
-          <h4 className="text-3xl font-black tracking-tighter text-black uppercase italic">
-            You&apos;re in!
-          </h4>
-          <p className="text-sm font-bold tracking-tight text-black/50 uppercase">
-            Challenge Accepted. Time to dominate.
-          </p>
-        </div>
-
-        <Link href={`/participations/${challengeId}`} className="w-full">
-          <Button className="group h-16 w-full rounded-2xl border-4 border-black bg-black text-lg font-black text-white transition-all hover:bg-zinc-800 hover:shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] active:scale-95">
-            SEE MY PROGRESS
-            <BarChart3 className="ml-3 h-6 w-6 transition-transform group-hover:scale-110 group-hover:rotate-6" />
-          </Button>
-        </Link>
-      </div>
+      <Link href={`/participations/${challengeId}`} className="block w-full">
+        <Button
+          size="lg"
+          className="group h-20 w-full rounded-[30px] border-4 border-black bg-white py-7 text-xl font-black tracking-tighter text-black uppercase italic shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] transition-all duration-200 hover:shadow-none active:scale-95"
+        >
+          <div className="flex items-center gap-3">
+            <BarChart3 className="h-6 w-6 stroke-[3px] text-[#A3E635]" />
+            <span>TRACK MY PROGRESS</span>
+            <ArrowRight className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-2" />
+          </div>
+        </Button>
+      </Link>
     );
   }
 

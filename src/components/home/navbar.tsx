@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b-8 border-black bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="group flex items-center gap-2">
-          <h1 className="text-4xl leading-none font-black tracking-tighter text-black uppercase italic">
+          <h1 className="font-mono text-4xl leading-none font-black tracking-tighter text-black uppercase italic">
             HABO<span className="text-[#A3E635]">.</span>
           </h1>
           <div className="h-1.5 w-10 -skew-x-12 border-x-2 border-black bg-[#A3E635] opacity-0 transition-opacity group-hover:opacity-100" />

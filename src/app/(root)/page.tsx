@@ -15,7 +15,7 @@ export default function LandingPage() {
   return (
     <>
       {/* --- HERO SECTION --- */}
-      <header className="relative overflow-hidden bg-white py-24 md:py-32">
+      <header className="relative overflow-hidden bg-white py-24 font-mono md:py-32">
         <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
           <div className="mb-8 inline-block skew-x-[-12deg] border-4 border-black bg-black px-6 py-2 text-white">
             <h2 className="text-xl font-black tracking-tighter uppercase italic">

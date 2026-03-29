@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  LayoutGrid,
-  Calendar,
-  MessageSquare,
-  Zap,
-  Trophy,
-  LogOut,
-  Clock,
-  ShieldCheck,
-  Crown, // Added for Admin Stats
-} from "lucide-react";
+import { LayoutGrid, Calendar, ShieldCheck, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -22,7 +12,8 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   const pathname = usePathname();
 
   const navItems = [
-    { icon: LayoutGrid, label: "Dashboard", href: "/dashboard" },
+    { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
+    { icon: Calendar, label: "Participations", href: "/participations" },
     { icon: Crown, label: "Leaderboard", href: "/leaderboard" },
   ];
 
@@ -38,7 +29,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
     <aside className="flex h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10">
       {/* Brand Section - High Contrast */}
       <div className="mb-12 text-center">
-        <h1 className="text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
+        <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
           HABO
         </h1>
         <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
