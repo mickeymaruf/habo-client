@@ -79,15 +79,25 @@ export default async function ChallengePage({
         <div className="relative px-8 pt-10 pb-12">
           {/* Header Section */}
           <div className="mb-10 space-y-4">
-            <div className="flex items-center gap-3">
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              {challenge.featured && (
+                <span className="rounded-full border-2 border-black bg-[#A3E635] px-3 py-1 text-[9px] font-black uppercase italic">
+                  FEATURED
+                </span>
+              )}
+
+              {challenge.isPremium && (
+                <div className="flex items-center gap-1.5 rounded-full border-2 border-black bg-white px-3 py-1 text-black">
+                  <Lock className="h-3 w-3 stroke-[3px]" />
+                  <span className="text-[9px] font-black uppercase italic">
+                    PREMIUM
+                  </span>
+                </div>
+              )}
+
               <span className="rounded-full bg-black px-4 py-1 text-[10px] font-black tracking-widest text-white uppercase">
                 {challenge.category}
               </span>
-              {challenge.featured && (
-                <div className="flex items-center gap-1 rounded-full border-2 border-black bg-white px-3 py-1 text-[10px] font-black uppercase">
-                  <Sparkles className="h-3 w-3 fill-yellow-400" /> Featured
-                </div>
-              )}
             </div>
 
             <h1 className="text-5xl leading-none font-black tracking-tighter text-black uppercase italic md:text-6xl">

@@ -1,5 +1,6 @@
 import { env } from "@/env";
 import { ApiResponse } from "@/types/api.types";
+import { cookies } from "next/headers";
 
 export const challengeService = {
   getAllChallenges: async <TData>(query?: {
@@ -7,6 +8,8 @@ export const challengeService = {
     category?: string;
     featured?: string;
   }): Promise<ApiResponse<TData>> => {
+    const cookieStore = await cookies();
+
     const url = new URL(`${env.API_URL}/challenges`);
 
     if (query?.search) url.searchParams.append("search", query.search);
@@ -15,7 +18,9 @@ export const challengeService = {
 
     const res = await fetch(url.toString(), {
       next: { tags: ["challenges"] },
-      // credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
     });
 
     const data = await res.json();
@@ -30,7 +35,12 @@ export const challengeService = {
   getSingleChallenge: async <TData>(
     id: string,
   ): Promise<ApiResponse<TData>> => {
+    const cookieStore = await cookies();
+
     const res = await fetch(`${env.API_URL}/challenges/${id}`, {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
       next: { tags: ["challenge"] },
     });
 

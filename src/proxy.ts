@@ -4,7 +4,7 @@ import { UserRole } from "./constants/user";
 import { authService } from "./services/auth.service";
 
 // Define routes that anyone can see (Home, About, etc.)
-export const publicRoutes = ["/", "/about", "/contact", "/leaderboard"];
+export const publicRoutes = ["/", "/about", "/contact"];
 
 export const authRoutes = [
   "/login",

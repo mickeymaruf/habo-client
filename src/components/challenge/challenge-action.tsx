@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { leaveChallenge } from "@/actions/participation";
 
 export default function ChallengeAction({
   challenge,
@@ -102,9 +103,16 @@ export default function ChallengeAction({
           Options
         </DropdownMenuLabel>
 
-        <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100">
+        <DropdownMenuItem
+          onClick={async () => {
+            await leaveChallenge(challenge.id);
+            toast.success("You have left the challenge!");
+            router.push("/participations");
+          }}
+          className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100"
+        >
           <LogOut className="h-4 w-4 stroke-[3px]" />
-          LEAVE SESSION
+          LEAVE CHALLENGE
         </DropdownMenuItem>
 
         {isCreator && (
