@@ -69,11 +69,7 @@ export default async function ChallengePage({
 
           {/* RIGHT SIDE: Action Dropdown Sticker */}
           {(hasJoined || session.user.role === UserRole.ADMIN) && (
-            <ChallengeAction
-              user={session.user}
-              challenge={challenge}
-              hasJoined={hasJoined}
-            />
+            <ChallengeAction user={session.user} challenge={challenge} />
           )}
 
           {/* Background Texture Pattern */}
@@ -130,7 +126,7 @@ export default async function ChallengePage({
                     {challenge._count?.participations || 0}
                   </span>
                   <span className="text-xs font-bold text-black/50 uppercase">
-                    Participants
+                    Total Participants
                   </span>
                 </div>
                 <div className="flex flex-col gap-1 rounded-3xl border-4 border-black bg-cyan-300 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">

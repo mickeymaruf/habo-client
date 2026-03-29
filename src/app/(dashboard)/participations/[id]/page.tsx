@@ -126,12 +126,12 @@ export default async function ChallengePage({
                 </span>
               </div>
               <div className="flex flex-col gap-1 rounded-3xl border-4 border-black bg-[#A3E635] p-6">
-                <Zap className="h-6 w-6 stroke-[3px] text-black" />
-                <span className="text-2xl font-black tracking-tighter uppercase">
-                  60%
+                <Users2 className="h-6 w-6 stroke-[3px] text-black" />
+                <span className="text-2xl font-black">
+                  {participation.challenge._count?.participations || 0}
                 </span>
                 <span className="text-xs font-bold text-black/50 uppercase">
-                  Community Avg
+                  Total Participants
                 </span>
               </div>
               <div className="flex flex-col gap-1 rounded-3xl border-4 border-black p-6">

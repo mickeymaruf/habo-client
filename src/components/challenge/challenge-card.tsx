@@ -32,7 +32,7 @@ export default function ChallengeCard({
             </span>
           )}
 
-          {!isJoined && challenge.isPremium && (
+          {challenge.isPremium && (
             <div className="flex items-center gap-1.5 rounded-full border-2 border-black bg-white px-3 py-1 text-black">
               <Lock className="h-3 w-3 stroke-[3px]" />
               <span className="text-[9px] font-black uppercase italic">

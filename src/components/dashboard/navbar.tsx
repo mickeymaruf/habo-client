@@ -176,9 +176,14 @@ export default function DashboardNavbar({ user }: { user: User }) {
 
             {/* Main Actions Group */}
             <DropdownMenuGroup className="space-y-1">
-              <DropdownMenuItem className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black">
-                <UserIcon className="h-5 w-5 stroke-[3px]" />
-                <span>Profile</span>
+              <DropdownMenuItem
+                asChild
+                className="flex cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 font-black tracking-tighter text-black uppercase italic transition-colors focus:bg-[#A3E635] focus:text-black"
+              >
+                <Link href="/profile">
+                  <UserIcon className="h-5 w-5 stroke-[3px]" />
+                  <span>Profile</span>
+                </Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem

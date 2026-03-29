@@ -1,6 +1,12 @@
 "use client";
 
-import { LayoutGrid, Calendar, ShieldCheck, Crown } from "lucide-react";
+import {
+  LayoutGrid,
+  Calendar,
+  ShieldCheck,
+  Crown,
+  ChartNoAxesCombined,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -19,7 +25,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
 
   if (role === UserRole.ADMIN) {
     navItems.push({
-      icon: ShieldCheck,
+      icon: ChartNoAxesCombined,
       label: "Platform Stats",
       href: "/stats",
     });
