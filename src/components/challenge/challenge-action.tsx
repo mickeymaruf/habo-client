@@ -26,11 +26,9 @@ import { toast } from "sonner";
 export default function ChallengeAction({
   challenge,
   user,
-  hasJoined,
 }: {
   challenge: Challenge;
   user: User;
-  hasJoined: boolean;
 }) {
   const router = useRouter();
   const isAdmin = user.role === "ADMIN";

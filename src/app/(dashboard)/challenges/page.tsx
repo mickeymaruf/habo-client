@@ -6,12 +6,14 @@ import Link from "next/link";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import ChallengeCard from "@/components/challenge/challenge-card";
 import FeaturedChallengeCard from "@/components/challenge/featured-challenge-card";
+import { authService } from "@/services/auth.service";
 
 export default async function ChallengesPage({
   searchParams,
 }: {
   searchParams: Promise<{ search?: string; category?: string }>;
 }) {
+  const session = await authService.getSession();
   const query = await searchParams;
   const isSearching = !!query.search;
 
@@ -136,6 +138,7 @@ export default async function ChallengesPage({
                 key={c.id}
                 challenge={c}
                 redirectUrl="/challenges"
+                currentUserId={session.user.id}
               />
             ))}
           </div>

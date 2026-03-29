@@ -143,7 +143,7 @@ export default async function ChallengePage({
                   )}
                 </span>
                 <span className="text-xs font-bold text-black/50 uppercase">
-                  Deployment Date
+                  Joined At
                 </span>
               </div>
             </div>

@@ -3,8 +3,10 @@ import DashboardHeader from "./_components/dashboard-header";
 import CheckList from "./_components/check-list";
 import { Participation } from "@/types/participation.types";
 import ChallengeCard from "../../../components/challenge/challenge-card";
+import { authService } from "@/services/auth.service";
 
 export default async function MyChallengesPage() {
+  const session = await authService.getSession();
   const { data: participations } =
     await participationService.getMyParticipations<Participation[]>();
 
@@ -40,6 +42,7 @@ export default async function MyChallengesPage() {
               key={c.id}
               challenge={c.challenge}
               redirectUrl="/participations"
+              currentUserId={session.user.id}
             />
           ))}
         </div>
