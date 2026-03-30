@@ -7,6 +7,9 @@ import {
   eachDayOfInterval,
   startOfWeek,
   startOfDay,
+  addDays,
+  isBefore,
+  isSameDay,
 } from "date-fns";
 import { useMemo } from "react";
 import {
@@ -33,9 +36,23 @@ export default function ActivityGraph({
   progressLogs: ProgressLog[];
   durationDays: number;
 }) {
-  const startDate = useMemo(() => startOfWeek(parseISO(joinedAt)), [joinedAt]);
-  const endDate = new Date();
+  // 1. Core Date Calculations
+  const startDay = useMemo(() => startOfDay(parseISO(joinedAt)), [joinedAt]);
+  const graphStartDate = useMemo(() => startOfWeek(startDay), [startDay]);
 
+  // The absolute end of the challenge
+  const challengeEndDate = useMemo(
+    () => addDays(startDay, durationDays - 1),
+    [startDay, durationDays],
+  );
+
+  // The visual end of the graph (Today, but capped at the Challenge End)
+  const visualEndDate = useMemo(() => {
+    const today = startOfDay(new Date());
+    return isBefore(challengeEndDate, today) ? challengeEndDate : today;
+  }, [challengeEndDate]);
+
+  // 2. Data Mapping
   const logMap = useMemo(() => {
     const map = new Map<string, ProgressLog>();
     progressLogs.forEach((log) => {
@@ -47,8 +64,12 @@ export default function ActivityGraph({
     return map;
   }, [progressLogs]);
 
+  // 3. Grid Generation
   const weeks = useMemo(() => {
-    const days = eachDayOfInterval({ start: startDate, end: endDate });
+    const days = eachDayOfInterval({
+      start: graphStartDate,
+      end: visualEndDate,
+    });
     const weeksArr: Date[][] = [];
     let currentWeek: Date[] = [];
 
@@ -61,7 +82,7 @@ export default function ActivityGraph({
     });
     if (currentWeek.length > 0) weeksArr.push(currentWeek);
     return weeksArr;
-  }, [startDate, endDate]);
+  }, [graphStartDate, visualEndDate]);
 
   const totalCompleted = progressLogs.filter((p) => p.completed).length;
 
@@ -127,17 +148,28 @@ export default function ActivityGraph({
                         const dateStr = format(day, "yyyy-MM-dd");
                         const logEntry = logMap.get(dateStr);
                         const isCompleted = !!logEntry;
+                        const isBeforeStart = isBefore(day, startDay);
+
+                        // Don't show anything for pre-challenge start date
+                        if (isBeforeStart) {
+                          return (
+                            <div
+                              key={dateStr}
+                              className="h-[14px] w-[14px] bg-transparent"
+                            />
+                          );
+                        }
 
                         return (
                           <Tooltip key={dateStr}>
                             <TooltipTrigger asChild>
                               <div
-                                className={`h-[14px] w-[14px] rounded-[3px] transition-all ${
+                                className={`relative h-[14px] w-[14px] rounded-[2px] transition-all ${
                                   isCompleted
                                     ? "bg-[#39d353] ring-white hover:ring-2"
                                     : "border border-[#30363d] bg-[#161b22]"
                                 }`}
-                              />
+                              ></div>
                             </TooltipTrigger>
                             <TooltipContent
                               side="top"
@@ -148,11 +180,6 @@ export default function ActivityGraph({
                                 {isCompleted ? "Completed" : "No contribution"}{" "}
                                 on {format(day, "MMM dd, yyyy")}
                               </p>
-                              {logEntry?.note && (
-                                <p className="mt-1 text-[#8b949e] italic">
-                                  "{logEntry.note}"
-                                </p>
-                              )}
                             </TooltipContent>
                           </Tooltip>
                         );

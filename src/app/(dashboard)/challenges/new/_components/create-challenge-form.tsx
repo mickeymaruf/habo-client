@@ -37,14 +37,14 @@ export default function CreateChallengeForm({ role }: { role: string }) {
       onChange: createChallengeZodSchema,
     },
     onSubmit: async ({ value }) => {
-      const id = toast.loading("Deploying challenge protocol...");
+      const id = toast.loading("Creating challenge...");
       try {
         const payload = { ...value };
         if (!payload.isPremium) delete payload.price;
 
         await createChallenge(payload);
 
-        toast.success("Protocol Active!", { id });
+        toast.success("Creating Active!", { id });
         router.push("/challenges");
       } catch (error: any) {
         toast.error(error.message || "Deployment failed", { id });

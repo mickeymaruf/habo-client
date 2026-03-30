@@ -35,6 +35,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const [searchValue, setSearchValue] = useState(
     searchParams.get("search") || "",
@@ -195,20 +196,44 @@ export default function DashboardNavbar({ user }: { user: User }) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
             <DropdownMenuItem
+              disabled={isLoggingOut}
+              onSelect={(e) => {
+                e.preventDefault();
+              }}
               onClick={async () => {
-                const { data, error } = await authClient.signOut();
-                if (data?.success) {
-                  router.push("/login");
-                  return;
-                }
+                setIsLoggingOut(true);
+                const toastId = toast.loading("TERMINATING_SESSION..."); // Immediate feedback
 
-                if (error) {
-                  toast.error(error.message);
+                try {
+                  const { data, error } = await authClient.signOut();
+
+                  if (error) {
+                    toast.error(error.message, { id: toastId });
+                    setIsLoggingOut(false);
+                    return;
+                  }
+
+                  toast.success("SESSION_CLOSED", { id: toastId });
+                  router.push("/login");
+                  router.refresh();
+                } catch (err) {
+                  toast.error("LOGOUT_FAILED", { id: toastId });
+                  setIsLoggingOut(false);
                 }
               }}
-              className="flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black text-[#A3E635] uppercase italic focus:bg-red-600 focus:text-white"
+              className={cn(
+                "flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black text-[#A3E635] uppercase italic transition-all",
+                "focus:bg-red-600 focus:text-white",
+                isLoggingOut && "opacity-50",
+              )}
             >
-              <LogOut className="h-5 w-5 stroke-[3px]" /> Logout
+              <LogOut
+                className={cn(
+                  "h-5 w-5 stroke-[3px]",
+                  isLoggingOut && "animate-pulse",
+                )}
+              />
+              {isLoggingOut ? "LOGGING_OUT..." : "Logout"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
