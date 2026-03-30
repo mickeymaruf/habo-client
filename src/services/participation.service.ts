@@ -1,6 +1,7 @@
 import { env } from "@/env";
 import { ApiResponse } from "@/types/api.types";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 export const participationService = {
   getMyParticipations: async <TData>(): Promise<ApiResponse<TData>> => {
@@ -30,6 +31,10 @@ export const participationService = {
       },
       next: { tags: ["participations"] },
     });
+
+    if (res.status === 404) {
+      notFound();
+    }
 
     const data = await res.json();
 

@@ -1,6 +1,7 @@
 import { env } from "@/env";
 import { ApiResponse } from "@/types/api.types";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 
 export const challengeService = {
   getAllChallenges: async <TData>(query?: {
@@ -43,6 +44,10 @@ export const challengeService = {
       },
       next: { tags: ["challenge"] },
     });
+
+    if (res.status === 404) {
+      notFound();
+    }
 
     const data = await res.json();
 
