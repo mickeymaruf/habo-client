@@ -10,6 +10,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -98,12 +99,12 @@ export default function LoginForm() {
       </form.Field>
 
       <div className="flex justify-start">
-        <button
-          type="button"
+        <Link
+          href="/forgot-password"
           className="text-[10px] font-black tracking-widest text-black/40 uppercase hover:text-black hover:underline"
         >
           Forgot Password?
-        </button>
+        </Link>
       </div>
 
       <form.Subscribe
