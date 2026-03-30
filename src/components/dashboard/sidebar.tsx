@@ -32,49 +32,79 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   }
 
   return (
-    <aside className="flex h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10">
-      {/* Brand Section - High Contrast */}
-      <div className="mb-12 text-center">
-        <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
-          HABO
-        </h1>
-        <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
-      </div>
+    <>
+      {/* DESKTOP SIDEBAR - Original Structure */}
+      <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10 md:flex">
+        <div className="mb-12 text-center">
+          <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
+            HABO
+          </h1>
+          <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
+        </div>
 
-      {/* Nav Links */}
-      <nav className="flex flex-1 flex-col gap-6">
-        {navItems.map((item) => {
-          const isActive = pathname.startsWith(item.href);
-          return (
-            <div key={item.label} className="group relative">
-              <Button
-                asChild
-                variant="ghost"
+        <nav className="flex flex-1 flex-col gap-6">
+          {navItems.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <div key={item.label} className="group relative">
+                <Button
+                  asChild
+                  variant="ghost"
+                  className={cn(
+                    "h-14 w-14 rounded-2xl border-4 transition-all duration-200 active:scale-90",
+                    isActive
+                      ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                      : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
+                  )}
+                >
+                  <Link href={item.href}>
+                    <item.icon
+                      className={cn(
+                        "h-6 w-6",
+                        isActive ? "stroke-[3px]" : "stroke-[2px]",
+                      )}
+                    />
+                  </Link>
+                </Button>
+                <span className="absolute top-1/2 left-20 z-50 -translate-y-1/2 scale-0 rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase transition-all group-hover:scale-100">
+                  {item.label}
+                </span>
+              </div>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* MOBILE FLOATING DOCK - Responsive Classes Only */}
+      <div className="fixed bottom-6 left-0 z-50 flex w-full justify-center px-6 md:hidden">
+        <nav className="flex items-center gap-1 rounded-[28px] border-[3px] border-black bg-white/80 p-2 shadow-[0_8px_32px_rgba(0,0,0,0.15),4px_4px_0px_0px_rgba(0,0,0,1)] backdrop-blur-md">
+          {navItems.map((item) => {
+            const isActive = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
                 className={cn(
-                  "h-14 w-14 rounded-2xl border-4 transition-all duration-200 active:scale-90",
-                  isActive
-                    ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
+                  "flex items-center gap-2 rounded-[22px] px-4 py-2.5 transition-all duration-300",
+                  isActive ? "bg-black text-[#A3E635]" : "text-black/40",
                 )}
               >
-                <Link href={item.href}>
-                  <item.icon
-                    className={cn(
-                      "h-6 w-6",
-                      isActive ? "stroke-[3px]" : "stroke-[2px]",
-                    )}
-                  />
-                </Link>
-              </Button>
-
-              {/* Tooltip on hover (Optional) */}
-              <span className="absolute top-1/2 left-20 z-50 -translate-y-1/2 scale-0 rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase transition-all group-hover:scale-100">
-                {item.label}
-              </span>
-            </div>
-          );
-        })}
-      </nav>
-    </aside>
+                <item.icon
+                  className={cn(
+                    "h-5 w-5",
+                    isActive ? "stroke-[2.5px]" : "stroke-[2px]",
+                  )}
+                />
+                {isActive && (
+                  <span className="text-[10px] font-black tracking-tight uppercase">
+                    {item.label.split(" ")[0]}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    </>
   );
 }
