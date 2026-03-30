@@ -40,7 +40,7 @@ export default function ChallengeNotFound() {
           {/* Header Message */}
           <div className="mb-10 space-y-4">
             <h1 className="text-4xl leading-none font-black tracking-tighter text-black uppercase italic md:text-7xl">
-              MISSION_VOID
+              Not_found
             </h1>
             <p className="mx-auto max-w-sm text-base leading-tight font-bold text-black/40 uppercase md:text-lg">
               We tracked the signal, but there&apos;s nothing here. This mission

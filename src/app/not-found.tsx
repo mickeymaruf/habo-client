@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, MoveLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function NotFound() {
+  const router = useRouter();
+
   return (
     <div className="relative flex min-h-[85vh] flex-col items-center justify-center overflow-hidden bg-white px-4">
       {/* --- BACKGROUND WATERMARK --- */}
@@ -39,22 +42,22 @@ export default function NotFound() {
         </div>
 
         {/* Primary Action */}
-        <Link
-          href="/"
+        <button
+          onClick={() => router.back()}
           className="group relative flex items-center gap-4 border-4 border-black bg-black px-10 py-6 text-xl font-black tracking-tighter text-white uppercase italic transition-all hover:bg-[#A3E635] hover:text-black hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:scale-95"
         >
           <ArrowLeft className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-1" />
-          Return to Home
-        </Link>
+          Go Back
+        </button>
 
         {/* Secondary Action */}
-        <button
-          onClick={() => window.history.back()}
+        <Link
+          href="/"
           className="mt-8 flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-black/30 uppercase transition-colors hover:text-black"
         >
-          Go Back
+          Return to Home
           <ArrowRight className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
 
       {/* --- CORNER DECOR --- */}

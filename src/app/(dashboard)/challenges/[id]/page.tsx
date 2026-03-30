@@ -62,7 +62,7 @@ export default async function ChallengePage({
             <div className="flex items-center gap-2 rounded-xl border-4 border-black bg-white px-3 py-1.5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all group-hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:px-5 md:py-2">
               <ArrowLeft className="h-4 w-4 stroke-[4px] text-black md:h-5 md:w-5" />
               <span className="text-[10px] font-black tracking-tighter text-black uppercase italic md:text-sm">
-                Back to Feed
+                Go back
               </span>
             </div>
           </Link>
