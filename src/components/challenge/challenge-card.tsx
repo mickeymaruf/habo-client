@@ -48,14 +48,14 @@ export default function ChallengeCard({
             </div>
           )}
 
-          <span className="ml-auto rounded-full bg-black px-4 py-1 text-[10px] font-black tracking-widest text-white uppercase">
+          <span className="rounded-full bg-black px-4 py-1 text-[10px] font-black tracking-widest text-white uppercase">
             {challenge.category}
           </span>
         </div>
 
         {/* TITLE & DESCRIPTION: Heavy Italic Tracking */}
         <div className="mb-6 space-y-3">
-          <h3 className="text-3xl leading-none font-medium tracking-tighter text-black transition-colors group-hover:text-[#A3E635]">
+          <h3 className="line-clamp-4 text-3xl leading-none font-medium tracking-tighter text-black transition-colors group-hover:text-[#A3E635]">
             {challenge.title}
           </h3>
           <p className="line-clamp-2 text-sm font-bold text-black/70">
@@ -64,7 +64,7 @@ export default function ChallengeCard({
         </div>
 
         {/* THE STATS ROW: Votes and Comments integrated here */}
-        <div className="mb-8 flex flex-wrap items-center gap-4 rounded-xl border-2 border-black bg-zinc-50 p-3">
+        <div className="mt-auto mb-8 flex flex-wrap items-center gap-4 rounded-xl bg-zinc-200 p-3">
           {/* Duration */}
           <div className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4 stroke-[3px]" />
@@ -105,7 +105,7 @@ export default function ChallengeCard({
         </div>
 
         {/* BOTTOM ROW: Sticker Avatars & Action */}
-        <div className="mt-auto flex items-center justify-between border-t-4 border-black pt-6">
+        <div className="flex items-center justify-between">
           <div className="flex items-center -space-x-2">
             {otherParticipants.slice(0, 3).map((p) => (
               <Avatar

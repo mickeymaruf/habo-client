@@ -11,32 +11,33 @@ export default async function MyChallengesPage() {
     await participationService.getMyParticipations<Participation[]>();
 
   return (
-    <div className="pb-20">
+    <div className="px-4 pb-20 md:px-0">
       {/* Top Section: Briefing & Daily Log */}
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-2">
         <DashboardHeader />
         <CheckList participations={participations} />
       </div>
 
       {/* --- SECTION HEADER: MY CHALLENGES --- */}
-      <div className="mt-24 mb-12 flex flex-col items-start gap-2">
-        <div className="flex items-center gap-3">
-          <h2 className="text-4xl font-black tracking-tighter text-black uppercase italic">
+      <div className="mt-16 mb-8 flex flex-col items-start gap-2 md:mt-24 md:mb-12">
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 className="text-3xl font-black tracking-tighter text-black uppercase italic md:text-4xl">
             Active Missions
           </h2>
-          <span className="rounded-full border-2 border-black bg-[#A3E635] px-3 py-0.5 text-[10px] font-black text-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <span className="rounded-full border-2 border-black bg-[#A3E635] px-3 py-0.5 text-[9px] font-black text-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:text-[10px]">
             {participations.length} TOTAL
           </span>
         </div>
-        <div className="h-1.5 w-32 bg-black" /> {/* Heavy Underline Accent */}
-        <p className="mt-2 text-xs font-bold tracking-widest text-black/40 uppercase">
+        <div className="h-1.5 w-24 bg-black md:w-32" />{" "}
+        {/* Heavy Underline Accent */}
+        <p className="mt-2 text-[10px] font-bold tracking-widest text-black/40 uppercase md:text-xs">
           Deployment overview and live challenge tracking.
         </p>
       </div>
 
       {/* Challenges Grid */}
       {participations.length > 0 ? (
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 xl:grid-cols-3">
           {participations.map((c) => (
             <ChallengeCard
               key={c.id}
@@ -47,11 +48,11 @@ export default async function MyChallengesPage() {
           ))}
         </div>
       ) : (
-        <div className="rounded-[40px] border-4 border-dashed border-black/10 bg-zinc-50/50 py-32 text-center">
-          <p className="text-xl font-black tracking-tighter text-black/20 uppercase italic">
+        <div className="rounded-[30px] border-4 border-dashed border-black/10 bg-zinc-50/50 py-20 text-center md:rounded-[40px] md:py-32">
+          <p className="text-lg font-black tracking-tighter text-black/20 uppercase italic md:text-xl">
             No active deployments detected.
           </p>
-          <p className="mt-2 text-[10px] font-bold tracking-[0.2em] text-black/20 uppercase">
+          <p className="mt-2 text-[9px] font-bold tracking-[0.2em] text-black/20 uppercase md:text-[10px]">
             Visit the feed to enlist.
           </p>
         </div>

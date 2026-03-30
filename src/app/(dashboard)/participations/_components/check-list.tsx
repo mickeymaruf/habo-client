@@ -65,10 +65,10 @@ export default function CheckList({
   return (
     <div className="w-full max-w-3xl">
       <div className="mb-2 flex items-baseline justify-between px-1">
-        <h3 className="text-sm font-black tracking-[0.3em] text-black uppercase">
+        <h3 className="text-[10px] font-black tracking-[0.2em] text-black uppercase sm:text-sm sm:tracking-[0.3em]">
           Daily Tasks
         </h3>
-        <p className="text-[10px] font-bold text-black/30 uppercase">
+        <p className="text-[9px] font-bold text-black/30 uppercase sm:text-[10px]">
           {state.filter((s) => s.completed).length} of {state.length} complete
         </p>
       </div>
@@ -79,29 +79,29 @@ export default function CheckList({
             <div
               key={challenge.id}
               className={cn(
-                "group flex items-center justify-between border-b border-black/10 py-6 transition-colors",
+                "group flex items-center justify-between border-b border-black/10 py-4 transition-colors sm:py-6",
                 challenge.completed ? "bg-zinc-50/50" : "hover:bg-[#A3E635]/5",
               )}
             >
-              <div className="flex items-center gap-8 px-2">
+              <div className="flex min-w-0 items-center gap-3 px-1 sm:gap-8 sm:px-2">
                 {/* Minimalist Day Index */}
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold text-black/20 uppercase">
+                <div className="flex shrink-0 flex-col">
+                  <span className="text-[8px] font-bold text-black/20 uppercase sm:text-[10px]">
                     Day
                   </span>
-                  <span className="text-2xl leading-none font-black text-black tabular-nums">
+                  <span className="text-lg leading-none font-black text-black tabular-nums sm:text-2xl">
                     {challenge.currentDay.toString().padStart(2, "0")}
                   </span>
                 </div>
 
                 {/* Vertical Divider */}
-                <div className="h-10 w-[2px] bg-black" />
+                <div className="h-8 w-[2px] shrink-0 bg-black sm:h-10" />
 
                 {/* Title and Badge */}
-                <div className="flex flex-col gap-1">
+                <div className="flex min-w-0 flex-col gap-1">
                   <h3
                     className={cn(
-                      "text-xl font-black tracking-tight uppercase italic transition-all",
+                      "truncate text-sm font-black tracking-tight uppercase italic transition-all sm:text-xl",
                       challenge.completed
                         ? "text-black/20 line-through"
                         : "text-black",
@@ -109,14 +109,14 @@ export default function CheckList({
                   >
                     {challenge.title}
                   </h3>
-                  <p className="mt-1 w-fit rounded-sm bg-black px-2 py-0.5 text-[10px] font-black tracking-widest text-[#A3E635] uppercase">
+                  <p className="mt-0.5 w-fit rounded-sm bg-black px-1.5 py-0.5 text-[8px] font-black tracking-widest text-[#A3E635] uppercase sm:mt-1 sm:px-2 sm:text-[10px]">
                     {challenge.totalDays} Day Mission
                   </p>
                 </div>
               </div>
 
               {/* Square Tactical Checkbox */}
-              <div className="pr-4">
+              <div className="pr-2 pl-2 sm:pr-4">
                 {challenge.loading ? (
                   <Loader2 className="h-6 w-6 animate-spin text-black" />
                 ) : (
@@ -125,7 +125,7 @@ export default function CheckList({
                     disabled={challenge.completed || challenge.loading}
                     onCheckedChange={() => handleCheck(challenge.id)}
                     className={cn(
-                      "h-14 w-14 rounded-none border-2 border-black transition-all",
+                      "h-10 w-10 rounded-none border-2 border-black transition-all sm:h-14 sm:w-14",
                       "data-[state=checked]:border-black data-[state=checked]:bg-[#A3E635] data-[state=checked]:text-black",
                       "hover:border-black hover:bg-[#A3E635]",
                     )}

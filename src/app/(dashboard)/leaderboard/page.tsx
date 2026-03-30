@@ -68,7 +68,7 @@ export default async function LeaderboardPage() {
   const { topChallenges, topUsers } = await getLeaderboardData();
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-12 pt-10 pb-20 font-mono text-black">
+    <div className="mx-auto w-full max-w-6xl space-y-12 px-4 pt-10 pb-20 font-mono text-black">
       {/* Header Section */}
       <div className="space-y-4 text-center">
         <div className="inline-block skew-x-[-12deg] border-4 border-black bg-black px-6 py-2 text-white">
@@ -76,7 +76,7 @@ export default async function LeaderboardPage() {
             TOP 10
           </h2>
         </div>
-        <h1 className="text-7xl leading-none font-black tracking-tighter uppercase italic md:text-8xl">
+        <h1 className="text-6xl leading-none font-black tracking-tighter uppercase italic sm:text-6xl md:text-8xl">
           LEADERBOARD<span className="text-[#A3E635]">_</span>
         </h1>
         <p className="mx-auto max-w-xl text-sm font-bold tracking-widest text-black/50 uppercase">
@@ -90,7 +90,7 @@ export default async function LeaderboardPage() {
         <div className="space-y-8 lg:col-span-8">
           <div className="flex items-center gap-4 border-b-8 border-black pb-4">
             <TrendingUp className="h-8 w-8 stroke-[3px]" />
-            <h3 className="text-4xl font-black tracking-tighter uppercase italic">
+            <h3 className="text-3xl font-black tracking-tighter uppercase italic md:text-4xl">
               Challenges_Taking_Over
             </h3>
           </div>
