@@ -87,7 +87,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
           )}
         </form.Field>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <form.Field name="durationDays">
             {(field) => (
               <AppField
@@ -180,9 +180,9 @@ export default function CreateChallengeForm({ role }: { role: string }) {
             isPending={isSubmitting}
             pendingLabel="Initializing..."
             disabled={!canSubmit}
-            className="group relative flex w-full cursor-pointer items-center justify-center border-[4px] border-black bg-[#A3E635] py-8 text-lg font-black tracking-tighter uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+            className="group relative flex w-full cursor-pointer items-center justify-center border-[4px] border-black bg-[#A3E635] py-6 text-base font-black tracking-tighter text-black uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none md:py-8 md:text-lg"
           >
-            Confirm Mission Parameters
+            Create
           </AppSubmitButton>
         )}
       </form.Subscribe>

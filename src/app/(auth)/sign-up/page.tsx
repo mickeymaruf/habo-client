@@ -9,11 +9,11 @@ import { ArrowLeft } from "lucide-react";
 
 export default function SignupPage() {
   return (
-    <div className="relative flex min-h-screen w-full bg-white font-mono selection:bg-[#A3E635] selection:text-black">
+    <div className="relative flex min-h-screen w-full overflow-x-hidden bg-white font-mono selection:bg-[#A3E635] selection:text-black">
       {/* --- BACK BUTTON / ABORT PROTOCOL --- */}
       <Link
         href="/"
-        className="group absolute top-8 left-8 z-50 flex items-center gap-2 border-2 border-black bg-white px-4 py-2 transition-all hover:-translate-y-1 hover:bg-[#A3E635] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none"
+        className="group absolute top-4 left-4 z-50 flex items-center gap-2 border-2 border-black bg-white px-4 py-2 transition-all hover:-translate-y-1 hover:bg-[#A3E635] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none md:top-8 md:left-8"
       >
         <ArrowLeft className="h-4 w-4 stroke-[3px]" />
         <span className="text-[10px] font-black tracking-widest uppercase">
@@ -23,15 +23,15 @@ export default function SignupPage() {
 
       {/* Background Large Text Decor */}
       <div className="pointer-events-none absolute top-0 left-[5%] z-0 select-none">
-        <p className="text-[15rem] font-black tracking-tighter text-black/5 uppercase italic">
+        <p className="text-[8rem] font-black tracking-tighter text-black/5 uppercase italic md:text-[15rem]">
           EVOLVE
         </p>
       </div>
 
       {/* Left Side: Form Container */}
       <div className="relative z-10 flex w-full flex-col lg:w-4/6">
-        <div className="flex flex-1 flex-col items-center justify-center p-8 md:p-24">
-          <div className="w-full max-w-md rounded-none border-[6px] border-black bg-white p-10 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
+        <div className="flex flex-1 flex-col items-center justify-center p-4 md:p-24">
+          <div className="w-full max-w-md rounded-none border-[4px] border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:border-[6px] md:p-10 md:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
             {/* Logo Section */}
             <div className="mb-12 border-b-4 border-black pb-6">
               <h1 className="text-4xl font-black tracking-tighter uppercase italic">
@@ -47,7 +47,7 @@ export default function SignupPage() {
               <p className="text-xs font-black tracking-widest text-black/40 uppercase">
                 Begin Initial Deployment
               </p>
-              <h2 className="text-4xl font-black tracking-tighter text-black uppercase italic">
+              <h2 className="text-3xl font-black tracking-tighter text-black uppercase italic md:text-4xl">
                 Create Account
               </h2>
             </div>
@@ -78,7 +78,7 @@ export default function SignupPage() {
               </div>
             </div> */}
 
-            <p className="mt-10 text-center text-xs font-bold tracking-widest uppercase">
+            <p className="mt-10 text-center text-[10px] font-bold tracking-widest uppercase md:text-xs">
               Already Have One?{" "}
               <Link
                 href="/login"

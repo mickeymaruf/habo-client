@@ -6,7 +6,7 @@ export default function FeaturedChallengeCard({ c }: { c: Challenge }) {
   return (
     <Link
       href={`/challenges/${c.id}`}
-      className="group relative flex min-h-[400px] w-[280px] shrink-0 flex-col overflow-hidden rounded-[35px] bg-zinc-900 p-6 transition-all hover:-translate-y-2 sm:w-[320px] md:min-h-[420px] md:w-[380px] md:rounded-[45px] md:p-8"
+      className="group relative flex min-h-[400px] w-[320px] shrink-0 flex-col overflow-hidden rounded-[35px] bg-zinc-900 p-6 transition-all hover:-translate-y-2 sm:w-[320px] md:min-h-[420px] md:w-[380px] md:rounded-[45px] md:p-8"
     >
       {/* Background Accents */}
       <div className="absolute top-0 right-0 h-32 w-32 translate-x-10 -translate-y-10 rounded-full bg-[#C3B5FD]/20 blur-3xl transition-colors group-hover:bg-[#A3E635]/20" />
