@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 import { UserRole } from "./constants/user";
 import { authService } from "./services/auth.service";
 
-// Define routes that anyone can see (Home, About, etc.)
 export const publicRoutes = ["/", "/about", "/contact"];
+export const adminRoutes = ["/stats"];
 
 export const authRoutes = [
   "/login",
@@ -20,6 +20,7 @@ export async function proxy(request: NextRequest) {
 
   const isAuthRoute = authRoutes.includes(pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
+  const isAdminRoute = adminRoutes.includes(pathname);
 
   // 1. If it's a public route (like Home), let them through regardless of session
   if (isPublicRoute) {
@@ -37,12 +38,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // 4. Role-Based Protection (Uncommented and cleaned)
+  // 4. Role-Based Protection
   if (session) {
     const role = session.user.role;
 
-    // Example: Prevent Users from hitting Admin routes
-    if (role === UserRole.USER && pathname.startsWith("/admin")) {
+    // Prevent Users from hitting Admin routes
+    if (role === UserRole.USER && isAdminRoute) {
       return NextResponse.redirect(new URL("/challenges", request.url));
     }
   }

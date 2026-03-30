@@ -29,6 +29,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { UserRole } from "@/constants/user";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export default function DashboardNavbar({ user }: { user: User }) {
   const router = useRouter();
@@ -194,9 +195,16 @@ export default function DashboardNavbar({ user }: { user: User }) {
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
             <DropdownMenuItem
-              onClick={() => {
-                authClient.signOut();
-                router.push("/login");
+              onClick={async () => {
+                const { data, error } = await authClient.signOut();
+                if (data?.success) {
+                  router.push("/login");
+                  return;
+                }
+
+                if (error) {
+                  toast.error(error.message);
+                }
               }}
               className="flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black text-[#A3E635] uppercase italic focus:bg-red-600 focus:text-white"
             >

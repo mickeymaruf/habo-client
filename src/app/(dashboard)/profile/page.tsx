@@ -181,9 +181,16 @@ export default function ProfilePage() {
       {/* --- DANGER ZONE --- */}
       <div className="flex justify-center">
         <button
-          onClick={() => {
-            authClient.signOut();
-            router.push("/login");
+          onClick={async () => {
+            const { data, error } = await authClient.signOut();
+            if (data?.success) {
+              router.push("/login");
+              return;
+            }
+
+            if (error) {
+              toast.error(error.message);
+            }
           }}
           className="group flex items-center gap-2 font-black tracking-widest text-red-500 uppercase transition-colors hover:text-red-600"
         >
