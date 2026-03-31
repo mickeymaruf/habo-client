@@ -64,7 +64,7 @@ export default function ChallengeCard({
         </div>
 
         {/* THE STATS ROW: Votes and Comments integrated here */}
-        <div className="mt-auto mb-8 flex flex-wrap items-center gap-4 rounded-xl bg-zinc-200 p-3">
+        <div className="mt-auto mb-8 flex flex-wrap items-center gap-4 rounded-xl bg-zinc-200/70 p-3">
           {/* Duration */}
           <div className="flex items-center gap-1.5">
             <Calendar className="h-4 w-4 stroke-[3px]" />

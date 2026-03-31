@@ -19,8 +19,9 @@ import {
   MoreVertical,
   LogOut,
   ShieldAlert,
+  Eye,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { leaveChallenge } from "@/actions/participation";
 
@@ -31,6 +32,8 @@ export default function ChallengeAction({
   challenge: Challenge;
   user: User;
 }) {
+  const pathname = usePathname();
+  const isDetailPage = pathname === `/challenges/${challenge.id}`;
   const router = useRouter();
   const isAdmin = user.role === "ADMIN";
   const isCreator = user.id === challenge.creatorId;
@@ -114,6 +117,16 @@ export default function ChallengeAction({
         <DropdownMenuLabel className="px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
           Options
         </DropdownMenuLabel>
+
+        {!isDetailPage && (
+          <DropdownMenuItem
+            onClick={() => router.push(`/challenges/${challenge.id}`)}
+            className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-[#A3E635]"
+          >
+            <Eye className="h-4 w-4 stroke-[3px]" />
+            VIEW CHALLENGE
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem
           onClick={handleLeave}

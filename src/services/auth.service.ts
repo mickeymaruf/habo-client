@@ -3,7 +3,7 @@ import { env } from "@/env";
 import { AuthSessionResponse } from "@/types/auth.types";
 
 export const authService = {
-  getSession: async (): Promise<AuthSessionResponse | null> => {
+  checkSession: async (): Promise<AuthSessionResponse | null> => {
     try {
       const cookieStore = await cookies();
       const cookieString = cookieStore.toString();
@@ -38,5 +38,13 @@ export const authService = {
       console.error("Failed to fetch session:", error);
       return null;
     }
+  },
+
+  getSession: async (): Promise<AuthSessionResponse> => {
+    const session = await authService.checkSession();
+    if (!session) {
+      throw new Error("Authentication Required");
+    }
+    return session;
   },
 };

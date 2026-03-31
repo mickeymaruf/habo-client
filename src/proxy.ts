@@ -24,7 +24,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const session = await authService.getSession();
+  const session = await authService.checkSession();
   const isAuthRoute = authRoutes.includes(pathname);
 
   // 2. If logged in and trying to access login/signup, send to dashboard/challenges
