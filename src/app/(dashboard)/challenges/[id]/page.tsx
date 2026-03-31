@@ -101,71 +101,79 @@ export default async function ChallengePage({
               {challenge.title}
             </h1>
 
-            <p className="max-w-2xl text-base leading-relaxed font-medium text-black/70 md:text-xl">
-              {challenge.description}
-            </p>
+            <div
+              className={cn(
+                "transition-all duration-500",
+                showPaywall && "opacity-40 blur-md select-none",
+              )}
+            >
+              <p className="max-w-2xl text-base leading-relaxed font-medium text-black/70 md:text-xl">
+                {challenge.description}
+              </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <div className="mr-2 flex flex-col">
-                <span className="text-[10px] font-black tracking-widest text-black/40 uppercase">
-                  Member List
-                </span>
-                <span className="text-xs font-black tracking-tighter uppercase italic">
-                  Active Participants
-                </span>
-              </div>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <div className="mr-2 flex flex-col">
+                  <span className="text-[10px] font-black tracking-widest text-black/40 uppercase">
+                    Member List
+                  </span>
+                  <span className="text-xs font-black tracking-tighter uppercase italic">
+                    Active Participants
+                  </span>
+                </div>
 
-              <div className="flex flex-wrap gap-2">
-                <TooltipProvider delayDuration={0}>
-                  {/* 1. CREATOR AVATAR */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="relative cursor-crosshair">
-                        <Avatar className="h-12 w-12 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ring-4 ring-[#A3E635] ring-offset-2">
-                          <AvatarImage src={challenge.creator.image || ""} />
-                          <AvatarFallback className="bg-zinc-200 text-xs font-black uppercase">
-                            {challenge.creator.name.slice(0, 2)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-[#A3E635] text-[8px] font-black">
-                          ★
-                        </div>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent
-                      side="bottom"
-                      className="rounded-none border-2 border-black bg-black px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]"
-                    >
-                      Creator: {challenge.creator.name}
-                    </TooltipContent>
-                  </Tooltip>
-
-                  {/* 2. PARTICIPANT AVATARS */}
-                  {challenge.participations
-                    ?.filter((p) => p.user.id !== challenge.creatorId)
-                    .map((participation) => (
-                      <Tooltip key={participation.id}>
-                        <TooltipTrigger asChild>
-                          <div className="relative cursor-crosshair">
-                            <Avatar className="h-12 w-12 border-4 border-black">
-                              <AvatarImage
-                                src={participation.user.image || ""}
-                              />
-                              <AvatarFallback className="bg-zinc-200 text-xs font-black uppercase">
-                                {participation.user.name.slice(0, 2)}
-                              </AvatarFallback>
-                            </Avatar>
+                <div className="flex flex-wrap gap-2">
+                  <TooltipProvider delayDuration={0}>
+                    {/* 1. CREATOR AVATAR */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="relative cursor-crosshair">
+                          <Avatar className="h-10 w-10 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ring-4 ring-[#A3E635] ring-offset-2 md:h-12 md:w-12">
+                            <AvatarImage src={challenge.creator.image || ""} />
+                            <AvatarFallback className="bg-zinc-200 text-xs font-black uppercase">
+                              {challenge.creator.name.slice(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-[#A3E635] text-[8px] font-black">
+                            ★
                           </div>
-                        </TooltipTrigger>
-                        <TooltipContent
-                          side="bottom"
-                          className="rounded-none border-2 border-black bg-black px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]"
-                        >
-                          {participation.user.name}
-                        </TooltipContent>
-                      </Tooltip>
-                    ))}
-                </TooltipProvider>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="bottom"
+                        className="rounded-none border-2 border-black bg-black px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]"
+                      >
+                        Creator: {challenge.creator.name}
+                      </TooltipContent>
+                    </Tooltip>
+
+                    {/* 2. PARTICIPANT AVATARS */}
+                    {challenge.participations
+                      ?.filter((p) => p.user.id !== challenge.creatorId)
+                      .slice(0, 5)
+                      .map((participation) => (
+                        <Tooltip key={participation.id}>
+                          <TooltipTrigger asChild>
+                            <div className="relative cursor-crosshair">
+                              <Avatar className="h-10 w-10 border-4 border-black md:h-12 md:w-12">
+                                <AvatarImage
+                                  src={participation.user.image || ""}
+                                />
+                                <AvatarFallback className="bg-zinc-200 text-xs font-black uppercase">
+                                  {participation.user.name.slice(0, 2)}
+                                </AvatarFallback>
+                              </Avatar>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent
+                            side="bottom"
+                            className="rounded-none border-2 border-black bg-black px-3 py-1 text-[10px] font-black tracking-widest text-white uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]"
+                          >
+                            {participation.user.name}
+                          </TooltipContent>
+                        </Tooltip>
+                      ))}
+                  </TooltipProvider>
+                </div>
               </div>
             </div>
           </div>
@@ -233,7 +241,7 @@ export default async function ChallengePage({
 
             {/* THE BRUTALIST PAYWALL OVERLAY */}
             {showPaywall && (
-              <div className="absolute inset-0 z-30 flex items-center justify-center p-4 pt-10">
+              <div className="absolute inset-0 z-30 flex items-start justify-center p-4 pt-10 md:pt-20">
                 <div className="w-full max-w-sm rounded-[30px] border-4 border-black bg-white p-6 text-center shadow-[10px_10px_0px_0px_rgba(163,230,53,1)] md:max-w-md md:rounded-[40px] md:p-10 md:shadow-[15px_15px_0px_0px_rgba(163,230,53,1)]">
                   <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-900 text-[#A3E635] md:mb-6 md:h-20 md:w-20">
                     <Lock className="h-8 w-8 stroke-[3px] md:h-10 md:w-10" />

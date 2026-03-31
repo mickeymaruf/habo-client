@@ -72,12 +72,12 @@ export function JoinChallengeButton({
       <Link href={`/participations/${challengeId}`} className="block w-full">
         <Button
           size="lg"
-          className="group h-20 w-full rounded-[30px] border-4 border-black bg-white py-7 text-xl font-black tracking-tighter text-black uppercase italic shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] transition-all duration-200 hover:shadow-none active:scale-95"
+          className="group h-16 w-full rounded-[20px] border-4 border-black bg-white py-4 text-lg font-black tracking-tighter text-black uppercase italic shadow-[6px_6px_0px_0px_rgba(163,230,53,1)] transition-all duration-200 hover:shadow-none active:scale-95 md:h-20 md:rounded-[30px] md:py-7 md:text-xl md:shadow-[8px_8px_0px_0px_rgba(163,230,53,1)]"
         >
           <div className="flex items-center gap-3">
-            <BarChart3 className="h-6 w-6 stroke-[3px] text-[#A3E635]" />
+            <BarChart3 className="h-5 w-5 stroke-[3px] text-[#A3E635] md:h-6 md:w-6" />
             <span>TRACK MY PROGRESS</span>
-            <ArrowRight className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-2" />
+            <ArrowRight className="hidden h-5 w-5 stroke-[3px] transition-transform group-hover:translate-x-2 sm:block md:h-6 md:w-6" />
           </div>
         </Button>
       </Link>
@@ -93,33 +93,33 @@ export function JoinChallengeButton({
       onClick={handleJoin}
       disabled={loading}
       className={cn(
-        "group h-20 w-full rounded-[30px] border-4 border-black py-7 text-xl font-black tracking-tighter italic transition-all duration-200 active:scale-95",
+        "group h-16 w-full rounded-[20px] border-4 border-black py-4 text-lg font-black tracking-tighter italic transition-all duration-200 active:scale-95 md:h-20 md:rounded-[30px] md:py-7 md:text-xl",
         isRejoining || !isPremium
-          ? "bg-[#A3E635] text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-[#92d42d] hover:shadow-none"
-          : "bg-black text-white shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] hover:bg-zinc-900",
+          ? "bg-[#A3E635] text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:bg-[#92d42d] hover:shadow-none md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+          : "bg-black text-white shadow-[6px_6px_0px_0px_rgba(163,230,53,1)] hover:bg-zinc-900 md:shadow-[8px_8px_0px_0px_rgba(163,230,53,1)]",
       )}
     >
       {loading ? (
         <div className="flex items-center gap-3">
-          <Loader2 className="h-6 w-6 animate-spin stroke-[3px]" />
+          <Loader2 className="h-5 w-5 animate-spin stroke-[3px] md:h-6 md:w-6" />
           <span>VERIFYING...</span>
         </div>
       ) : isRejoining ? (
         <div className="flex items-center gap-3">
-          <RotateCcw className="h-6 w-6 stroke-[3px]" />
+          <RotateCcw className="h-5 w-5 stroke-[3px] md:h-6 md:w-6" />
           <span>REJOIN MISSION</span>
-          <ArrowRight className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-2" />
+          <ArrowRight className="hidden h-5 w-5 stroke-[3px] transition-transform group-hover:translate-x-2 sm:block md:h-6 md:w-6" />
         </div>
       ) : isPremium ? (
         <div className="flex items-center gap-3">
-          <Lock className="h-6 w-6 stroke-[3px]" />
+          <Lock className="h-5 w-5 stroke-[3px] md:h-6 md:w-6" />
           <span>UNLOCK PREMIUM ACCESS</span>
-          <ArrowRight className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-2" />
+          <ArrowRight className="hidden h-5 w-5 stroke-[3px] transition-transform group-hover:translate-x-2 sm:block md:h-6 md:w-6" />
         </div>
       ) : (
         <div className="flex items-center gap-3">
           <span>JOIN CHALLENGE</span>
-          <Users className="h-6 w-6 stroke-[3px]" />
+          <Users className="h-5 w-5 stroke-[3px] md:h-6 md:w-6" />
         </div>
       )}
     </Button>
