@@ -44,7 +44,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   return (
     <>
       {/* DESKTOP SIDEBAR - Original Structure */}
-      <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-10 md:flex">
+      <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-7 md:flex">
         <div className="mb-12 text-center">
           <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
             HABO
@@ -86,34 +86,37 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
       </aside>
 
       {/* MOBILE FLOATING DOCK - Responsive Classes Only */}
-      <div className="fixed bottom-6 left-0 z-50 flex w-full justify-center px-6 md:hidden">
-        <nav className="flex items-center gap-1 rounded-[28px] border-[3px] border-black bg-white/80 p-2 shadow-[0_8px_32px_rgba(0,0,0,0.15),4px_4px_0px_0px_rgba(0,0,0,1)] backdrop-blur-md">
-          {navItems.map((item) => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-2 rounded-[22px] px-4 py-2.5 transition-all duration-300",
-                  isActive ? "bg-black text-[#A3E635]" : "text-black/40",
-                )}
-              >
-                <item.icon
+      <div className="fixed bottom-6 left-0 z-50 flex w-full justify-center px-4 md:hidden">
+        <div className="relative max-w-full overflow-hidden rounded-[32px] border-[3px] border-black bg-white/80 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.15),4px_4px_0px_0px_rgba(0,0,0,1)] backdrop-blur-md">
+          {/* Scrollable Container */}
+          <nav className="flex items-center gap-1 overflow-x-auto overflow-y-hidden px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {navItems.map((item) => {
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
                   className={cn(
-                    "h-5 w-5",
-                    isActive ? "stroke-[2.5px]" : "stroke-[2px]",
+                    "flex shrink-0 items-center gap-2 rounded-[22px] px-4 py-2.5 transition-all duration-300",
+                    isActive ? "bg-black text-[#A3E635]" : "text-black/40",
                   )}
-                />
-                {isActive && (
-                  <span className="text-[10px] font-black tracking-tight uppercase">
-                    {item.label.split(" ")[0]}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-        </nav>
+                >
+                  <item.icon
+                    className={cn(
+                      "h-5 w-5",
+                      isActive ? "stroke-[2.5px]" : "stroke-[2px]",
+                    )}
+                  />
+                  {isActive && (
+                    <span className="text-[10px] font-black tracking-tight whitespace-nowrap uppercase">
+                      {item.label.split(" ")[0]}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       </div>
     </>
   );

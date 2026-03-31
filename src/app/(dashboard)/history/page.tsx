@@ -27,7 +27,7 @@ export default async function MyMissionsPage() {
           <div className="flex items-center gap-4">
             <Rocket className="h-10 w-10 stroke-[3px]" />
             <h2 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
-              Published <span className="text-[#A3E635]">Missions</span>
+              Published <span className="text-[#A3E635]">Challenges</span>
             </h2>
           </div>
           <Link href="/challenges/new">

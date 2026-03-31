@@ -16,14 +16,14 @@ export default async function AdminPaymentsPage() {
   const { payments } = data;
 
   return (
-    <div className="min-h-screen space-y-8 bg-[#F3F4F6] p-8">
+    <div className="min-h-screen space-y-8 overflow-x-hidden bg-[#F3F4F6] p-4 md:p-8">
       {/* HEADER SECTION */}
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div>
-          <h1 className="text-5xl font-black tracking-tighter uppercase italic">
+          <h1 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
             Revenue <span className="text-[#A3E635]">Control</span>
           </h1>
-          <p className="text-sm font-bold tracking-widest text-black/60 uppercase">
+          <p className="text-xs font-bold tracking-widest text-black/60 uppercase md:text-sm">
             Audit logs for all Habo financial transactions
           </p>
         </div>
@@ -47,24 +47,24 @@ export default async function AdminPaymentsPage() {
       </div>
 
       {/* SEARCH & FILTER BAR - COMING SOON STATE */}
-      <div className="group relative flex items-center gap-4 opacity-60">
+      <div className="group relative flex flex-col items-stretch gap-4 opacity-60 md:flex-row md:items-center">
         <div className="relative flex-1">
           <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 stroke-[3px]" />
-          <div className="w-full cursor-not-allowed border-4 border-black bg-white/50 p-4 pl-12 text-lg font-bold text-black/40 italic">
+          <div className="w-full cursor-not-allowed border-4 border-black bg-white/50 p-4 pl-12 text-base font-bold text-black/40 italic md:text-lg">
             Search functionality coming soon...
           </div>
         </div>
         <button
           disabled
-          className="cursor-not-allowed border-4 border-black bg-black/20 p-4 px-6 font-black text-white uppercase"
+          className="flex cursor-not-allowed justify-center border-4 border-black bg-black/20 p-4 px-6 font-black text-white uppercase"
         >
           <Filter className="h-5 w-5" />
         </button>
       </div>
 
       {/* THE BRUTALIST TABLE */}
-      <div className="overflow-hidden rounded-3xl border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-        <table className="w-full border-collapse text-left">
+      <div className="overflow-x-auto rounded-3xl border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+        <table className="w-full min-w-[800px] border-collapse text-left">
           <thead>
             <tr className="border-b-4 border-black bg-black text-white">
               <th className="p-5 font-black tracking-tighter uppercase italic">
@@ -107,21 +107,21 @@ export default async function AdminPaymentsPage() {
                       <div>
                         <div className="flex items-center gap-2">
                           <UserIcon className="h-3 w-3" />
-                          <p className="leading-none font-black">
+                          <p className="text-sm leading-none font-black">
                             {payment.user.name}
                           </p>
                         </div>
-                        <p className="mt-0.5 font-mono text-[9px] font-bold text-black/40">
+                        <p className="mt-0.5 font-mono text-[9px] font-bold break-all text-black/40">
                           UID: {payment.user.id}
                         </p>
                       </div>
 
                       <div className="inline-flex flex-col gap-1">
-                        <div className="flex w-fit items-center gap-2 rounded bg-black px-2 py-0.5 text-xs font-bold text-[#A3E635] italic">
+                        <div className="flex w-fit items-center gap-2 rounded bg-black px-2 py-0.5 text-[10px] font-bold text-[#A3E635] italic">
                           <Target className="h-3 w-3" />
                           <span>{payment.challenge.title}</span>
                         </div>
-                        <p className="font-mono text-[9px] font-bold text-black/40">
+                        <p className="font-mono text-[9px] font-bold break-all text-black/40">
                           CID: {payment.challenge.id}
                         </p>
                       </div>
