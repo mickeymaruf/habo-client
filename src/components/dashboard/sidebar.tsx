@@ -26,7 +26,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   if (role === UserRole.ADMIN) {
     navItems.push({
       icon: ChartNoAxesCombined,
-      label: "Platform Stats",
+      label: "Stats",
       href: "/stats",
     });
   }

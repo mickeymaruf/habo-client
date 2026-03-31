@@ -4,7 +4,7 @@ import { UserRole } from "./constants/user";
 import { authService } from "./services/auth.service";
 
 export const publicRoutes = ["/", "/about", "/contact"];
-export const adminRoutes = ["/stats"];
+export const adminRoutes = ["/stats", "/payments"];
 
 export const authRoutes = [
   "/login",
@@ -16,16 +16,16 @@ export const authRoutes = [
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const session = await authService.getSession();
 
-  const isAuthRoute = authRoutes.includes(pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
-  const isAdminRoute = adminRoutes.includes(pathname);
 
   // 1. If it's a public route (like Home), let them through regardless of session
   if (isPublicRoute) {
     return NextResponse.next();
   }
+
+  const session = await authService.getSession();
+  const isAuthRoute = authRoutes.includes(pathname);
 
   // 2. If logged in and trying to access login/signup, send to dashboard/challenges
   if (session && isAuthRoute) {
@@ -37,6 +37,8 @@ export async function proxy(request: NextRequest) {
   if (!session && !isAuthRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  const isAdminRoute = adminRoutes.includes(pathname);
 
   // 4. Role-Based Protection
   if (session) {
