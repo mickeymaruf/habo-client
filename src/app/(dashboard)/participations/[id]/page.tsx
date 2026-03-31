@@ -1,21 +1,13 @@
 import { notFound } from "next/navigation";
-import {
-  Calendar,
-  Lock,
-  ArrowLeft,
-  Zap,
-  Users2,
-  Sparkles,
-  ShieldCheck,
-} from "lucide-react";
+import { Calendar, Lock, ArrowLeft, Users2 } from "lucide-react";
 import Link from "next/link";
 import ActivityGraph from "./_components/activity-graph";
 import { participationService } from "@/services/participation.service";
 import CheckList from "../_components/check-list";
 import ChallengeAction from "@/components/challenge/challenge-action";
 import { authService } from "@/services/auth.service";
-import { SuccessBanner } from "@/components/payment/success-banner";
 import { cn } from "@/lib/utils";
+import PaymentToastHandler from "@/components/payment/payment-toast-handler";
 
 export default async function ChallengePage({
   params,
@@ -52,7 +44,7 @@ export default async function ChallengePage({
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 px-4 pb-20 md:px-0">
-      {isSuccess && <SuccessBanner />}
+      <PaymentToastHandler />
 
       {/* Main Participation Container */}
       <div className="relative overflow-hidden rounded-[30px] border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:rounded-[50px] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">

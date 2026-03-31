@@ -1,4 +1,4 @@
-import { ChallengeStatus } from "./enum.types";
+import { ChallengeStatus, ParticipationStatus } from "./enum.types";
 
 export interface Challenge {
   id: string;
@@ -38,4 +38,7 @@ export interface Challenge {
   };
   votedByMe: boolean;
   completedToday: number;
+  isJoined: boolean;
+  hasAccess: boolean;
+  participationStatus: ParticipationStatus | null;
 }

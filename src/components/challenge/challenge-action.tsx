@@ -47,6 +47,18 @@ export default function ChallengeAction({
     }
   };
 
+  const handleLeave = async () => {
+    if (confirm("Are you sure you want to leave?")) {
+      try {
+        await leaveChallenge(challenge.id);
+        toast.success("You have left the challenge");
+        router.push("/participations");
+      } catch (error) {
+        toast.error("Couldn't leave");
+      }
+    }
+  };
+
   const handleDelete = async () => {
     if (confirm("Permanently delete this challenge? This cannot be undone.")) {
       try {
@@ -104,11 +116,7 @@ export default function ChallengeAction({
         </DropdownMenuLabel>
 
         <DropdownMenuItem
-          onClick={async () => {
-            await leaveChallenge(challenge.id);
-            toast.success("You have left the challenge!");
-            router.push("/participations");
-          }}
+          onClick={handleLeave}
           className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100"
         >
           <LogOut className="h-4 w-4 stroke-[3px]" />

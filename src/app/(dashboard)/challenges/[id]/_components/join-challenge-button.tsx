@@ -3,11 +3,11 @@
 import { useState } from "react";
 import {
   Users,
-  CheckCircle2,
   BarChart3,
   Lock,
   ArrowRight,
   Loader2,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { joinChallenge } from "@/actions/participation";
@@ -20,12 +20,14 @@ interface JoinChallengeButtonProps {
   challengeId: string;
   initialHasJoined: boolean;
   isPremium?: boolean;
+  hasAccess?: boolean;
 }
 
 export function JoinChallengeButton({
   challengeId,
   initialHasJoined,
   isPremium,
+  hasAccess,
 }: JoinChallengeButtonProps) {
   const [loading, setLoading] = useState(false);
   const [joined, setJoined] = useState(initialHasJoined);
@@ -35,9 +37,21 @@ export function JoinChallengeButton({
 
     setLoading(true);
     try {
-      if (isPremium) {
-        const result = await createPaymentSession(challengeId);
+      // --- REJOIN OR FREE JOIN LOGIC ---
+      // If they have access already (even if premium) or it's a free challenge
+      if (hasAccess || !isPremium) {
+        await joinChallenge(challengeId);
+        setJoined(true);
+        toast.success(
+          hasAccess ? "Welcome back to the mission!" : "Successfully joined!",
+        );
+        setLoading(false);
+        return;
+      }
 
+      // --- NEW PREMIUM PURCHASE LOGIC ---
+      if (isPremium && !hasAccess) {
+        const result = await createPaymentSession(challengeId);
         if (result?.url) {
           window.location.href = result.url;
           return;
@@ -45,19 +59,14 @@ export function JoinChallengeButton({
           throw new Error("Could not generate payment link.");
         }
       }
-
-      await joinChallenge(challengeId);
-      setJoined(true);
-      toast.success("Successfully joined the challenge!");
     } catch (error: any) {
-      console.error("Failed to join challenge", error);
-      toast.error(error.message || "Something went wrong. Please try again.");
-    } finally {
-      if (!isPremium) setLoading(false);
+      console.error("Action failed", error);
+      toast.error(error.message || "Something went wrong.");
+      setLoading(false);
     }
   };
 
-  // --- SUCCESS STATE (Already Joined) ---
+  // 1. ACTIVE STATE: Already participating
   if (joined) {
     return (
       <Link href={`/participations/${challengeId}`} className="block w-full">
@@ -75,7 +84,9 @@ export function JoinChallengeButton({
     );
   }
 
-  // --- JOIN / UNLOCK STATE ---
+  // 2. REJOIN STATE: Has access but status is "LEFT"
+  const isRejoining = hasAccess && !joined;
+
   return (
     <Button
       size="lg"
@@ -83,15 +94,21 @@ export function JoinChallengeButton({
       disabled={loading}
       className={cn(
         "group h-20 w-full rounded-[30px] border-4 border-black py-7 text-xl font-black tracking-tighter italic transition-all duration-200 active:scale-95",
-        isPremium
-          ? "bg-black text-white shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] hover:bg-zinc-900"
-          : "bg-[#A3E635] text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-[#92d42d] hover:shadow-none",
+        isRejoining || !isPremium
+          ? "bg-[#A3E635] text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-[#92d42d] hover:shadow-none"
+          : "bg-black text-white shadow-[8px_8px_0px_0px_rgba(163,230,53,1)] hover:bg-zinc-900",
       )}
     >
       {loading ? (
         <div className="flex items-center gap-3">
           <Loader2 className="h-6 w-6 animate-spin stroke-[3px]" />
           <span>VERIFYING...</span>
+        </div>
+      ) : isRejoining ? (
+        <div className="flex items-center gap-3">
+          <RotateCcw className="h-6 w-6 stroke-[3px]" />
+          <span>REJOIN MISSION</span>
+          <ArrowRight className="h-6 w-6 stroke-[3px] transition-transform group-hover:translate-x-2" />
         </div>
       ) : isPremium ? (
         <div className="flex items-center gap-3">

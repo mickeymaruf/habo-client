@@ -1,34 +1,23 @@
 import { notFound } from "next/navigation";
 import { challengeService } from "@/services/challenge.service";
 import { Challenge } from "@/types/challenge.type";
-import {
-  Calendar,
-  Lock,
-  ArrowLeft,
-  Sparkles,
-  Zap,
-  Users2,
-  Star,
-} from "lucide-react";
+import { Calendar, Lock, ArrowLeft, Sparkles, Users2 } from "lucide-react";
 import Link from "next/link";
 import { JoinChallengeButton } from "./_components/join-challenge-button";
 import { authService } from "@/services/auth.service";
 import ChallengeAction from "@/components/challenge/challenge-action";
-import { CanceledBanner } from "@/components/payment/cancel-banner";
 import { cn } from "@/lib/utils";
 import EngagementHub from "./_components/engagement";
 import { UserRole } from "@/constants/user";
+import PaymentToastHandler from "@/components/payment/payment-toast-handler";
 
 export default async function ChallengePage({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const { id } = await params;
-  const sParams = await searchParams;
-  const isCanceled = sParams.canceled === "true";
 
   const { data: challenge } =
     await challengeService.getSingleChallenge<Challenge>(id);
@@ -36,14 +25,13 @@ export default async function ChallengePage({
 
   if (!challenge) return notFound();
 
-  const hasJoined = challenge.participations.some(
-    (p) => p.userId === session.user.id,
-  );
-  const showPaywall = challenge.isPremium && !hasJoined;
+  const hasJoined = challenge.isJoined;
+  const hasAccess = challenge.hasAccess;
+  const showPaywall = challenge.isPremium && !hasAccess;
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 px-4 pb-20 md:px-0">
-      {isCanceled && <CanceledBanner />}
+      <PaymentToastHandler />
 
       {/* Main Content Card */}
       <div className="relative overflow-hidden rounded-[30px] border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:rounded-[50px] md:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
@@ -158,6 +146,7 @@ export default async function ChallengePage({
                   challengeId={challenge.id}
                   isPremium={challenge.isPremium}
                   initialHasJoined={hasJoined}
+                  hasAccess={hasAccess}
                 />
               </div>
 
