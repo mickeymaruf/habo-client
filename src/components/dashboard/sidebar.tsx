@@ -6,6 +6,8 @@ import {
   ShieldCheck,
   Crown,
   ChartNoAxesCombined,
+  CreditCard,
+  History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -21,14 +23,22 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
     { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
     { icon: Calendar, label: "Participations", href: "/participations" },
     { icon: Crown, label: "Leaderboard", href: "/leaderboard" },
+    { icon: History, label: "History", href: "/history" },
   ];
 
   if (role === UserRole.ADMIN) {
-    navItems.push({
-      icon: ChartNoAxesCombined,
-      label: "Stats",
-      href: "/stats",
-    });
+    navItems.push(
+      {
+        icon: ChartNoAxesCombined,
+        label: "Stats",
+        href: "/stats",
+      },
+      {
+        icon: CreditCard,
+        label: "Payments",
+        href: "/payments",
+      },
+    );
   }
 
   return (
