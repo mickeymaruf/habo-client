@@ -1,71 +1,25 @@
 import {
   Star,
   Trophy,
-  Zap,
   TrendingUp,
   Users,
   Flame,
   Target,
-  MessageSquare,
   ChevronUp,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { env } from "@/env";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
-interface TopChallenge {
-  id: string;
-  title: string;
-  category: string;
-  isPremium: boolean;
-  participantCount: number;
-  voteCount: number;
-  commentCount: number;
-  score: number;
-  topParticipants: {
-    image: string | null;
-    name: string;
-    streak: number;
-    completionPercentage: number;
-    currentDay: number;
-  }[];
-}
-
-interface TopUser {
-  id: string;
-  name: string;
-  image: string | null;
-  totalScore: number;
-  challengesCompleted: number;
-  activeCheckIns: number;
-}
-
-async function getLeaderboardData() {
-  const [challengesRes, usersRes] = await Promise.all([
-    fetch(`${env.API_URL}/leaderboard/top-challenges`, {
-      // next: { revalidate: 3600 },
-    }),
-    fetch(`${env.API_URL}/leaderboard/users`, {
-      // next: { revalidate: 3600 },
-    }),
-  ]);
-
-  const challenges = await challengesRes.json();
-  const users = await usersRes.json();
-
-  return {
-    topChallenges: (challenges.data as TopChallenge[]) || [],
-    topUsers: (users.data as TopUser[]) || [],
-  };
-}
+import { leaderboardService } from "@/services/leaderboard.service";
 
 export default async function LeaderboardPage() {
-  const { topChallenges, topUsers } = await getLeaderboardData();
+  const [topChallenges, topUsers] = await Promise.all([
+    leaderboardService.getTopChallenges(),
+    leaderboardService.getTopUsers(),
+  ]);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-12 px-4 pt-10 pb-20 font-mono text-black">

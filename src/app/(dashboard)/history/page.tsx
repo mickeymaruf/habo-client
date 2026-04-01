@@ -1,6 +1,4 @@
 import { userChallengeService } from "@/services/user-challenge.service";
-import { authService } from "@/services/auth.service";
-import { notFound } from "next/navigation";
 import {
   Rocket,
   History,
@@ -12,10 +10,7 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export default async function MyMissionsPage() {
-  const session = await authService.getSession();
-  if (!session) return notFound();
-
+export default async function HistoryPage() {
   const { data } = await userChallengeService.getMyChallenges();
   const { created, history } = data;
 
