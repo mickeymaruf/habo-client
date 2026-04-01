@@ -31,3 +31,19 @@ export interface AdminPaymentData {
   payments: AdminPayment[];
   stats: RevenueStats;
 }
+
+export type BannedChallenge = {
+  id: string;
+  title: string;
+  category: string;
+  isBanned: boolean;
+  creator?: {
+    name: string;
+    email: string;
+  };
+  bannedBy?: {
+    name: string;
+  };
+  banReason?: string | null;
+  bannedAt?: string | Date | null;
+};

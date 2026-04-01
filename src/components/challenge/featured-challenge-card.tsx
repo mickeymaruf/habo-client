@@ -32,7 +32,7 @@ export default function FeaturedChallengeCard({ c }: { c: Challenge }) {
           <h3 className="line-clamp-4 text-3xl leading-none font-medium whitespace-normal text-white group-hover:text-[#A3E635]">
             {c.title}
           </h3>
-          <p className="line-clamp-2 text-sm font-bold text-zinc-500">
+          <p className="line-clamp-2 text-sm font-bold whitespace-normal text-zinc-500">
             {c.description}
           </p>
         </div>

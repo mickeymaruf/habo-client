@@ -24,6 +24,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { leaveChallenge } from "@/actions/participation";
+import { banChallenge, unbanChallenge } from "@/actions/admin";
 
 export default function ChallengeAction({
   challenge,
@@ -74,6 +75,29 @@ export default function ChallengeAction({
     }
   };
 
+  const handleBan = async () => {
+    try {
+      await banChallenge(challenge.id);
+      toast.success("Challenge banned successfully");
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to ban challenge");
+    }
+  };
+
+  const handleUnban = async () => {
+    if (!confirm("Are you sure you want to unban this challenge?")) return;
+
+    try {
+      await unbanChallenge(challenge.id);
+      toast.success("Challenge unbanned successfully");
+      router.refresh();
+    } catch (error) {
+      toast.error("Failed to unban challenge");
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -106,9 +130,16 @@ export default function ChallengeAction({
               />
               {challenge.featured ? "UNFEATURE" : "FEATURE THIS"}
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-orange-600 italic focus:bg-orange-100">
+            <DropdownMenuItem
+              onClick={challenge.isBanned ? handleUnban : handleBan}
+              className={`flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black italic ${
+                challenge.isBanned
+                  ? "text-green-600 focus:bg-green-100"
+                  : "text-orange-600 focus:bg-orange-100"
+              }`}
+            >
               <Ban className="h-4 w-4 stroke-[3px]" />
-              BAN CHALLENGE
+              {challenge.isBanned ? "UNBAN CHALLENGE" : "BAN CHALLENGE"}
             </DropdownMenuItem>
             <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
           </>

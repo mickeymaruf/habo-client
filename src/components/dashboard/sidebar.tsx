@@ -8,6 +8,8 @@ import {
   ChartNoAxesCombined,
   CreditCard,
   History,
+  Ban,
+  BanIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -37,6 +39,11 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
         icon: CreditCard,
         label: "Payments",
         href: "/payments",
+      },
+      {
+        icon: BanIcon,
+        label: "Bans",
+        href: "/bans",
       },
     );
   }

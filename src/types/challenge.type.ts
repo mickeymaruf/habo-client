@@ -41,4 +41,9 @@ export interface Challenge {
   isJoined: boolean;
   hasAccess: boolean;
   participationStatus: ParticipationStatus | null;
+
+  // ban fields
+  isBanned?: boolean;
+  banReason?: string | null;
+  bannedAt?: string | null;
 }

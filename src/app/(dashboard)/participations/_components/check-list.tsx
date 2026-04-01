@@ -63,7 +63,7 @@ export default function CheckList({
   };
 
   return (
-    <div className="w-full max-w-3xl">
+    <>
       <div className="mb-2 flex items-baseline justify-between px-1">
         <h3 className="text-sm font-black tracking-[0.3em] text-black uppercase">
           Daily Tasks
@@ -142,6 +142,6 @@ export default function CheckList({
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import { UserRole } from "./constants/user";
 import { authService } from "./services/auth.service";
 
 export const publicRoutes = ["/", "/about", "/contact"];
-export const adminRoutes = ["/stats", "/payments"];
+export const adminRoutes = ["/stats", "/payments", "/bans"];
 
 export const authRoutes = [
   "/login",
