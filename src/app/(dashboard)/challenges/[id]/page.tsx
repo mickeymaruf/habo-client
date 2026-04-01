@@ -236,6 +236,7 @@ export default async function ChallengePage({
                 votesCount={challenge._count?.votes}
                 commentsCount={challenge._count?.comments}
                 votedByMe={challenge.votedByMe}
+                isAdmin={session.user.role === UserRole.ADMIN}
               />
             </div>
 

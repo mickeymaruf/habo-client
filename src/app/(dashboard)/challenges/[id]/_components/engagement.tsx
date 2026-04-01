@@ -2,18 +2,19 @@ import { commentService } from "@/services/comment.service";
 import { Comment } from "@/types/comment.types";
 import { CommentInput } from "./comment-input";
 import CommentItem from "./comment-item";
-import { ThumbsUp } from "lucide-react";
 import { VoteButton } from "./vote-button";
 
 export default async function Engagement({
   challengeId,
   userId,
+  isAdmin,
   votesCount,
   commentsCount,
   votedByMe,
 }: {
   challengeId: string;
   userId: string;
+  isAdmin: boolean;
   votesCount: number | undefined;
   commentsCount: number | undefined;
   votedByMe: boolean;
@@ -58,6 +59,7 @@ export default async function Engagement({
             comment={comment}
             challengeId={challengeId}
             currentUserId={userId}
+            isAdmin={isAdmin}
           />
         ))}
       </div>

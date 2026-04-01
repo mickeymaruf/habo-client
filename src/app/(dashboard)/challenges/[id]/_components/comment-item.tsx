@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import { Comment } from "@/types/comment.types";
-import { ThumbsUp, CornerDownRight, Trash2 } from "lucide-react"; // Added Trash2
+import { ThumbsUp, CornerDownRight, Trash2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { CommentInput } from "./comment-input";
-import { likeComment, unlikeComment, deleteComment } from "@/actions/comment"; // Added deleteComment
+import { likeComment, unlikeComment, deleteComment } from "@/actions/comment";
 
 export default function CommentItem({
   comment,
   challengeId,
   isReply = false,
-  currentUserId, // Add these to check permissions
+  currentUserId,
   isAdmin = false,
 }: {
   comment: Comment;
