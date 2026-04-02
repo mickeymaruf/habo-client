@@ -69,7 +69,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
           {(field) => (
             <AppField
               field={field}
-              label="Mission Title"
+              label="Title"
               placeholder="e.g. ALPHA_RUN_30"
               prepend={<Type className="h-5 w-5 text-black" />}
             />
@@ -80,7 +80,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
           {(field) => (
             <AppField
               field={field}
-              label="Objective Details"
+              label="Description"
               placeholder="Define the parameters of success..."
               prepend={<AlignLeft className="h-5 w-5 text-black" />}
             />
@@ -92,7 +92,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
             {(field) => (
               <AppField
                 field={field}
-                label="Timeframe (Days)"
+                label="Duration (Days)"
                 type="number"
                 prepend={<Calendar className="h-5 w-5 text-black" />}
                 onChangeOverride={(e) =>
@@ -106,7 +106,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
             {(field) => (
               <AppField
                 field={field}
-                label="Sector"
+                label="Category"
                 placeholder="Health / Logic"
                 prepend={<Tag className="h-5 w-5 text-black" />}
               />
@@ -138,7 +138,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                     htmlFor="isPremium"
                     className="flex cursor-pointer items-center gap-2 text-xs font-black tracking-tight text-black uppercase"
                   >
-                    Premium Tier Authorization
+                    Premium
                   </label>
                 </div>
               )}
@@ -152,7 +152,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                       {(field) => (
                         <AppField
                           field={field}
-                          label="Access Credit (USD)"
+                          label="Price (USD)"
                           type="number"
                           placeholder="0.00"
                           prepend={

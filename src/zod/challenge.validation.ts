@@ -10,7 +10,10 @@ export const createChallengeZodSchema = z
       .string()
       .min(10, "Description must be at least 10 characters"),
     durationDays: z.number().positive("Duration must be a positive number"),
-    category: z.string().min(2, "Category must be at least 2 characters"),
+    category: z
+      .string()
+      .min(2, "Category must be at least 2 characters")
+      .max(20, "Category must be less than 20 characters"),
     isPremium: z.boolean().optional(),
     featured: z.boolean().optional(),
     price: z
@@ -44,6 +47,7 @@ export const updateChallengeZodSchema = z
     category: z
       .string()
       .min(2, "Category must be at least 2 characters")
+      .max(20, "Category must be less than 20 characters")
       .optional(),
     isPremium: z.boolean().optional(),
     featured: z.boolean().optional(),

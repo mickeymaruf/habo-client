@@ -80,7 +80,7 @@ export default function EditChallengeForm({
           {(field) => (
             <AppField
               field={field}
-              label="Mission Title"
+              label="Title"
               prepend={<Type className="h-5 w-5 text-black" />}
             />
           )}
@@ -90,7 +90,7 @@ export default function EditChallengeForm({
           {(field) => (
             <AppField
               field={field}
-              label="Objective Details"
+              label="Description"
               prepend={<AlignLeft className="h-5 w-5 text-black" />}
             />
           )}
@@ -101,7 +101,7 @@ export default function EditChallengeForm({
             {(field) => (
               <AppField
                 field={field}
-                label="Timeframe (Days)"
+                label="Duration (Days)"
                 type="number"
                 prepend={<Calendar className="h-5 w-5 text-black" />}
                 onChangeOverride={(e) =>
@@ -115,7 +115,7 @@ export default function EditChallengeForm({
             {(field) => (
               <AppField
                 field={field}
-                label="Sector"
+                label="Category"
                 prepend={<Tag className="h-5 w-5 text-black" />}
               />
             )}
@@ -150,7 +150,7 @@ export default function EditChallengeForm({
                     htmlFor="isPremium"
                     className="cursor-pointer text-xs font-black tracking-tight uppercase italic"
                   >
-                    Premium Tier Authorization
+                    Premium
                   </label>
                 </div>
               )}
@@ -164,7 +164,7 @@ export default function EditChallengeForm({
                       {(field) => (
                         <AppField
                           field={field}
-                          label="Access Credit (USD)"
+                          label="Price (USD)"
                           type="number"
                           prepend={
                             <DollarSign className="h-5 w-5 text-black" />

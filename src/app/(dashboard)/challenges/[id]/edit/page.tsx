@@ -32,7 +32,7 @@ export default async function EditChallengePage({
         <Link href="/history" className="group inline-block">
           <button className="mb-6 flex cursor-pointer items-center gap-2 border-4 border-black bg-white px-4 py-2 text-xs font-black tracking-widest uppercase transition-all hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none md:mb-10">
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Return to Logs
+            Return to History
           </button>
         </Link>
 
@@ -53,8 +53,8 @@ export default async function EditChallengePage({
               Edit <span className="text-[#A3E635]">Protocol</span>
             </h1>
             <p className="mt-4 max-w-md text-xs leading-relaxed font-bold tracking-tight text-black/60 uppercase md:text-sm">
-              Adjust mission parameters and update recruitment requirements.
-              Changes will sync across all active agents.
+              Adjust the parameters of your challenge. Changes will sync across
+              all pages.
             </p>
           </div>
 

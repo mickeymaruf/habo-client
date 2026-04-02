@@ -79,8 +79,7 @@ export default function AppField({
           disabled={disabled}
           aria-describedby={isInvalid ? `${field.name}-error` : undefined}
           className={cn(
-            // --- NEW BRUTALIST STYLING ---
-            "rounded-none border-2 border-black bg-white py-6 text-sm font-bold tracking-tight uppercase transition-all placeholder:font-medium placeholder:text-black/20",
+            "rounded-none border-2 border-black bg-white py-6 text-sm font-bold tracking-tight transition-all placeholder:font-medium placeholder:text-black/20 placeholder:uppercase",
             "focus-visible:border-[#A3E635] focus-visible:ring-0 focus-visible:ring-offset-0",
             "disabled:bg-zinc-100 disabled:opacity-50",
             prepend && "pl-12",

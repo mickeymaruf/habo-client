@@ -141,14 +141,14 @@ export default function ChallengeAction({
               <Ban className="h-4 w-4 stroke-[3px]" />
               {challenge.isBanned ? "UNBAN CHALLENGE" : "BAN CHALLENGE"}
             </DropdownMenuItem>
+
+            <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
           </>
         )}
 
         {/* --- OPTIONS SECTION --- */}
         {(!isDetailPage || challenge.isJoined || isCreator) && (
           <>
-            <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
-
             <DropdownMenuLabel className="px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
               Options
             </DropdownMenuLabel>
