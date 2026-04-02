@@ -1,15 +1,16 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import {
   LayoutGrid,
   Calendar,
-  ShieldCheck,
   Crown,
   ChartNoAxesCombined,
   CreditCard,
   History,
-  Ban,
   BanIcon,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,9 +18,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserRole as UserRoleType } from "@/types/enum.types";
 import { UserRole } from "@/constants/user";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Sidebar({ role }: { role: UserRoleType }) {
   const pathname = usePathname();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showTopArrow, setShowTopArrow] = useState(false);
+  const [showBottomArrow, setShowBottomArrow] = useState(false);
 
   const navItems = [
     { icon: LayoutGrid, label: "Challenges", href: "/challenges" },
@@ -30,66 +40,108 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
 
   if (role === UserRole.ADMIN) {
     navItems.push(
-      {
-        icon: ChartNoAxesCombined,
-        label: "Stats",
-        href: "/stats",
-      },
-      {
-        icon: CreditCard,
-        label: "Payments",
-        href: "/payments",
-      },
-      {
-        icon: BanIcon,
-        label: "Bans",
-        href: "/bans",
-      },
+      { icon: ChartNoAxesCombined, label: "Stats", href: "/stats" },
+      { icon: CreditCard, label: "Payments", href: "/payments" },
+      { icon: BanIcon, label: "Bans", href: "/bans" },
     );
   }
+
+  // Handle dynamic arrow visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+        // Show top arrow if we've scrolled down at least 5px
+        setShowTopArrow(scrollTop > 5);
+        // Show bottom arrow if there's more than 5px left to scroll
+        setShowBottomArrow(scrollHeight - scrollTop - clientHeight > 5);
+      }
+    };
+
+    const currentRef = scrollRef.current;
+    if (currentRef) {
+      currentRef.addEventListener("scroll", handleScroll);
+      // Initial check
+      handleScroll();
+      // Also check on window resize
+      window.addEventListener("resize", handleScroll);
+    }
+
+    return () => {
+      currentRef?.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [navItems.length]);
 
   return (
     <>
       {/* DESKTOP SIDEBAR - Original Structure */}
       <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-7 md:flex">
-        <div className="mb-12 text-center">
+        <div className="mb-10 shrink-0 text-center">
           <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
             HABO
           </h1>
           <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
         </div>
 
-        <nav className="flex flex-1 flex-col gap-6">
-          {navItems.map((item) => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <div key={item.label} className="group relative">
-                <Button
-                  asChild
-                  variant="ghost"
-                  className={cn(
-                    "h-14 w-14 rounded-2xl border-4 transition-all duration-200 active:scale-90",
-                    isActive
-                      ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                      : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
-                  )}
-                >
-                  <Link href={item.href}>
-                    <item.icon
-                      className={cn(
-                        "h-6 w-6",
-                        isActive ? "stroke-[3px]" : "stroke-[2px]",
-                      )}
-                    />
-                  </Link>
-                </Button>
-                <span className="absolute top-1/2 left-20 z-50 -translate-y-1/2 scale-0 rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase transition-all group-hover:scale-100">
-                  {item.label}
-                </span>
-              </div>
-            );
-          })}
-        </nav>
+        <div className="relative flex w-full flex-1 flex-col items-center overflow-hidden">
+          {/* Dynamic Scroll Indicators */}
+          {showTopArrow && (
+            <ChevronUp className="absolute top-0 z-20 h-5 w-5 animate-bounce text-black" />
+          )}
+          {showBottomArrow && (
+            <ChevronDown className="absolute bottom-2 z-20 h-5 w-5 animate-bounce text-black" />
+          )}
+
+          <nav
+            ref={scrollRef}
+            className="flex w-full flex-1 flex-col items-center gap-6 overflow-x-hidden overflow-y-auto pt-6 pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)",
+            }}
+          >
+            <TooltipProvider delayDuration={0}>
+              {navItems.map((item) => {
+                const isActive = pathname.startsWith(item.href);
+                return (
+                  <Tooltip key={item.label}>
+                    <TooltipTrigger asChild>
+                      <Button
+                        asChild
+                        variant="ghost"
+                        className={cn(
+                          "h-14 w-14 shrink-0 rounded-2xl border-4 transition-all duration-200 active:scale-90",
+                          isActive
+                            ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                            : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
+                        )}
+                      >
+                        <Link href={item.href}>
+                          <item.icon
+                            className={cn(
+                              "h-6 w-6",
+                              isActive ? "stroke-[3px]" : "stroke-[2px]",
+                            )}
+                          />
+                        </Link>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="right"
+                      sideOffset={20}
+                      className="z-[100] rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase [&_svg]:hidden!"
+                    >
+                      {item.label}
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </TooltipProvider>
+          </nav>
+        </div>
       </aside>
 
       {/* MOBILE FLOATING DOCK - Responsive Classes Only */}

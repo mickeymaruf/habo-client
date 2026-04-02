@@ -9,6 +9,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { adminService } from "@/services/admin.service";
 import { banChallenge, unbanChallenge } from "@/actions/admin";
+import { UnbanButton } from "./_components/unban-button"; // Import here
 
 export default async function AdminChallengesPage() {
   const { data: challenges } = await adminService.getBannedChallenges();
@@ -96,13 +97,6 @@ export default async function AdminChallengesPage() {
 
                     <td className="p-6 text-right">
                       <div className="flex items-center justify-end gap-3">
-                        <Link href={`/challenges/${challenge.id}`}>
-                          <button className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-4 py-2 text-[10px] font-black uppercase transition-all hover:bg-zinc-100 active:scale-95">
-                            Visit <ArrowRight className="h-3 w-3" />
-                          </button>
-                        </Link>
-
-                        {/* Direct Server Action Connection */}
                         <form
                           action={handleToggle.bind(
                             null,
@@ -110,25 +104,8 @@ export default async function AdminChallengesPage() {
                             isBanned,
                           )}
                         >
-                          <button
-                            type="submit"
-                            className={cn(
-                              "inline-flex items-center gap-2 rounded-xl border-2 border-black px-5 py-2 text-[10px] font-black uppercase italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:scale-95",
-                              isBanned
-                                ? "bg-[#A3E635] text-black"
-                                : "bg-black text-white",
-                            )}
-                          >
-                            {isBanned ? (
-                              <>
-                                <ShieldCheck className="h-4 w-4" /> UNBAN
-                              </>
-                            ) : (
-                              <>
-                                <ShieldAlert className="h-4 w-4" /> SUSPEND
-                              </>
-                            )}
-                          </button>
+                          {/* Use the new button component here */}
+                          <UnbanButton isBanned={isBanned} />
                         </form>
                       </div>
                     </td>

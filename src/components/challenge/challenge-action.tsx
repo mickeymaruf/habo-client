@@ -141,42 +141,50 @@ export default function ChallengeAction({
               <Ban className="h-4 w-4 stroke-[3px]" />
               {challenge.isBanned ? "UNBAN CHALLENGE" : "BAN CHALLENGE"}
             </DropdownMenuItem>
-            <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
           </>
         )}
 
-        <DropdownMenuLabel className="px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
-          Options
-        </DropdownMenuLabel>
+        {/* --- OPTIONS SECTION --- */}
+        {(!isDetailPage || challenge.isJoined || isCreator) && (
+          <>
+            <DropdownMenuSeparator className="my-2 h-1 bg-black/5" />
 
-        {!isDetailPage && (
-          <DropdownMenuItem
-            onClick={() => router.push(`/challenges/${challenge.id}`)}
-            className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-[#A3E635]"
-          >
-            <Eye className="h-4 w-4 stroke-[3px]" />
-            VIEW CHALLENGE
-          </DropdownMenuItem>
-        )}
+            <DropdownMenuLabel className="px-2 py-2 text-[10px] font-black tracking-widest text-zinc-400 uppercase">
+              Options
+            </DropdownMenuLabel>
 
-        <DropdownMenuItem
-          onClick={handleLeave}
-          className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100"
-        >
-          <LogOut className="h-4 w-4 stroke-[3px]" />
-          LEAVE CHALLENGE
-        </DropdownMenuItem>
+            {!isDetailPage && (
+              <DropdownMenuItem
+                onClick={() => router.push(`/challenges/${challenge.id}`)}
+                className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-[#A3E635]"
+              >
+                <Eye className="h-4 w-4 stroke-[3px]" />
+                VIEW CHALLENGE
+              </DropdownMenuItem>
+            )}
 
-        {isCreator && (
-          <div className="mt-2">
-            <DropdownMenuItem
-              onClick={handleDelete}
-              className="flex cursor-pointer items-center gap-2 rounded-xl bg-black px-3 py-3 font-black text-[#A3E635] italic focus:bg-red-600 focus:text-white"
-            >
-              <Trash2 className="h-4 w-4 stroke-[3px]" />
-              TERMINATE
-            </DropdownMenuItem>
-          </div>
+            {challenge.isJoined && (
+              <DropdownMenuItem
+                onClick={handleLeave}
+                className="flex cursor-pointer items-center gap-2 rounded-xl py-3 font-black text-black italic focus:bg-zinc-100"
+              >
+                <LogOut className="h-4 w-4 stroke-[3px]" />
+                LEAVE CHALLENGE
+              </DropdownMenuItem>
+            )}
+
+            {isCreator && (
+              <div className="mt-2">
+                <DropdownMenuItem
+                  onClick={handleDelete}
+                  className="flex cursor-pointer items-center gap-2 rounded-xl bg-black px-3 py-3 font-black text-[#A3E635] italic focus:bg-red-600 focus:text-white"
+                >
+                  <Trash2 className="h-4 w-4 stroke-[3px]" />
+                  TERMINATE
+                </DropdownMenuItem>
+              </div>
+            )}
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
