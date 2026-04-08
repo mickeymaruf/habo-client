@@ -26,13 +26,15 @@ export default function Footer() {
             {/* SOCIAL STICKERS */}
             <div className="mt-6 flex gap-3">
               <a
-                href="#"
+                target="_blank"
+                href="https://github.com/mickeymaruf/habo-client"
                 className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                target="_blank"
+                href="https://twitter.com/mickeymaruf"
                 className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
               >
                 <Twitter className="h-5 w-5" />
@@ -69,7 +71,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/premium"
+                    href="/#pricing"
                     className="hover:text-[#A3E635] hover:underline"
                   >
                     Premium_Access
@@ -80,7 +82,7 @@ export default function Footer() {
                     href="/blog"
                     className="hover:text-[#A3E635] hover:underline"
                   >
-                    Field_Reports
+                    Read_Articles
                   </Link>
                 </li>
               </ul>

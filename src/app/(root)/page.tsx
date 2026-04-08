@@ -450,7 +450,10 @@ export default function LandingPage() {
       </section>
 
       {/* --- HABIT_PRICING --- */}
-      <section className="border-b-4 border-black bg-zinc-50 py-16 md:border-b-8 md:py-24">
+      <section
+        id="pricing"
+        className="border-b-4 border-black bg-zinc-50 py-16 md:border-b-8 md:py-24"
+      >
         <div className="mx-auto max-w-7xl px-6 text-center">
           <SectionHeader title="Access_Levels" icon={<ShieldCheck />} />
           <div className="mt-16 flex flex-col justify-center gap-8 md:flex-row">
