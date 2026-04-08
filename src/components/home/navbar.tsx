@@ -21,9 +21,10 @@ export default function Navbar() {
 
         {/* DESKTOP NAV */}
         <div className="hidden items-center gap-6 text-sm font-black tracking-widest uppercase lg:flex">
-          <NavLink href="/challenges">Challenges_</NavLink>
-          <NavLink href="#features">Features_</NavLink>
-          <NavLink href="/leaderboard">Leaderboard_</NavLink>
+          <NavLink href="/about">About_</NavLink>
+          <NavLink href="/#features">Features_</NavLink>
+          <NavLink href="/blog">Blogs_</NavLink>
+          <NavLink href="/contact">Contact_</NavLink>
         </div>
 
         {/* CTA & MOBILE TOGGLE */}
