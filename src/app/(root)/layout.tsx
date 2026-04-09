@@ -7,11 +7,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="@font-mono min-h-screen bg-white text-black selection:bg-[#A3E635]">
+    <div className="min-h-screen bg-white font-mono text-black transition-colors duration-300 selection:bg-[#A3E635] selection:text-black dark:bg-zinc-950 dark:text-white">
       {/* --- NAVBAR --- */}
       <Navbar />
 
-      <main>{children}</main>
+      <main className="relative min-h-[calc(100vh-200px)]">{children}</main>
 
       {/* --- FOOTER --- */}
       <Footer />

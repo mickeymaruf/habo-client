@@ -2,12 +2,12 @@ import { ShieldCheck, Zap, Users } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-4xl space-y-16 px-4 py-20 font-mono">
+    <div className="mx-auto max-w-4xl space-y-16 px-4 py-20 font-mono transition-colors duration-200 dark:bg-zinc-950">
       <section className="space-y-6">
-        <h1 className="text-6xl font-black tracking-tighter uppercase italic md:text-8xl">
+        <h1 className="text-6xl font-black tracking-tighter uppercase italic md:text-8xl dark:text-white">
           THE <span className="text-[#A3E635]">MANIFESTO</span>
         </h1>
-        <p className="text-xl leading-tight font-bold text-black/80 md:text-2xl">
+        <p className="text-xl leading-tight font-bold text-black/80 md:text-2xl dark:text-zinc-400">
           Habo isn't a "habit tracker." It's a high-performance deployment
           system for your life. We stripped away the soft edges and the
           gradients to focus on what matters: execution.
@@ -34,13 +34,13 @@ export default function AboutPage() {
         ].map((item, i) => (
           <div
             key={i}
-            className="border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            className="border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-[8px_8px_0px_0px_#27272a]"
           >
             <item.icon className="mb-4 h-10 w-10 text-[#A3E635]" />
-            <h3 className="text-xl font-black uppercase italic">
+            <h3 className="text-xl font-black uppercase italic dark:text-zinc-100">
               {item.title}
             </h3>
-            <p className="text-sm font-bold text-black/60 uppercase">
+            <p className="text-sm font-bold text-black/60 uppercase dark:text-zinc-500">
               {item.desc}
             </p>
           </div>

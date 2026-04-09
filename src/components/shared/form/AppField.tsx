@@ -50,8 +50,8 @@ export default function AppField({
       <Label
         htmlFor={field.name}
         className={cn(
-          "text-[10px] font-black tracking-[0.2em] text-black/50 uppercase transition-colors",
-          isInvalid && "text-destructive",
+          "text-[10px] font-black tracking-[0.2em] text-black/50 uppercase transition-colors dark:text-zinc-500",
+          isInvalid && "text-destructive dark:text-red-500",
         )}
       >
         {label}
@@ -59,7 +59,7 @@ export default function AppField({
 
       <div className="group relative">
         {prepend && (
-          <div className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-black transition-transform group-focus-within:scale-110">
+          <div className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-black transition-transform group-focus-within:scale-110 dark:text-zinc-400">
             {prepend}
           </div>
         )}
@@ -84,12 +84,14 @@ export default function AppField({
             "disabled:bg-zinc-100 disabled:opacity-50",
             prepend && "pl-12",
             append && "pr-12",
-            isInvalid && "border-destructive focus-visible:border-destructive",
+            "dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-700 dark:disabled:bg-zinc-950",
+            isInvalid &&
+              "border-destructive focus-visible:border-destructive dark:border-red-500 dark:focus-visible:border-red-500",
           )}
         />
 
         {append && (
-          <div className="absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 text-black/40 hover:text-black">
+          <div className="absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 text-black/40 hover:text-black dark:text-zinc-500 dark:hover:text-zinc-200">
             {append}
           </div>
         )}
@@ -99,7 +101,7 @@ export default function AppField({
         <p
           id={`${field.name}-error`}
           role="alert"
-          className="text-destructive text-[10px] font-black tracking-tighter uppercase italic"
+          className="text-destructive text-[10px] font-black tracking-tighter uppercase italic dark:text-red-500"
         >
           {firstError}
         </p>

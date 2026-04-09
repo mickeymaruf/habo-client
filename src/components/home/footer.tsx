@@ -4,21 +4,21 @@ import { Terminal, Github, Twitter, Zap } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t-4 border-black bg-white pt-16 pb-8 md:border-t-8">
+    <footer className="border-t-4 border-black bg-white pt-16 pb-8 transition-colors duration-200 md:border-t-8 dark:border-zinc-800 dark:bg-zinc-950">
       <div className="mx-auto max-w-7xl px-6">
         {/* --- MAIN GRID --- */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           {/* BRAND BLOCK */}
           <div className="md:col-span-5">
             <div className="mb-4 flex items-center gap-2">
-              <div className="bg-black p-1 text-[#A3E635]">
+              <div className="bg-black p-1 text-[#A3E635] dark:bg-[#A3E635] dark:text-black">
                 <Zap className="h-6 w-6 fill-current" />
               </div>
-              <span className="text-3xl font-black tracking-tighter uppercase italic">
+              <span className="text-3xl font-black tracking-tighter uppercase italic dark:text-white">
                 HABO<span className="text-[#A3E635]">.OS</span>
               </span>
             </div>
-            <p className="max-w-sm text-sm leading-tight font-bold text-black uppercase">
+            <p className="max-w-sm text-sm leading-tight font-bold text-black uppercase dark:text-zinc-400">
               The high-performance deployment system for personal discipline.
               Track streaks, upload intel, and dominate the leaderboard.
             </p>
@@ -28,18 +28,18 @@ export default function Footer() {
               <a
                 target="_blank"
                 href="https://github.com/mickeymaruf/habo-client"
-                className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none dark:border-white dark:bg-zinc-900 dark:text-white dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
                 target="_blank"
                 href="https://twitter.com/mickeymaruf"
-                className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                className="border-2 border-black bg-white p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none dark:border-white dark:bg-zinc-900 dark:text-white dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
               >
                 <Twitter className="h-5 w-5" />
               </a>
-              <div className="flex items-center gap-2 border-2 border-black bg-[#A3E635] px-3 py-1 text-[10px] font-black uppercase italic shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div className="flex items-center gap-2 border-2 border-black bg-[#A3E635] px-3 py-1 text-[10px] font-black text-black uppercase italic shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:border-white dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]">
                 <Terminal className="h-3 w-3" /> System_Online
               </div>
             </div>
@@ -49,14 +49,14 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-8 md:col-span-7 md:grid-cols-3">
             {/* OPERATIONS */}
             <div className="space-y-4">
-              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase">
+              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase dark:text-zinc-500">
                 Operations
               </h4>
-              <ul className="flex flex-col gap-2 text-xs font-black uppercase italic">
+              <ul className="flex flex-col gap-2 text-xs font-black uppercase italic dark:text-zinc-200">
                 <li>
                   <Link
                     href="/challenges"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Challenges
                   </Link>
@@ -64,7 +64,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/leaderboard"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Leaderboard
                   </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/#pricing"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Premium_Access
                   </Link>
@@ -80,7 +80,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/blog"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Read_Articles
                   </Link>
@@ -90,14 +90,14 @@ export default function Footer() {
 
             {/* INTEL */}
             <div className="space-y-4">
-              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase">
+              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase dark:text-zinc-500">
                 Intel
               </h4>
-              <ul className="flex flex-col gap-2 text-xs font-black uppercase italic">
+              <ul className="flex flex-col gap-2 text-xs font-black uppercase italic dark:text-zinc-200">
                 <li>
                   <Link
                     href="/about"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     About_Habo
                   </Link>
@@ -105,7 +105,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/contact"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Comm_Link
                   </Link>
@@ -113,7 +113,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/help"
-                    className="hover:text-[#A3E635] hover:underline"
+                    className="transition-colors hover:text-[#A3E635] hover:underline"
                   >
                     Support_Docs
                   </Link>
@@ -123,22 +123,31 @@ export default function Footer() {
 
             {/* LEGAL */}
             <div className="space-y-4">
-              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase">
+              <h4 className="text-[10px] font-black tracking-[0.2em] text-black/30 uppercase dark:text-zinc-500">
                 Protocols
               </h4>
-              <ul className="flex flex-col gap-2 text-xs font-black text-black/60 uppercase italic">
+              <ul className="flex flex-col gap-2 text-xs font-black text-black/60 uppercase italic dark:text-zinc-500">
                 <li>
-                  <Link href="/legal" className="hover:text-black">
+                  <Link
+                    href="/legal"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
                     Privacy_Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal" className="hover:text-black">
+                  <Link
+                    href="/legal"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
                     Terms_Of_Service
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal" className="hover:text-black">
+                  <Link
+                    href="/legal"
+                    className="transition-colors hover:text-black dark:hover:text-white"
+                  >
                     Cookie_Directives
                   </Link>
                 </li>
@@ -148,9 +157,9 @@ export default function Footer() {
         </div>
 
         {/* --- BOTTOM BAR --- */}
-        <div className="mt-16 flex flex-col items-center justify-between border-t-4 border-black pt-8 md:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between border-t-4 border-black pt-8 md:flex-row dark:border-zinc-800">
           <div className="flex flex-col items-center gap-2 md:items-start">
-            <p className="text-[10px] font-black tracking-widest text-black uppercase">
+            <p className="text-[10px] font-black tracking-widest text-black uppercase dark:text-zinc-400">
               © 2026 HABO // ALL RIGHTS RESERVED // STREAK_OR_DIE
             </p>
             {/* DEVELOPER SIGNATURE */}
@@ -160,17 +169,19 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 text-[10px] font-black tracking-tighter uppercase"
             >
-              <span className="text-black/40 italic">Engineered By</span>
-              <span className="bg-[#A3E635] px-2 py-0.5 text-black transition-all group-hover:bg-black group-hover:text-[#A3E635]">
+              <span className="text-black/40 italic dark:text-zinc-600">
+                Engineered By
+              </span>
+              <span className="bg-[#A3E635] px-2 py-0.5 text-black transition-all group-hover:bg-black group-hover:text-[#A3E635] dark:group-hover:bg-white dark:group-hover:text-black">
                 MARUF
               </span>
             </a>
           </div>
 
           <div className="mt-6 flex items-center gap-4 md:mt-0">
-            <div className="flex items-center gap-2 border-2 border-black bg-zinc-100 px-3 py-1">
+            <div className="flex items-center gap-2 border-2 border-black bg-zinc-100 px-3 py-1 dark:border-white dark:bg-zinc-900">
               <div className="h-2 w-2 animate-pulse rounded-full bg-[#A3E635]" />
-              <span className="text-[9px] font-black tracking-widest text-black/40 uppercase">
+              <span className="text-[9px] font-black tracking-widest text-black/40 uppercase dark:text-zinc-500">
                 v1.0.4-stable
               </span>
             </div>

@@ -4,23 +4,24 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeSwitcher } from "./theme-switcher";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b-4 border-black bg-white md:border-b-8">
+    <nav className="sticky top-0 z-50 border-b-4 border-black bg-white/80 backdrop-blur-md md:border-b-8 dark:border-zinc-800 dark:bg-[#09090b]/80">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
         {/* LOGO */}
         <Link href="/" className="group flex items-center gap-2">
-          <h1 className="font-mono text-2xl leading-none font-black tracking-tighter text-black uppercase italic md:text-4xl">
+          <h1 className="font-mono text-2xl leading-none font-black tracking-tighter text-black uppercase italic md:text-4xl dark:text-zinc-100">
             HABO<span className="text-[#A3E635]">.</span>
           </h1>
-          <div className="hidden h-1.5 w-10 -skew-x-12 border-x-2 border-black bg-[#A3E635] opacity-0 transition-opacity group-hover:opacity-100 md:block" />
+          <div className="hidden h-1.5 w-10 -skew-x-12 border-x-2 border-black bg-[#A3E635] opacity-0 transition-opacity group-hover:opacity-100 md:block dark:border-zinc-100" />
         </Link>
 
         {/* DESKTOP NAV */}
-        <div className="hidden items-center gap-6 text-sm font-black tracking-widest uppercase lg:flex">
+        <div className="hidden items-center gap-6 text-sm font-black tracking-widest text-black uppercase lg:flex dark:text-zinc-400">
           <NavLink href="/about">About_</NavLink>
           <NavLink href="/#features">Features_</NavLink>
           <NavLink href="/blog">Blogs_</NavLink>
@@ -30,14 +31,15 @@ export default function Navbar() {
         {/* CTA & MOBILE TOGGLE */}
         <div className="flex items-center gap-4">
           <Link href="/challenges" className="hidden sm:block">
-            <button className="border-4 border-black bg-black px-4 py-2 text-[10px] font-black text-[#A3E635] uppercase shadow-[3px_3px_0px_0px_rgba(163,230,53,1)] transition-all hover:translate-y-0.5 hover:shadow-none active:scale-95 md:px-6 md:py-2.5 md:text-xs md:shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]">
+            <button className="border-4 border-black bg-black px-4 py-2 text-[10px] font-black text-[#A3E635] uppercase shadow-[3px_3px_0px_0px_rgba(163,230,53,1)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none active:scale-95 md:px-6 md:py-2.5 md:text-xs md:shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] dark:border-zinc-800 dark:bg-zinc-900 dark:text-[#A3E635] dark:shadow-[3px_3px_0px_0px_#27272a] dark:hover:border-[#A3E635] dark:hover:bg-[#A3E635] dark:hover:text-black dark:hover:shadow-none">
               Access_Challenges
             </button>
           </Link>
+          <ThemeSwitcher />
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex h-10 w-10 items-center justify-center border-4 border-black bg-[#A3E635] text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none lg:hidden"
+            className="flex h-10 w-10 items-center justify-center border-4 border-black bg-[#A3E635] text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:shadow-none lg:hidden dark:border-zinc-800 dark:bg-transparent dark:text-zinc-100 dark:shadow-none"
           >
             {isOpen ? (
               <X size={24} strokeWidth={3} />
@@ -51,11 +53,11 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       <div
         className={cn(
-          "absolute left-0 w-full border-b-4 border-black bg-white transition-all duration-300 ease-in-out lg:hidden",
+          "absolute left-0 w-full border-b-4 border-black bg-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out lg:hidden dark:border-zinc-800 dark:bg-[#09090b]/90",
           isOpen ? "top-[100%] opacity-100" : "top-[-400%] opacity-0",
         )}
       >
-        <div className="flex flex-col gap-4 p-6 text-xl font-black tracking-widest uppercase">
+        <div className="flex flex-col gap-4 p-6 text-xl font-black tracking-widest text-black uppercase dark:text-zinc-100">
           <Link
             href="/challenges"
             onClick={() => setIsOpen(false)}
@@ -82,7 +84,7 @@ export default function Navbar() {
             className="sm:hidden"
             onClick={() => setIsOpen(false)}
           >
-            <button className="w-full border-4 border-black bg-black py-4 text-sm font-black text-[#A3E635] uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]">
+            <button className="w-full border-4 border-black bg-black py-4 text-sm font-black text-[#A3E635] uppercase shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] dark:border-zinc-100 dark:bg-transparent dark:text-zinc-100">
               Access_Challenges
             </button>
           </Link>
@@ -100,7 +102,10 @@ function NavLink({
   children: React.ReactNode;
 }) {
   return (
-    <Link href={href} className="group relative overflow-hidden">
+    <Link
+      href={href}
+      className="group relative overflow-hidden transition-colors dark:hover:text-zinc-100"
+    >
       {children}
       <div className="absolute bottom-0 left-0 h-1 w-full -translate-x-full bg-[#A3E635] transition-transform duration-300 group-hover:translate-x-0" />
     </Link>

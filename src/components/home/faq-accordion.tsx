@@ -23,25 +23,28 @@ export function FaqAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="mt-16 space-y-4">
+    <div className="mt-16 space-y-6">
       {faqs.map((f, i) => (
         <div
           key={i}
-          className="border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          className="border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-[4px_4px_0px_0px_#27272a]"
         >
           <button
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className="flex w-full items-center justify-between p-6 text-left"
+            className="flex w-full items-center justify-between p-6 text-left focus:outline-none"
           >
-            <span className="text-lg font-black uppercase italic md:text-xl">
+            <span className="text-lg font-black uppercase italic md:text-xl dark:text-zinc-100">
               {f.q}
             </span>
-            {openIndex === i ? (
-              <Minus className="h-6 w-6" />
-            ) : (
-              <Plus className="h-6 w-6" />
-            )}
+            <div className="text-black dark:text-[#A3E635]">
+              {openIndex === i ? (
+                <Minus className="h-6 w-6 stroke-[3px]" />
+              ) : (
+                <Plus className="h-6 w-6 stroke-[3px]" />
+              )}
+            </div>
           </button>
+
           <AnimatePresence>
             {openIndex === i && (
               <motion.div
@@ -50,7 +53,7 @@ export function FaqAccordion() {
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden"
               >
-                <div className="border-t-4 border-black p-6 text-sm leading-relaxed font-bold text-black/60 uppercase">
+                <div className="border-t-4 border-black p-6 text-sm leading-relaxed font-bold text-black/60 uppercase dark:border-zinc-800 dark:text-zinc-500">
                   {f.a}
                 </div>
               </motion.div>
