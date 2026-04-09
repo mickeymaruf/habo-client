@@ -19,13 +19,13 @@ export default function DashboardHeader() {
     <div className="w-full max-w-2xl space-y-8 pb-12">
       {/* Greeting Section - Mission Style */}
       <div className="relative inline-block w-full sm:w-auto">
-        <div className="absolute -inset-2 z-0 -rotate-1 border-4 border-black bg-[#A3E635] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" />
-        <div className="relative z-10 rotate-1 border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          <h1 className="mb-4 text-5xl leading-[0.8] font-black tracking-tighter text-black uppercase italic md:text-6xl">
+        <div className="absolute -inset-2 z-0 -rotate-1 border-4 border-black bg-[#A3E635] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]" />
+        <div className="relative z-10 rotate-1 border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-zinc-900/90 dark:backdrop-blur-xl">
+          <h1 className="mb-4 text-5xl leading-[0.8] font-black tracking-tighter text-black uppercase italic md:text-6xl dark:text-white">
             HAPPY <br /> {format(now, "EEEE")}
           </h1>
-          <div className="flex w-fit items-center gap-2 bg-black px-3 py-1">
-            <span className="text-[10px] font-black tracking-[0.2em] text-[#A3E635] uppercase">
+          <div className="flex w-fit items-center gap-2 bg-black px-3 py-1 dark:bg-[#A3E635]">
+            <span className="text-[10px] font-black tracking-[0.2em] text-[#A3E635] uppercase dark:text-black">
               {format(now, "dd MMM yyyy • HH:mm").toUpperCase()}
             </span>
           </div>
@@ -36,7 +36,7 @@ export default function DashboardHeader() {
       <div className="flex flex-col gap-4 pt-4 md:flex-row">
         <Button
           asChild
-          className="group relative h-20 min-h-14 flex-1 rounded-2xl border-4 border-black bg-[#A3E635] text-xl font-black tracking-tighter text-black italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-[#92d42d] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:scale-95"
+          className="group relative h-20 min-h-14 flex-1 rounded-2xl border-4 border-black bg-[#A3E635] text-xl font-black tracking-tighter text-black italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-[#92d42d] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:scale-95 dark:border-zinc-800"
         >
           <Link
             href="/challenges/new"
@@ -50,7 +50,7 @@ export default function DashboardHeader() {
         <Button
           asChild
           variant="outline"
-          className="group relative h-20 min-h-14 flex-1 rounded-2xl border-4 border-black bg-white text-xl font-black tracking-tighter text-black italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-zinc-50 hover:shadow-[6px_6px_0px_0px_rgba(163,230,53,1)] active:scale-95"
+          className="group relative h-20 min-h-14 flex-1 rounded-2xl border-4 border-black bg-white text-xl font-black tracking-tighter text-black italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-zinc-50 hover:shadow-[6px_6px_0px_0px_rgba(163,230,53,1)] active:scale-95 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-white dark:hover:bg-zinc-900 dark:hover:shadow-[6px_6px_0px_0px_rgba(163,230,53,0.5)]"
         >
           <Link
             href="/challenges"

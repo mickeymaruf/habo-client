@@ -81,7 +81,7 @@ export default function EditChallengeForm({
             <AppField
               field={field}
               label="Title"
-              prepend={<Type className="h-5 w-5 text-black" />}
+              prepend={<Type className="h-5 w-5 text-black dark:text-white" />}
             />
           )}
         </form.Field>
@@ -91,7 +91,9 @@ export default function EditChallengeForm({
             <AppField
               field={field}
               label="Description"
-              prepend={<AlignLeft className="h-5 w-5 text-black" />}
+              prepend={
+                <AlignLeft className="h-5 w-5 text-black dark:text-white" />
+              }
             />
           )}
         </form.Field>
@@ -103,7 +105,9 @@ export default function EditChallengeForm({
                 field={field}
                 label="Duration (Days)"
                 type="number"
-                prepend={<Calendar className="h-5 w-5 text-black" />}
+                prepend={
+                  <Calendar className="h-5 w-5 text-black dark:text-white" />
+                }
                 onChangeOverride={(e) =>
                   field.handleChange(Number(e.target.value))
                 }
@@ -116,7 +120,7 @@ export default function EditChallengeForm({
               <AppField
                 field={field}
                 label="Category"
-                prepend={<Tag className="h-5 w-5 text-black" />}
+                prepend={<Tag className="h-5 w-5 text-black dark:text-white" />}
               />
             )}
           </form.Field>
@@ -124,8 +128,8 @@ export default function EditChallengeForm({
 
         {/* ADMIN OVERRIDES BLOCK */}
         {role === "ADMIN" && (
-          <div className="border-4 border-black bg-black/5 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <p className="mb-4 text-[10px] font-black tracking-widest text-black/40 uppercase">
+          <div className="border-4 border-black bg-black/5 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-white/5 dark:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+            <p className="mb-4 text-[10px] font-black tracking-widest text-black/40 uppercase dark:text-zinc-500">
               Administrative Control Level
             </p>
 
@@ -140,7 +144,7 @@ export default function EditChallengeForm({
                       onChange={(e) => {
                         field.handleChange(e.target.checked);
                       }}
-                      className="h-6 w-6 cursor-pointer appearance-none border-4 border-black bg-white transition-colors checked:bg-[#A3E635]"
+                      className="h-6 w-6 cursor-pointer appearance-none border-4 border-black bg-white transition-colors checked:bg-[#A3E635] dark:border-zinc-700 dark:bg-zinc-900"
                     />
                     {field.state.value && (
                       <Zap className="pointer-events-none absolute left-1 h-4 w-4 text-black" />
@@ -148,7 +152,7 @@ export default function EditChallengeForm({
                   </div>
                   <label
                     htmlFor="isPremium"
-                    className="cursor-pointer text-xs font-black tracking-tight uppercase italic"
+                    className="cursor-pointer text-xs font-black tracking-tight uppercase italic dark:text-white"
                   >
                     Premium
                   </label>
@@ -159,7 +163,7 @@ export default function EditChallengeForm({
             <form.Subscribe selector={(state) => [state.values.isPremium]}>
               {([isPremium]) =>
                 isPremium ? (
-                  <div className="mt-6 border-t-2 border-black/10 pt-6">
+                  <div className="mt-6 border-t-2 border-black/10 pt-6 dark:border-white/10">
                     <form.Field name="price">
                       {(field) => (
                         <AppField
@@ -167,7 +171,7 @@ export default function EditChallengeForm({
                           label="Price (USD)"
                           type="number"
                           prepend={
-                            <DollarSign className="h-5 w-5 text-black" />
+                            <DollarSign className="h-5 w-5 text-black dark:text-white" />
                           }
                           onChangeOverride={(e) =>
                             field.handleChange(Number(e.target.value))
@@ -191,7 +195,7 @@ export default function EditChallengeForm({
             isPending={isSubmitting}
             pendingLabel="Syncing Protocol..."
             disabled={!canSubmit}
-            className="group relative flex w-full border-[4px] border-black bg-[#A3E635] py-6 text-xl font-black text-black uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none md:py-8"
+            className="group relative flex w-full border-[4px] border-black bg-[#A3E635] py-6 text-xl font-black text-black uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none md:py-8 dark:border-zinc-800 dark:shadow-[8px_8px_0px_0px_rgba(163,230,53,0.3)]"
           >
             <div className="flex items-center gap-3">
               <Settings2 className="h-6 w-6" />

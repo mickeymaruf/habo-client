@@ -19,25 +19,25 @@ export default async function HistoryPage() {
     <div className="mx-auto max-w-6xl space-y-16 px-4 py-12 md:px-0">
       {/* --- SECTION 1: CREATED MISSIONS --- */}
       <section className="space-y-6">
-        <div className="flex items-center justify-between border-b-8 border-black pb-6">
+        <div className="flex items-center justify-between border-b-8 border-black pb-6 dark:border-zinc-800">
           <div className="flex items-center gap-4">
-            <Rocket className="h-10 w-10 stroke-[3px]" />
-            <h2 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
+            <Rocket className="h-10 w-10 stroke-[3px] text-black dark:text-white" />
+            <h2 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl dark:text-white">
               Published <span className="text-[#A3E635]">Challenges</span>
             </h2>
           </div>
           <Link href="/challenges/new">
-            <button className="group flex items-center gap-2 border-4 border-black bg-[#A3E635] px-6 py-3 font-black text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none">
+            <button className="group flex items-center gap-2 border-4 border-black bg-[#A3E635] px-6 py-3 font-black text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-zinc-800 dark:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.5)]">
               <Plus className="h-5 w-5 stroke-[4px]" />
               <span className="hidden italic md:inline">NEW MISSION</span>
             </button>
           </Link>
         </div>
 
-        <div className="overflow-hidden border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:rounded-[40px]">
+        <div className="overflow-hidden border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:rounded-[40px] dark:border-zinc-800 dark:bg-zinc-900/50 dark:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)]">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b-4 border-black bg-black text-xs font-black tracking-widest text-white uppercase italic">
+              <tr className="border-b-4 border-black bg-black text-xs font-black tracking-widest text-white uppercase italic dark:border-zinc-800 dark:bg-zinc-800">
                 <th className="p-6">Mission Log</th>
                 <th className="hidden p-6 text-center md:table-cell">Status</th>
                 <th className="p-6 text-right">Control</th>
@@ -48,7 +48,7 @@ export default async function HistoryPage() {
                 created.map((item: any) => (
                   <tr
                     key={item.id}
-                    className="border-b-4 border-black transition-colors last:border-0 hover:bg-zinc-50"
+                    className="border-b-4 border-black transition-colors last:border-0 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-800/30"
                   >
                     <td className="p-6">
                       <Link
@@ -56,17 +56,17 @@ export default async function HistoryPage() {
                         className="group flex w-fit flex-col gap-1"
                       >
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-xl font-black tracking-tight uppercase italic decoration-black decoration-2 group-hover:underline">
+                          <span className="text-xl font-black tracking-tight uppercase italic decoration-black decoration-2 group-hover:underline dark:text-white dark:decoration-white">
                             {item.title}
                           </span>
-                          <ExternalLink className="h-4 w-4 stroke-[3px]" />
+                          <ExternalLink className="h-4 w-4 stroke-[3px] text-black dark:text-white" />
                         </div>
                       </Link>
                       <div className="mt-1 flex items-center gap-3">
-                        <span className="bg-black px-2 py-0.5 text-[9px] font-bold text-white uppercase">
+                        <span className="bg-black px-2 py-0.5 text-[9px] font-bold text-white uppercase dark:bg-zinc-800 dark:text-[#A3E635]">
                           {item.category}
                         </span>
-                        <div className="flex items-center gap-1 text-[10px] font-bold text-black/40 uppercase">
+                        <div className="flex items-center gap-1 text-[10px] font-bold text-black/40 uppercase dark:text-zinc-500">
                           <Users2 className="h-3 w-3" />
                           {item._count.participations} Agents Active
                         </div>
@@ -75,16 +75,16 @@ export default async function HistoryPage() {
                       {/* Mobile Status Logic */}
                       <div className="mt-3 md:hidden">
                         {item.isBanned ? (
-                          <div className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-black px-3 py-1 text-[8px] font-black text-white uppercase">
+                          <div className="inline-flex items-center gap-1 rounded-full border-2 border-black bg-black px-3 py-1 text-[8px] font-black text-white uppercase dark:border-zinc-700">
                             <Ban className="h-3 w-3 text-red-500" />
                             Banned
                           </div>
                         ) : item.isDeleted ? (
-                          <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-red-400 px-3 py-1 text-[8px] font-black text-white uppercase">
+                          <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-red-400 px-3 py-1 text-[8px] font-black text-white uppercase dark:border-zinc-700">
                             Deleted
                           </div>
                         ) : (
-                          <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-white px-3 py-1 text-[8px] font-black uppercase">
+                          <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-white px-3 py-1 text-[8px] font-black uppercase dark:border-zinc-700 dark:bg-zinc-800 dark:text-white">
                             <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#A3E635]" />
                             Live
                           </div>
@@ -95,16 +95,16 @@ export default async function HistoryPage() {
                     {/* Desktop Status Logic */}
                     <td className="hidden p-6 text-center md:table-cell">
                       {item.isBanned ? (
-                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-1.5 text-[10px] font-black text-white uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-black px-4 py-1.5 text-[10px] font-black text-white uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-700 dark:shadow-none">
                           <Ban className="h-3 w-3 stroke-[3px] text-red-500" />
                           Banned
                         </div>
                       ) : item.isDeleted ? (
-                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-red-400 px-4 py-1.5 text-[10px] font-black text-white uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-red-400 px-4 py-1.5 text-[10px] font-black text-white uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-700 dark:shadow-none">
                           Deleted
                         </div>
                       ) : (
-                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-white px-4 py-1.5 text-[10px] font-black uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                        <div className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-white px-4 py-1.5 text-[10px] font-black uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:shadow-none">
                           <div className="h-2 w-2 animate-pulse rounded-full bg-[#A3E635]" />
                           Live on Habo
                         </div>
@@ -114,7 +114,7 @@ export default async function HistoryPage() {
                     <td className="p-6 text-right">
                       {!item.isBanned && !item.isDeleted ? (
                         <Link href={`/challenges/${item.id}/edit`}>
-                          <button className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-2.5 text-xs font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:scale-95">
+                          <button className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-2.5 text-xs font-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:scale-95 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
                             <Settings2 className="h-4 w-4" />
                             Edit
                           </button>
@@ -127,7 +127,7 @@ export default async function HistoryPage() {
                 <tr>
                   <td
                     colSpan={3}
-                    className="p-24 text-center text-2xl font-black tracking-tighter uppercase italic opacity-20"
+                    className="p-24 text-center text-2xl font-black tracking-tighter uppercase italic opacity-20 dark:text-white"
                   >
                     No active mission protocols found.
                   </td>
@@ -140,17 +140,17 @@ export default async function HistoryPage() {
 
       {/* --- SECTION 2: ARCHIVE --- */}
       <section className="space-y-6">
-        <div className="flex items-center gap-4 border-b-8 border-black pb-6">
-          <History className="h-10 w-10 stroke-[3px]" />
-          <h2 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl">
+        <div className="flex items-center gap-4 border-b-8 border-black pb-6 dark:border-zinc-800">
+          <History className="h-10 w-10 stroke-[3px] text-black dark:text-white" />
+          <h2 className="text-4xl font-black tracking-tighter uppercase italic md:text-5xl dark:text-white">
             Mission <span className="text-zinc-400">Archive</span>
           </h2>
         </div>
 
-        <div className="overflow-hidden border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:rounded-[40px]">
+        <div className="overflow-hidden border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:rounded-[40px] dark:border-zinc-800 dark:bg-zinc-900/50 dark:shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)]">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b-4 border-black bg-zinc-900 text-xs font-black tracking-widest text-white uppercase italic">
+              <tr className="border-b-4 border-black bg-zinc-900 text-xs font-black tracking-widest text-white uppercase italic dark:border-zinc-800 dark:bg-zinc-800">
                 <th className="p-6">Operation History</th>
                 <th className="p-6 text-right">Outcome</th>
               </tr>
@@ -160,7 +160,7 @@ export default async function HistoryPage() {
                 history.map((record: any) => (
                   <tr
                     key={record.id}
-                    className="border-b-4 border-black transition-colors last:border-0 hover:bg-zinc-50"
+                    className="border-b-4 border-black transition-colors last:border-0 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-800/30"
                   >
                     <td className="p-6">
                       <Link
@@ -168,22 +168,22 @@ export default async function HistoryPage() {
                         className="group flex w-fit flex-col gap-1"
                       >
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-xl font-black tracking-tight uppercase italic decoration-black decoration-2 group-hover:underline">
+                          <span className="text-xl font-black tracking-tight uppercase italic decoration-black decoration-2 group-hover:underline dark:text-white dark:decoration-white">
                             {record.challenge.title}
                           </span>
-                          <ExternalLink className="h-4 w-4 stroke-[3px]" />
+                          <ExternalLink className="h-4 w-4 stroke-[3px] text-black dark:text-white" />
                         </div>
                       </Link>
-                      <div className="mt-1 text-[10px] font-bold text-black/40 uppercase">
+                      <div className="mt-1 text-[10px] font-bold text-black/40 uppercase dark:text-zinc-500">
                         Logged: {new Date(record.joinedAt).toLocaleDateString()}
                       </div>
                     </td>
                     <td className="p-6 text-right">
                       <div
                         className={cn(
-                          "inline-flex items-center gap-2 rounded-full border-2 border-black px-4 py-1.5 text-[10px] font-black uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]",
+                          "inline-flex items-center gap-2 rounded-full border-2 border-black px-4 py-1.5 text-[10px] font-black uppercase shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-700 dark:shadow-none",
                           record.completed
-                            ? "bg-[#A3E635]"
+                            ? "bg-[#A3E635] text-black"
                             : "bg-red-400 text-white",
                         )}
                       >
@@ -196,7 +196,7 @@ export default async function HistoryPage() {
                 <tr>
                   <td
                     colSpan={2}
-                    className="p-24 text-center text-2xl font-black tracking-tighter uppercase italic opacity-20"
+                    className="p-24 text-center text-2xl font-black tracking-tighter uppercase italic opacity-20 dark:text-white"
                   >
                     History log is clear.
                   </td>

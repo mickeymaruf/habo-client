@@ -76,21 +76,21 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
   return (
     <>
       {/* DESKTOP SIDEBAR - Original Structure */}
-      <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-7 md:flex">
+      <aside className="hidden h-screen w-28 shrink-0 flex-col items-center border-r-4 border-black bg-white py-7 md:flex dark:border-zinc-800 dark:bg-zinc-950">
         <div className="mb-10 shrink-0 text-center">
-          <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic">
+          <h1 className="font-mono text-3xl leading-none font-black tracking-tighter text-black uppercase italic dark:text-white">
             HABO
           </h1>
-          <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635]" />
+          <div className="mt-1 h-1.5 w-full border-x-2 border-black bg-[#A3E635] dark:border-zinc-800" />
         </div>
 
         <div className="relative flex w-full flex-1 flex-col items-center overflow-hidden">
           {/* Dynamic Scroll Indicators */}
           {showTopArrow && (
-            <ChevronUp className="absolute top-0 z-20 h-5 w-5 animate-bounce text-black" />
+            <ChevronUp className="absolute top-0 z-20 h-5 w-5 animate-bounce text-black dark:text-zinc-400" />
           )}
           {showBottomArrow && (
-            <ChevronDown className="absolute bottom-2 z-20 h-5 w-5 animate-bounce text-black" />
+            <ChevronDown className="absolute bottom-2 z-20 h-5 w-5 animate-bounce text-black dark:text-zinc-400" />
           )}
 
           <nav
@@ -115,8 +115,8 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
                         className={cn(
                           "h-14 w-14 shrink-0 rounded-2xl border-4 transition-all duration-200 active:scale-90",
                           isActive
-                            ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                            : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black",
+                            ? "border-black bg-[#A3E635] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800"
+                            : "border-transparent text-zinc-700 hover:border-black hover:bg-zinc-100 hover:text-black dark:text-zinc-500 dark:hover:border-zinc-800 dark:hover:bg-zinc-900 dark:hover:text-white",
                         )}
                       >
                         <Link href={item.href}>
@@ -132,7 +132,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
                     <TooltipContent
                       side="right"
                       sideOffset={20}
-                      className="z-[100] rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase [&_svg]:hidden!"
+                      className="z-[100] rounded-lg border-2 border-black bg-black px-2 py-1 text-[10px] font-black text-white uppercase dark:border-zinc-800 [&_svg]:hidden!"
                     >
                       {item.label}
                     </TooltipContent>
@@ -146,7 +146,7 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
 
       {/* MOBILE FLOATING DOCK - Responsive Classes Only */}
       <div className="fixed bottom-6 left-0 z-50 flex w-full justify-center px-4 md:hidden">
-        <div className="relative max-w-full overflow-hidden rounded-[32px] border-[3px] border-black bg-white/80 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.15),4px_4px_0px_0px_rgba(0,0,0,1)] backdrop-blur-md">
+        <div className="relative max-w-full overflow-hidden rounded-[32px] border-[3px] border-black bg-white/80 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.15),4px_4px_0px_0px_rgba(0,0,0,1)] backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/70 dark:shadow-[0_8px_32px_rgba(0,0,0,0.5),4px_4px_0px_0px_rgba(0,0,0,1)] dark:backdrop-blur-xl">
           {/* Scrollable Container */}
           <nav className="flex items-center gap-1 overflow-x-auto overflow-y-hidden px-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {navItems.map((item) => {
@@ -157,7 +157,9 @@ export default function Sidebar({ role }: { role: UserRoleType }) {
                   href={item.href}
                   className={cn(
                     "flex shrink-0 items-center gap-2 rounded-[22px] px-4 py-2.5 transition-all duration-300",
-                    isActive ? "bg-black text-[#A3E635]" : "text-black/40",
+                    isActive
+                      ? "bg-black text-[#A3E635] dark:bg-[#A3E635] dark:text-black"
+                      : "text-black/40 dark:text-zinc-500",
                   )}
                 >
                   <item.icon

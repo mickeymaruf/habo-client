@@ -71,7 +71,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
               field={field}
               label="Title"
               placeholder="e.g. ALPHA_RUN_30"
-              prepend={<Type className="h-5 w-5 text-black" />}
+              prepend={<Type className="h-5 w-5 text-black dark:text-white" />}
             />
           )}
         </form.Field>
@@ -82,7 +82,9 @@ export default function CreateChallengeForm({ role }: { role: string }) {
               field={field}
               label="Description"
               placeholder="Define the parameters of success..."
-              prepend={<AlignLeft className="h-5 w-5 text-black" />}
+              prepend={
+                <AlignLeft className="h-5 w-5 text-black dark:text-white" />
+              }
             />
           )}
         </form.Field>
@@ -94,7 +96,9 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                 field={field}
                 label="Duration (Days)"
                 type="number"
-                prepend={<Calendar className="h-5 w-5 text-black" />}
+                prepend={
+                  <Calendar className="h-5 w-5 text-black dark:text-white" />
+                }
                 onChangeOverride={(e) =>
                   field.handleChange(Number(e.target.value))
                 }
@@ -108,15 +112,15 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                 field={field}
                 label="Category"
                 placeholder="Health / Logic"
-                prepend={<Tag className="h-5 w-5 text-black" />}
+                prepend={<Tag className="h-5 w-5 text-black dark:text-white" />}
               />
             )}
           </form.Field>
         </div>
 
         {role === "ADMIN" && (
-          <div className="border-4 border-black bg-black/5 p-4">
-            <p className="mb-4 text-[10px] font-black tracking-widest text-black/40 uppercase">
+          <div className="border-4 border-black bg-black/5 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
+            <p className="mb-4 text-[10px] font-black tracking-widest text-black/40 uppercase dark:text-zinc-500">
               Administrative Overrides
             </p>
             <form.Field name="isPremium">
@@ -128,7 +132,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                       id="isPremium"
                       checked={field.state.value}
                       onChange={(e) => field.handleChange(e.target.checked)}
-                      className="h-6 w-6 cursor-pointer appearance-none border-4 border-black bg-white transition-colors checked:bg-[#A3E635]"
+                      className="h-6 w-6 cursor-pointer appearance-none border-4 border-black bg-white transition-colors checked:bg-[#A3E635] dark:border-zinc-800 dark:bg-zinc-950 dark:checked:bg-[#A3E635]"
                     />
                     {field.state.value && (
                       <Zap className="pointer-events-none absolute left-1 h-4 w-4 text-black" />
@@ -136,7 +140,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                   </div>
                   <label
                     htmlFor="isPremium"
-                    className="flex cursor-pointer items-center gap-2 text-xs font-black tracking-tight text-black uppercase"
+                    className="flex cursor-pointer items-center gap-2 text-xs font-black tracking-tight text-black uppercase dark:text-white"
                   >
                     Premium
                   </label>
@@ -156,7 +160,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
                           type="number"
                           placeholder="0.00"
                           prepend={
-                            <DollarSign className="h-5 w-5 text-black" />
+                            <DollarSign className="h-5 w-5 text-black dark:text-white" />
                           }
                           onChangeOverride={(e) =>
                             field.handleChange(Number(e.target.value))
@@ -180,7 +184,7 @@ export default function CreateChallengeForm({ role }: { role: string }) {
             isPending={isSubmitting}
             pendingLabel="Initializing..."
             disabled={!canSubmit}
-            className="group relative flex w-full cursor-pointer items-center justify-center border-[4px] border-black bg-[#A3E635] py-6 text-base font-black tracking-tighter text-black uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none md:py-8 md:text-lg"
+            className="group relative flex w-full cursor-pointer items-center justify-center border-[4px] border-black bg-[#A3E635] py-6 text-base font-black tracking-tighter text-black uppercase italic transition-all hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none md:py-8 md:text-lg dark:border-zinc-800 dark:text-black"
           >
             Create
           </AppSubmitButton>

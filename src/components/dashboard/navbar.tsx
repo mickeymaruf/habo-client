@@ -38,6 +38,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { ThemeSwitcher } from "../home/theme-switcher";
 
 export default function DashboardNavbar({ user }: { user: User }) {
   const router = useRouter();
@@ -129,13 +130,13 @@ export default function DashboardNavbar({ user }: { user: User }) {
   };
 
   return (
-    <nav className="flex h-20 items-center justify-between gap-5 border-b-4 border-black bg-white px-4 md:h-24 md:px-10">
+    <nav className="sticky top-0 z-50 flex h-20 items-center justify-between gap-5 border-b-4 border-black bg-white px-4 md:h-24 md:px-10 dark:border-zinc-800 dark:bg-zinc-950/70 dark:backdrop-blur-md">
       {/* Search Container */}
       <div className="flex flex-1 items-center md:w-1/3" ref={containerRef}>
         <div className="group relative w-full sm:max-w-sm">
           <Search
             size={18}
-            className="absolute top-1/2 left-3 z-10 -translate-y-1/2 stroke-[3px] text-black md:left-4 md:size-[20px]"
+            className="absolute top-1/2 left-3 z-10 -translate-y-1/2 stroke-[3px] text-black md:left-4 md:size-[20px] dark:text-zinc-400"
           />
           <Input
             ref={inputRef}
@@ -146,7 +147,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
             onKeyDown={handleKeyDown}
             onFocus={() => setShowSuggestions(true)}
             className={cn(
-              "h-10 border-2 border-black bg-white pl-9 text-sm font-black tracking-tight italic placeholder:text-zinc-400 focus-visible:ring-0 md:h-12 md:border-4 md:pl-12",
+              "h-10 border-2 border-black bg-white pl-9 text-sm font-black tracking-tight italic placeholder:text-zinc-400 focus-visible:ring-0 md:h-12 md:border-4 md:pl-12 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-white dark:backdrop-blur-sm dark:placeholder:text-zinc-500",
               searchValue.length > 0 ? "pr-24 md:pr-32" : "pr-4",
             )}
           />
@@ -155,13 +156,13 @@ export default function DashboardNavbar({ user }: { user: User }) {
           {showSuggestions &&
             (searchValue.length > 0 || searchHistory.length > 0) && (
               <div className="absolute top-[calc(100%+8px)] left-0 z-50 w-full">
-                <Command className="rounded-none border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <Command className="rounded-none border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-zinc-900/90 dark:backdrop-blur-xl">
                   <CommandList className="max-h-[400px] overflow-y-auto">
                     {/* Recent History Section */}
                     {searchHistory.length > 0 && (
                       <CommandGroup
                         heading={
-                          <span className="px-2 text-[10px] font-black text-zinc-400 uppercase">
+                          <span className="px-2 text-[10px] font-black text-zinc-400 uppercase dark:text-zinc-500">
                             Recent
                           </span>
                         }
@@ -173,9 +174,9 @@ export default function DashboardNavbar({ user }: { user: User }) {
                               setSearchValue(term);
                               performSearch(term);
                             }}
-                            className="flex w-full cursor-pointer items-center px-4 py-3 text-sm font-black uppercase italic aria-selected:bg-[#A3E635]"
+                            className="flex w-full cursor-pointer items-center px-4 py-3 text-sm font-black uppercase italic aria-selected:bg-[#A3E635] aria-selected:text-black dark:text-zinc-300 dark:aria-selected:text-black"
                           >
-                            <History className="mr-3 h-4 w-4 stroke-[3px] text-zinc-400" />
+                            <History className="mr-3 h-4 w-4 stroke-[3px] text-zinc-400 dark:text-zinc-500" />
                             {term}
                           </CommandItem>
                         ))}
@@ -183,14 +184,14 @@ export default function DashboardNavbar({ user }: { user: User }) {
                     )}
 
                     {searchHistory.length > 0 && suggestions.length > 0 && (
-                      <CommandSeparator className="bg-black/10" />
+                      <CommandSeparator className="bg-black/10 dark:bg-zinc-800" />
                     )}
 
                     {/* API Suggestions Section */}
                     {suggestions.length > 0 && (
                       <CommandGroup
                         heading={
-                          <span className="px-2 text-[10px] font-black text-zinc-400 uppercase">
+                          <span className="px-2 text-[10px] font-black text-zinc-400 uppercase dark:text-zinc-500">
                             Suggestions
                           </span>
                         }
@@ -202,7 +203,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
                               setSearchValue(suggestion.title);
                               performSearch(suggestion.title);
                             }}
-                            className="flex w-full cursor-pointer items-center px-4 py-3 text-sm font-black uppercase italic aria-selected:bg-[#A3E635]"
+                            className="flex w-full cursor-pointer items-center px-4 py-3 text-sm font-black uppercase italic aria-selected:bg-[#A3E635] aria-selected:text-black dark:text-zinc-300 dark:aria-selected:text-black"
                           >
                             <Search className="mr-3 h-4 w-4 stroke-[3px]" />
                             {suggestion.title}
@@ -221,7 +222,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
               <button
                 type="button"
                 onClick={() => setSearchValue("")}
-                className="flex h-5 w-5 items-center justify-center border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-black hover:text-[#A3E635] active:translate-y-[2px] active:shadow-none md:h-6 md:w-6"
+                className="flex h-5 w-5 items-center justify-center border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-black hover:text-[#A3E635] active:translate-y-[2px] active:shadow-none md:h-6 md:w-6 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:hover:bg-white dark:hover:text-black"
               >
                 <X className="h-4 w-4 stroke-[4px]" />
               </button>
@@ -229,7 +230,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
               <button
                 type="button"
                 onClick={() => performSearch(searchValue)}
-                className="flex items-center gap-1 border-2 border-black bg-[#A3E635] px-1.5 py-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none md:gap-1.5 md:px-2"
+                className="flex items-center gap-1 border-2 border-black bg-[#A3E635] px-1.5 py-0.5 text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px] active:shadow-none md:gap-1.5 md:px-2 dark:border-zinc-800"
               >
                 <span className="text-[8px] font-black uppercase italic md:text-[9px]">
                   Enter
@@ -248,26 +249,28 @@ export default function DashboardNavbar({ user }: { user: User }) {
             <Button
               variant="ghost"
               size="icon"
-              className="group relative h-10 w-10 rounded-lg border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-[#A3E635] active:translate-y-1 active:shadow-none md:h-12 md:w-12 md:rounded-xl md:border-4 md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className="group relative h-10 w-10 rounded-lg border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-[#A3E635] active:translate-y-1 active:shadow-none md:h-12 md:w-12 md:rounded-xl md:border-4 md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-zinc-900/50 dark:backdrop-blur-sm"
             >
-              <Bell className="h-5 w-5 stroke-[2.5px] text-black md:h-6 md:w-6" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full border-2 border-black bg-red-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:h-4 md:w-4" />
+              <Bell className="h-5 w-5 stroke-[2.5px] text-black md:h-6 md:w-6 dark:text-white dark:group-hover:text-black" />
+              <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full border-2 border-black bg-red-500 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:h-4 md:w-4 dark:border-zinc-800" />
             </Button>
           </DropdownMenuTrigger>
 
+          <ThemeSwitcher />
+
           <DropdownMenuContent
             align="end"
-            className="w-64 rounded-[30px] border-4 border-black bg-white p-8 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]"
+            className="w-64 rounded-[30px] border-4 border-black bg-white p-8 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-zinc-900/90 dark:backdrop-blur-xl"
           >
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-4 border-black bg-[#A3E635]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-4 border-black bg-[#A3E635] dark:border-zinc-800">
                 <Zap className="h-6 w-6 stroke-[3px] text-black" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-xl font-black tracking-tighter text-black uppercase italic">
+                <h3 className="text-xl font-black tracking-tighter text-black uppercase italic dark:text-white">
                   Coming Soon
                 </h3>
-                <p className="text-[10px] font-bold tracking-widest text-black/40 uppercase">
+                <p className="text-[10px] font-bold tracking-widest text-black/40 uppercase dark:text-zinc-500">
                   Feature in progress
                 </p>
               </div>
@@ -275,28 +278,28 @@ export default function DashboardNavbar({ user }: { user: User }) {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="h-8 w-[2px] bg-black/10 md:h-10" />
+        <div className="h-8 w-[2px] bg-black/10 md:h-10 dark:bg-zinc-800" />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="flex h-10 items-center gap-2 rounded-lg border-2 border-black p-1 shadow-[2px_2px_0px_0px_rgba(163,230,53,1)] transition-all md:h-14 md:gap-3 md:rounded-2xl md:border-4 md:p-2 md:shadow-[4px_4px_0px_0px_rgba(163,230,53,1)]"
+              className="flex h-10 items-center gap-2 rounded-lg border-2 border-black p-1 shadow-[2px_2px_0px_0px_rgba(163,230,53,1)] transition-all md:h-14 md:gap-3 md:rounded-2xl md:border-4 md:p-2 md:shadow-[4px_4px_0px_0px_rgba(163,230,53,1)] dark:border-zinc-800 dark:bg-zinc-900/50 dark:backdrop-blur-sm"
             >
-              <Avatar className="h-6 w-6 border-black md:h-8 md:w-8 md:border-2">
+              <Avatar className="h-6 w-6 border-black md:h-8 md:w-8 md:border-2 dark:border-zinc-800">
                 {user?.image ? (
                   <AvatarImage src={user.image} />
                 ) : (
-                  <AvatarFallback className="bg-black text-[10px] font-black text-white md:text-xs">
+                  <AvatarFallback className="bg-black text-[10px] font-black text-white md:text-xs dark:bg-white dark:text-black">
                     {user?.name?.[0].toUpperCase()}
                   </AvatarFallback>
                 )}
               </Avatar>
               <div className="hidden text-left sm:block">
-                <p className="text-[10px] font-black text-black uppercase md:text-xs">
+                <p className="text-[10px] font-black text-black uppercase md:text-xs dark:text-white">
                   {user?.name}
                 </p>
-                <p className="text-[8px] font-bold text-black/40 md:text-[10px]">
+                <p className="text-[8px] font-bold text-black/40 md:text-[10px] dark:text-zinc-500">
                   {user.role === UserRole.ADMIN ? "ADMIN_USER" : "USER"}
                 </p>
               </div>
@@ -304,17 +307,17 @@ export default function DashboardNavbar({ user }: { user: User }) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent
-            className="w-64 rounded-[30px] border-4 border-black bg-white p-3 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+            className="w-64 rounded-[30px] border-4 border-black bg-white p-3 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:border-zinc-800 dark:bg-zinc-900/90 dark:backdrop-blur-xl"
             align="end"
           >
-            <DropdownMenuLabel className="px-4 py-3 font-black text-black uppercase italic">
+            <DropdownMenuLabel className="px-4 py-3 font-black text-black uppercase italic dark:text-white">
               {user?.name}
             </DropdownMenuLabel>
-            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
+            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5 dark:bg-zinc-800" />
             <DropdownMenuGroup className="space-y-1">
               <DropdownMenuItem
                 asChild
-                className="rounded-2xl px-4 py-3 font-black uppercase italic transition-colors focus:bg-[#A3E635]"
+                className="rounded-2xl px-4 py-3 font-black uppercase italic transition-colors focus:bg-[#A3E635] dark:text-zinc-300 dark:focus:text-black"
               >
                 <Link href="/profile" className="flex items-center gap-3">
                   <UserIcon className="h-5 w-5 stroke-[3px]" /> Profile
@@ -322,14 +325,14 @@ export default function DashboardNavbar({ user }: { user: User }) {
               </DropdownMenuItem>
               <DropdownMenuItem
                 asChild
-                className="rounded-2xl px-4 py-3 font-black uppercase italic transition-colors focus:bg-[#A3E635]"
+                className="rounded-2xl px-4 py-3 font-black uppercase italic transition-colors focus:bg-[#A3E635] dark:text-zinc-300 dark:focus:text-black"
               >
                 <Link href="/security" className="flex items-center gap-3">
                   <ShieldCheck className="h-5 w-5 stroke-[3px]" /> Security
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5" />
+            <DropdownMenuSeparator className="mx-2 my-2 h-1 bg-black/5 dark:bg-zinc-800" />
             <DropdownMenuItem
               disabled={isLoggingOut}
               onSelect={(e) => {
@@ -357,7 +360,7 @@ export default function DashboardNavbar({ user }: { user: User }) {
                 }
               }}
               className={cn(
-                "flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black text-[#A3E635] uppercase italic transition-all",
+                "flex cursor-pointer items-center gap-3 rounded-2xl bg-black px-4 py-3 font-black text-[#A3E635] uppercase italic transition-all dark:bg-white dark:text-black",
                 "focus:bg-red-600 focus:text-white",
                 isLoggingOut && "opacity-50",
               )}
